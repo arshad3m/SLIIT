@@ -30,13 +30,22 @@ public class InstMngmt_locations extends TestBase {
 		
 		click(element);
 		
-		type("lctns_code_XPATH","dddd");
-		
-		type("lctns_name_XPATh","ssssssssss");
-		
 		Thread.sleep(1500);
+
+		
+		click("lcnts_clear_changes_XPATH");
+		
+		type("lctns_code_XPATH",data.get("code"));
+		
+		type("lctns_name_XPATh",data.get("name"));
+		
+		Thread.sleep(6500);
 		
 		click("lcnts_status_XPATH");
+		
+		Thread.sleep(11500);
+
+		
 		
 		
 		

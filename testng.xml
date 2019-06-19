@@ -6,40 +6,13 @@
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
 		<listener
 			class-name="org.uncommons.reportng.JUnitXMLReporter" />
-		<listener class-name="com.upnorway.listeners.CustomListeners" />
+		<listener class-name="com.sliit.listeners.CustomListeners" />
 	</listeners>
 
 	<test name="Home page">
-		<parameter name="keyword_for_less" value="drifting" />
-		<parameter name="keyword_for_many" value="summer" />
-		<parameter name="keyword_invalid" value="abcdxyg987" />
-		<parameter name="firstname" value="Ravindra" />
-		<parameter name="lastname" value="Jadeja" />
-		<parameter name="age" value="34 years young" />
-		<parameter name="email" value="jadeja@bcci.in" />
-		<parameter name="phone" value="0097444667" />
-		<parameter name="arrivaldate" value="31st of December 2030" />
-		<parameter name="lengthofthetrip" value="4" />
-		<parameter name="occupation" value="Cricketer" />
-		<parameter name="adultscount" value="9" />
-		<parameter name="travellingfrom" value="India" />
-		<parameter name="message"
-			value="I would love to travel Norway" />
-
 		<classes>
-
-			<class name="com.upnorway.testcases.Homepage" />
-
-
+			<class name="com.sliit.testcases.InstMngmt_institute_details" />
+			<class name="com.sliit.testcases.InstMngmt_locations" />
 		</classes>
-
-
-	</test>
-
-	<test name="Journeys">
-		<classes>
-			<class name="com.upnorway.testcases.Journeys" />
-		</classes>
-
 	</test>
 </suite> <!-- Suite -->

@@ -12,7 +12,7 @@ import com.sliit.utilities.TestUtil;
 
 public class InstMngmt_institute_details extends TestBase {
 
-	@Test(dataProviderClass = TestUtil.class, dataProvider = "dp")
+	@Test(enabled=false,dataProviderClass = TestUtil.class, dataProvider = "dp")
 	public void add_institute_details(Hashtable<String, String> data) throws IOException, InterruptedException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -40,7 +40,7 @@ public class InstMngmt_institute_details extends TestBase {
 
 		click("inst_dtls_save_XPATH");
 		
-		String message_after_save=driver.findElement(By.xpath(OR.getProperty("inst_dtls_success_message_XPATH"))).getText();
+		String message_after_save=getTextOfElement("inst_dtls_success_message_XPATH");
 		
 		verifyContains(message_after_save, "successfuly!");
 		

@@ -14,13 +14,13 @@
         <protocol>https</protocol>
         
         <!-- title of the document -->
-        <documentTitle>Up Norway Automation Reports</documentTitle>
+        <documentTitle>SLIIT Automation Reports</documentTitle>
         
         <!-- report name - displayed at top-nav -->
         <reportName>Automation Report for</reportName>
         
         <!-- report headline - displayed at top-nav, after reportHeadline -->
-        <reportHeadline>Up Norway Smoke Test Suite</reportHeadline>
+        <reportHeadline>SLIIT Regression Test Suite</reportHeadline>
         
         <!-- global date format override -->
         <!-- defaults to yyyy-MM-dd -->

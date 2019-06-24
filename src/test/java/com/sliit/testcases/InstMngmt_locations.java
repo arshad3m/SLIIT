@@ -18,7 +18,7 @@ import com.sliit.utilities.TestUtil;
 
 public class InstMngmt_locations extends TestBase {
 
-	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp")
+	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp")
 	public void add_new_locations(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -30,7 +30,6 @@ public class InstMngmt_locations extends TestBase {
 
 		click("locations_XPATH");
 
-		// click("lctns_create_new_XPATH");
 
 		WebElement element = driver.findElement(By.xpath(OR.getProperty("lctns_create_new_XPATH")));
 
@@ -57,11 +56,14 @@ public class InstMngmt_locations extends TestBase {
 		click("lcnts_save_XPATH");
 
 		String message_after_save = getTextOfElement("lcnts_success_message_XPATH");
+		
+		Thread.sleep(2500);
+
 
 		verifyContains(message_after_save, "successfuly!");
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void search_locations_by_code() throws InterruptedException, IOException {
 
 		click("inst_management_XPATH");
@@ -71,7 +73,7 @@ public class InstMngmt_locations extends TestBase {
 		Thread.sleep(3000);
 
 		
-		String keyword="k";
+		String keyword="kandy";
 
 		search("lcnts_searchbox_XPATH",keyword);
 		
@@ -81,17 +83,25 @@ public class InstMngmt_locations extends TestBase {
 		
 		verifySearchResults(2, keyword);
 		
-	
+	}
+
+
+	@Test(enabled=true)
+	public void view_locations() throws InterruptedException, IOException {
 		
+		click("inst_management_XPATH");
 
-	}
+		click("locations_XPATH");
 
-	public void search_locations_by_name() {
-
-	}
-
-	public void view_locations() {
-
+		Thread.sleep(3000);
+		
+		//Make sure there are any locations to edit
+		if(getResultCountForSearch()>0) {
+			
+			String row=getRowValues(7);
+			
+			System.out.println(row);
+		}
 	}
 
 	public void edit_locations() {

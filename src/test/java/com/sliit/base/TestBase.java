@@ -164,7 +164,7 @@ public class TestBase {
 		test.log(LogStatus.INFO, "Clicking on : " + locator.toString().replace("_XPATH", ""));
 	}
 
-	public void click(WebElement element) {
+	public static void click(WebElement element) {
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].click();", element);
@@ -457,6 +457,12 @@ public class TestBase {
 		}
 	}
 	
+	
+	
+	/**
+	 * @author ArshadM 
+	 * Search
+	 */
 	public static void search(String search_box_xpath, String searchword) {
 		
 		type(search_box_xpath, searchword);
@@ -512,6 +518,31 @@ public class TestBase {
 
 		return codes;
 
+	}
+	
+	
+	/**
+	 * @author ArshadM 
+	 * Retrive the values for a given row.
+	 * The return value will be an string consisting the column values sepearted by space
+	 */
+	
+	public static String getRowValues(int row_number) {
+		
+		String row=OR.getProperty("list_row_XPATH")+"["+row_number+"]";
+		List<String> values = new ArrayList<String>();
+
+		if(row_number <10 | row_number == 10) {
+			
+			List<WebElement> list= driver.findElements(By.xpath(row));
+			
+			for(int i=0;i<list.size();i++) {
+				values.add(list.get(i).getAttribute("innerText"));
+			}
+		}
+		
+		return values.get(0);
+		
 	}
 	
 	

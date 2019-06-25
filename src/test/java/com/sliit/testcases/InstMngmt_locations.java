@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -18,7 +19,7 @@ import com.sliit.utilities.TestUtil;
 
 public class InstMngmt_locations extends TestBase {
 
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp")
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp")
 	public void add_new_locations(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -29,7 +30,6 @@ public class InstMngmt_locations extends TestBase {
 		click("inst_management_XPATH");
 
 		click("locations_XPATH");
-
 
 		WebElement element = driver.findElement(By.xpath(OR.getProperty("lctns_create_new_XPATH")));
 
@@ -55,15 +55,11 @@ public class InstMngmt_locations extends TestBase {
 
 		click("lcnts_save_XPATH");
 
-		String message_after_save = getTextOfElement("lcnts_success_message_XPATH");
+		verifyRecordSave();
 		
-		Thread.sleep(2500);
-
-
-		verifyContains(message_after_save, "successfuly!");
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void search_locations_by_code() throws InterruptedException, IOException {
 
 		click("inst_management_XPATH");
@@ -72,39 +68,45 @@ public class InstMngmt_locations extends TestBase {
 
 		Thread.sleep(3000);
 
-		
-		String keyword="kandy";
+		String keyword = "kandy";
 
-		search("lcnts_searchbox_XPATH",keyword);
-		
+		search("lcnts_searchbox_XPATH", keyword);
 
-		Thread.sleep(3000);
-
-		
 		verifySearchResults(2, keyword);
-		
+
 	}
 
-
-	@Test(enabled=true)
+	@Test(enabled = true)
 	public void view_locations() throws InterruptedException, IOException {
-		
+
 		click("inst_management_XPATH");
 
 		click("locations_XPATH");
 
-		Thread.sleep(3000);
-		
-		//Make sure there are any locations to edit
-		if(getResultCountForSearch()>0) {
-			
-			String row=getRowValues(7);
-			
-			System.out.println(row);
-		}
+		String row = getRowValues(5);
+
+		viewRow(5);
+
+		verifyViewRowValues(row);
+
 	}
 
-	public void edit_locations() {
+	
+	@Test(enabled=true)
+	public void edit_locations() throws InterruptedException, IOException {
+		
+		click("inst_management_XPATH");
+
+		click("locations_XPATH");
+		
+		editRow(4);
+		
+		type("lcnts_code_value_XPATH","Matara branch");
+		
+		click("lcnts_save_button_XPATH");
+		
+		verifyRecordSave();
+		
 
 	}
 

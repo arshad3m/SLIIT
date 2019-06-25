@@ -462,13 +462,17 @@ public class TestBase {
 	/**
 	 * @author ArshadM 
 	 * Search
+	 * @throws InterruptedException 
 	 */
-	public static void search(String search_box_xpath, String searchword) {
+	public static void search(String search_box_xpath, String searchword) throws InterruptedException {
 		
 		type(search_box_xpath, searchword);
 
 		driver.findElement(By.xpath(OR.getProperty(search_box_xpath))).sendKeys(Keys.ENTER);
 		test.log(LogStatus.INFO, "Hitting enter key");
+		
+		Thread.sleep(3000);
+
 	}
 
 	
@@ -525,9 +529,35 @@ public class TestBase {
 	 * @author ArshadM 
 	 * Retrive the values for a given row.
 	 * The return value will be an string consisting the column values sepearted by space
+	 * @throws InterruptedException 
+	 * @throws IOException 
 	 */
 	
-	public static String getRowValues(int row_number) {
+	public static String getRowValues(int row_number) throws IOException, InterruptedException {
+		
+		//verifyGreaterThan(getRecordCountForTable(), 0);
+		
+		//First make sure there are rows in the table
+		try {
+			if (getRecordCountForTable() > 0)
+				Assert.assertTrue(true);
+
+			else
+				assertTrue(false);
+		} catch (Throwable t) {
+
+			TestUtil.captureScreenshot();
+			// ReportNG
+			Reporter.log("<br>" + "No records found : " + t.getMessage() + "<br>");
+			Reporter.log("<a target=\"_blank\" href=" + TestUtil.screenshotName + "><img src=" + TestUtil.screenshotName
+					+ " height=200 width=200></img></a>");
+			Reporter.log("<br>");
+			Reporter.log("<br>");
+			// Extent Reports
+			test.log(LogStatus.FAIL, " No records found in the table : " + t.getMessage());
+			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
+		}
+		
 		
 		String row=OR.getProperty("list_row_XPATH")+"["+row_number+"]";
 		List<String> values = new ArrayList<String>();
@@ -546,15 +576,105 @@ public class TestBase {
 	}
 	
 	
+	
+	
+	
+
+	
+	
+	/**
+	 * @author ArshadM 
+	 * View any row of a grid
+	 * Provide the row number as a parameter
+	 * @throws InterruptedException 
+	 * @throws IOException 
+	 */
+	public static void viewRow(int row_number) throws InterruptedException, IOException {
+		
+		//First make sure there are rows in the table
+
+		try {
+			if (getRecordCountForTable() > 0)
+				Assert.assertTrue(true);
+
+			else
+				assertTrue(false);
+		} catch (Throwable t) {
+
+			TestUtil.captureScreenshot();
+			// ReportNG
+			Reporter.log("<br>" + "No records found : " + t.getMessage() + "<br>");
+			Reporter.log("<a target=\"_blank\" href=" + TestUtil.screenshotName + "><img src=" + TestUtil.screenshotName
+					+ " height=200 width=200></img></a>");
+			Reporter.log("<br>");
+			Reporter.log("<br>");
+			// Extent Reports
+			test.log(LogStatus.FAIL, " No records found in the table : " + t.getMessage());
+			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
+		}
+		
+		
+		
+		String xpath=OR.getProperty("row_ellipsis_XPATH")+"["+row_number+"]";
+		//click(xpath);
+		
+		
+		WebElement element = driver.findElement(By.xpath(xpath));
+		click(element);
+		click("view_row_XPATH");
+		
+		Thread.sleep(4000);
+
+		
+	}
+	
+	
+	public static void verifyViewRowValues(String row_values) throws IOException, InterruptedException {
+		
+		
+		String row=row_values;
+		
+	//	viewRow(5);
+		
+		Thread.sleep(3000);
+		
+		verifyEquals(row.split("\n")[0], getTextAttribute("lcnts_code_value_XPATH"));
+	}
+	
+	
+	
+	/**
+	 * @author ArshadM 
+	 * Edit any row of a grid
+	 * Provide the row number as a parameter
+	 * @throws InterruptedException 
+	 */
+	public static void editRow(int row_number) throws InterruptedException {
+		String xpath=OR.getProperty("row_ellipsis_XPATH")+"["+row_number+"]";
+		
+		//click(xpath);
+		WebElement element = driver.findElement(By.xpath(xpath));
+		click(element);
+		click("edit_row_XPATH");
+		
+		Thread.sleep(4000);
+	}
+	
+	
 	/**
 	 * @author ArshadM 
 	 * Retrive the number of results returned from the pagination text
+	 * @throws InterruptedException 
+	 * @throws IOException 
 	 */
-	public static int getResultCountForSearch() {
+	public static int getRecordCountForTable() throws InterruptedException, IOException {
 		
-		String result = driver.findElement(By.xpath(OR.getProperty("results_count_XPATH")))
+		Thread.sleep(4000);
+		
+	
+		 String result = driver.findElement(By.xpath(OR.getProperty("results_count_XPATH")))
 				.getAttribute("innerText");
-
+		 
 
 		String array[] = result.split(" ");
 		
@@ -573,13 +693,35 @@ public class TestBase {
 	 */
 	public static void verifySearchResults(int how_many_columns, String search_keyword) throws IOException, InterruptedException {
 		
-		verifyGreaterThan(getResultCountForSearch(), 0);
+	//	verifyGreaterThan(getRecordCountForTable(), 0);
+		
+		test.log(LogStatus.INFO, "Verifying Search keyword: " + search_keyword + " in the listed records"); 
+			
+		try {
+			if (getRecordCountForTable() > 0)
+				Assert.assertTrue(true);
+
+			else
+				assertTrue(false);
+		} catch (Throwable t) {
+
+			TestUtil.captureScreenshot();
+			// ReportNG
+			Reporter.log("<br>" + "No records found : " + t.getMessage() + "<br>");
+			Reporter.log("<a target=\"_blank\" href=" + TestUtil.screenshotName + "><img src=" + TestUtil.screenshotName
+					+ " height=200 width=200></img></a>");
+			Reporter.log("<br>");
+			Reporter.log("<br>");
+			// Extent Reports
+			test.log(LogStatus.FAIL, " No records found in the table : " + t.getMessage());
+			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
+		}
 		
 		List<String> first_column=getColumnValues(1);
 		
 		List<String> second_column=getColumnValues(2);
 		
-		
+				
 		try {
 		
 		for(int i=0;i<first_column.size();i++) {
@@ -613,6 +755,16 @@ public class TestBase {
 
 		}
 
+	}
+	
+	
+	public static void verifyRecordSave() throws InterruptedException, IOException {
+		
+		String message_after_save = getTextOfElement("lcnts_success_message_XPATH");
+
+		Thread.sleep(2500);
+
+		verifyContains(message_after_save, "successfuly!");
 	}
 	
 	
@@ -657,11 +809,34 @@ public class TestBase {
 		// driver.switchTo().window(originalHandle);
 	}
 
-	public String getTextOfElement(String xpath) {
+	
+	
+	/**
+	 * @author ArshadM 
+	 * Get text attribute of the element
+	 * 
+	 */
+	public static String getTextOfElement(String xpath) {
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(OR.getProperty(xpath)))));
 		String text = driver.findElement(By.xpath(OR.getProperty(xpath))).getText();
 		test.log(LogStatus.INFO, "Reading value of " + xpath.toString().replace("_XPATH", " "));
 		return text;
+	}
+	
+	
+	
+	/**
+	 * @author ArshadM 
+	 * Get text attribute of the element
+	 * 
+	 */
+	public static String getTextAttribute(String xpath) {
+		
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(OR.getProperty(xpath)))));
+		String text = driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("value");
+		test.log(LogStatus.INFO, "Reading value of " + xpath.toString().replace("_XPATH", " "));
+		return text;	
+		
 	}
 
 	@AfterSuite

@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -151,6 +152,7 @@ public class TestBase {
 
 	public static void click(String locator) {
 
+		try {
 		if (locator.endsWith("_CSS")) {
 			driver.findElement(By.cssSelector(OR.getProperty(locator))).click();
 		} else if (locator.endsWith("_XPATH")) {
@@ -162,7 +164,18 @@ public class TestBase {
 			driver.findElement(By.id(OR.getProperty(locator))).click();
 		}
 		test.log(LogStatus.INFO, "Clicking on : " + locator.toString().replace("_XPATH", ""));
+		
+		}catch(Throwable t) {
+			WebElement element = driver.findElement(By.xpath(OR.getProperty(locator)));
+			wait.until(ExpectedConditions.elementToBeClickable(element));
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript("arguments[0].click();", element);
+			test.log(LogStatus.INFO, "Clickingg on : " + element.toString().replace("_XPATH", ""));
+		}
 	}
+	
+	
+	
 
 	public static void click(WebElement element) {
 		wait.until(ExpectedConditions.elementToBeClickable(element));
@@ -495,7 +508,7 @@ public class TestBase {
 			codes.add(list.get(i).getAttribute("innerText"));
 		}
 
-		if (list.size() > 10 | list.size()==9) {
+		if (list.size() > 10 || list.size()==9) {
 
 		int	number_of_pages = Integer.parseInt(
 					driver.findElement(By.xpath(OR.getProperty("page_count_XPATH"))).getAttribute("innerText"));
@@ -533,7 +546,7 @@ public class TestBase {
 	 * @throws IOException 
 	 */
 	
-	public static String getRowValues(int row_number) throws IOException, InterruptedException {
+	public static List<String> getRowValues(int row_number) throws IOException, InterruptedException {
 		
 		//verifyGreaterThan(getRecordCountForTable(), 0);
 		
@@ -561,6 +574,7 @@ public class TestBase {
 		
 		String row=OR.getProperty("list_row_XPATH")+"["+row_number+"]";
 		List<String> values = new ArrayList<String>();
+		List<String> values2=new ArrayList<String>();
 
 		if(row_number <10 | row_number == 10) {
 			
@@ -571,7 +585,10 @@ public class TestBase {
 			}
 		}
 		
-		return values.get(0);
+		values2=Arrays.asList(values.get(0).split("\n"));
+		
+		return values2;
+		
 		
 	}
 	
@@ -623,22 +640,22 @@ public class TestBase {
 		click(element);
 		click("view_row_XPATH");
 		
-		Thread.sleep(4000);
+		Thread.sleep(5000);
 
 		
 	}
 	
 	
-	public static void verifyViewRowValues(String row_values) throws IOException, InterruptedException {
+	public static void verifyViewRowValues(String row_values, String field_xpath) throws IOException, InterruptedException {
 		
 		
-		String row=row_values;
+		//List<String> row=row_values;
 		
 	//	viewRow(5);
 		
 		Thread.sleep(3000);
 		
-		verifyEquals(row.split("\n")[0], getTextAttribute("lcnts_code_value_XPATH"));
+		verifyEquals(row_values, getTextAttribute(field_xpath));
 	}
 	
 	
@@ -731,12 +748,12 @@ public class TestBase {
 				
 				Assert.assertTrue(true);
 				
-			} //test.log(LogStatus.INFO, "Search keyword: " + search_keyword + " found in all the records listed");
+			} 
 		
 			else {
 				test.log(LogStatus.INFO,  search_keyword + " does'nt exists in row: "+first_column.get(i));
 				assertTrue(false);
-				//test.log(LogStatus.INFO, "Asserting element " + search_keyword + " does'nt exists");
+				
 			}
 		}
 		
@@ -835,6 +852,10 @@ public class TestBase {
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(OR.getProperty(xpath)))));
 		String text = driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("value");
 		test.log(LogStatus.INFO, "Reading value of " + xpath.toString().replace("_XPATH", " "));
+		
+		if(text==null) {
+			text=driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("innerText");
+		}
 		return text;	
 		
 	}

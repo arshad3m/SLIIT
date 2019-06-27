@@ -37,6 +37,9 @@ public class InstMngmt_institute_details extends TestBase {
 		type("inst_dtls_email_XPATH", data.get("email"));
 
 		type("inst_dtls_telephone_XPATH", data.get("telephone"));
+		
+		//uploading a logo
+		upload("inst_dtls_upload_XPATH","logopath");
 
 		click("inst_dtls_save_XPATH");
 		

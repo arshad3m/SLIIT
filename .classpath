@@ -32,6 +32,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/arshadm/Desktop/testng-6.8.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayashanig/Documents/Projects/SLIIT/Automation/testng-6.0.jar.zip"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

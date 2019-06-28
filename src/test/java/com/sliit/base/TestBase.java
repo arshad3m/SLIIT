@@ -2,6 +2,7 @@ package com.sliit.base;
 
 import static org.testng.Assert.assertTrue;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -868,6 +869,19 @@ public class TestBase {
 		}
 		return text;	
 		
+	}
+	
+	/**
+	 * @author Jayashani 
+	 * Get text attribute of the element
+	 * 
+	 */
+	public void upload(String locator, String path) {
+		
+		WebElement uploadElement = driver.findElement(By.xpath(OR.getProperty(locator)));
+	     
+        File file = new File(OR.getProperty(path));
+        uploadElement.sendKeys(file.getAbsolutePath());
 	}
 
 	@AfterSuite

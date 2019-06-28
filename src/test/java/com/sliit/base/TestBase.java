@@ -780,9 +780,9 @@ public class TestBase {
 		
 		String message_after_save = getTextOfElement("lcnts_success_message_XPATH");
 
-		Thread.sleep(2500);
+		Thread.sleep(3000);
 
-		verifyContains(message_after_save, "successfuly!");
+		verifyContains(message_after_save, "successfully!");
 	}
 	
 	
@@ -857,6 +857,16 @@ public class TestBase {
 		if(text==null) {
 			text=driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("innerText");
 		}
+		
+		if(text.equals("Active x")) {
+			text="Active";
+			
+		}
+		
+		if(text.equals("Inactive x")) {
+			text="Inactive";
+			
+		}
 		return text;	
 		
 	}
@@ -864,14 +874,18 @@ public class TestBase {
 	/**
 	 * @author Jayashani 
 	 * Get text attribute of the element
+	 * @throws InterruptedException 
 	 * 
 	 */
-	public void upload(String locator, String path) {
+	public static void upload(String locator, String path) throws InterruptedException {
 		
 		WebElement uploadElement = driver.findElement(By.xpath(OR.getProperty(locator)));
 	     
-        File file = new File(OR.getProperty(path));
+       // File file = new File(OR.getProperty(path));
+		 File file = new File(path);
         uploadElement.sendKeys(file.getAbsolutePath());
+        
+        Thread.sleep(3000);
 	}
 
 	@AfterSuite

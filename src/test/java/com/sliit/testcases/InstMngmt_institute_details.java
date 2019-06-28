@@ -12,7 +12,7 @@ import com.sliit.utilities.TestUtil;
 
 public class InstMngmt_institute_details extends TestBase {
 
-	@Test(enabled=false,dataProviderClass = TestUtil.class, dataProvider = "dp")
+	@Test(enabled=true,dataProviderClass = TestUtil.class, dataProvider = "dp")
 	public void add_institute_details(Hashtable<String, String> data) throws IOException, InterruptedException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -38,14 +38,14 @@ public class InstMngmt_institute_details extends TestBase {
 
 		type("inst_dtls_telephone_XPATH", data.get("telephone"));
 		
+		click("inst_dtls_plus_button_XPATH");
+		
 		//uploading a logo
-		upload("inst_dtls_upload_XPATH","logopath");
+		upload("inst_dtls_upload_XPATH",data.get("logo"));
 
 		click("inst_dtls_save_XPATH");
 		
-		String message_after_save=getTextOfElement("inst_dtls_success_message_XPATH");
-		
-		verifyContains(message_after_save, "successfuly!");
+		verifyRecordSave();
 		
 	}
 	

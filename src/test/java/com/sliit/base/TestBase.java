@@ -873,7 +873,7 @@ public class TestBase {
 	
 	/**
 	 * @author Jayashani 
-	 * Get text attribute of the element
+	 * Upload given file
 	 * @throws InterruptedException 
 	 * 
 	 */
@@ -884,6 +884,7 @@ public class TestBase {
        // File file = new File(OR.getProperty(path));
 		 File file = new File(path);
         uploadElement.sendKeys(file.getAbsolutePath());
+        test.log(LogStatus.INFO, "Uploading file: "+path);
         
         Thread.sleep(3000);
 	}

@@ -779,7 +779,7 @@ public class TestBase {
 		
 		String message_after_save = getTextOfElement("lcnts_success_message_XPATH");
 
-		Thread.sleep(2500);
+		Thread.sleep(3000);
 
 		verifyContains(message_after_save, "successfuly!");
 	}
@@ -855,6 +855,16 @@ public class TestBase {
 		
 		if(text==null) {
 			text=driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("innerText");
+		}
+		
+		if(text.equals("Active x")) {
+			text="Active";
+			
+		}
+		
+		if(text.equals("Inactive x")) {
+			text="Inactive";
+			
 		}
 		return text;	
 		

@@ -15,6 +15,8 @@ import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.SkipException;
 
+import com.relevantcodes.extentreports.DisplayOrder;
+import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.LogStatus;
 import com.sliit.base.TestBase;
 import com.sliit.utilities.MonitoringMail;
@@ -94,7 +96,10 @@ public class CustomListeners extends TestBase implements ITestListener,ISuiteLis
 		 
 		//messageBody = "http://" + InetAddress.getLocalHost().getHostAddress() + ":8080/job/DataDrivenLiveProject/Extent_Reports/";
 		//messageBody = "http://" + InetAddress.getLocalHost().getHostAddress() + ":8080/job/smoke_test/Extent_20Report/";
-		messageBody="file:///C:/Users/arshadm/eclipse-workspace/SLIIT_Automation/target/surefire-reports/html/extent.html#!";
+		//messageBody="file:///C:/Users/arshadm/eclipse-workspace/SLIIT_Automation/target/surefire-reports/html/extent.html#!";
+		
+	//	extent = new ExtentReports(System.getProperty("user.dir")+"\\target\\surefire-reports\\html\\extent.html",true,DisplayOrder.OLDEST_FIRST);
+		messageBody="file:///"+System.getProperty("user.dir")+"\\target\\surefire-reports\\html\\extent.html";
 	
 		try {
 			mail.sendMail(TestConfig.server, TestConfig.from, TestConfig.to, TestConfig.subject, messageBody);

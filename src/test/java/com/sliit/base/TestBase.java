@@ -867,6 +867,11 @@ public class TestBase {
 			text="Inactive";
 			
 		}
+		
+		if(text.endsWith(" x")) {
+			
+			text=text.replace(text.substring(text.length()-2, text.length()-0), "");
+		}
 		return text;	
 		
 	}

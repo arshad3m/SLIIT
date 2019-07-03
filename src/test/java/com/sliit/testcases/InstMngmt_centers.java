@@ -13,8 +13,8 @@ import com.sliit.utilities.TestUtil;
 public class InstMngmt_centers extends TestBase {
 	
 	
-	@Test(enabled=false)
-	public void search_centers_by_id() throws InterruptedException {
+	@Test(enabled=true)
+	public void search_centers_by_id() throws InterruptedException, IOException {
 		
 		click("inst_management_XPATH");
 
@@ -23,12 +23,13 @@ public class InstMngmt_centers extends TestBase {
 		Thread.sleep(3000);
 		
 		
-		List<String> code_values=getColumnValues(1);
-		
-	
-		for(int i=0;i<code_values.size();i++) {
-			System.out.println(code_values.get(i));
-		}
+		String keyword = "library";
+
+		//Enter serach keyword in the searchbox
+		search("lcnts_searchbox_XPATH", keyword);
+
+		//Verify search results
+		verifySearchResults(2, keyword);
 		
 	}
 	
@@ -56,9 +57,12 @@ public class InstMngmt_centers extends TestBase {
 
 		click("center_location_XPATH");
 		
-//		type("center_type_location_XPATH",data.get("location"));
+		Thread.sleep(3000);
 		
-		//select the first location in the dropdown
+		//Type the location name in the dropdown search
+		type("center_type_location_XPATH",data.get("location"));
+		
+		//Click on the first result
 		click("center_location_dd_value_XPATH");
 		
 		setStatus("center_status_XPATH",data.get("status"));

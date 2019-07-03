@@ -43,16 +43,8 @@ public class InstMngmt_locations extends TestBase {
 		//Enter location name
 		type("lctns_name_XPATH", data.get("name"));
 
-		//Select location status
-		click("lcnts_status_XPATH");
-
-		// Select checkbox based on Active or Inactive
-		if (data.get("status").equals("Active")) {
-			click("lcnts_active_XPATH");
-		} else {
-			click("lcnts_inactive_XPATH");
-			click("lcnts_confirm_inactivation_XPATH");
-		}
+		//Set status
+		setStatus("lcnts_status_XPATH", data.get("status"));
 
 		//Click save button
 		click("lcnts_save_XPATH");

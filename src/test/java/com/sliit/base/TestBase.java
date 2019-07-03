@@ -888,6 +888,26 @@ public class TestBase {
         
         Thread.sleep(3000);
 	}
+	
+	
+	/**
+	 * @author Arshad 
+	 * Set active or inactive status
+	 * based on the paramter passed
+	 * @throws InterruptedException 
+	 * 
+	 */
+	public static void setStatus( String drop_down,String status) {
+		
+		click(drop_down);
+		
+		if (status.equals("Active")) {
+			click("active_XPATH");
+		} else {
+			click("inactive_XPATH");
+			click("confirm_inactivation_XPATH");
+		}
+	}
 
 	@AfterSuite
 	public void tearDown() {

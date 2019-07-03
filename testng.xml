@@ -11,7 +11,13 @@
 
 	<test name="Home page">
 		<classes>
+			<class name="com.sliit.testcases.InstMngmt_institute_details" />
 			<class name="com.sliit.testcases.InstMngmt_locations" />
+			<class name="com.sliit.testcases.InstMngmt_centers" />
 		</classes>
 	</test>
-</suite> <!-- Suite -->
+</suite>
+
+
+
+<!-- Suite -->

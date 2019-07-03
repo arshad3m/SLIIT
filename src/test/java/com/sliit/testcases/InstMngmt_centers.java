@@ -13,7 +13,7 @@ import com.sliit.utilities.TestUtil;
 public class InstMngmt_centers extends TestBase {
 	
 	
-	@Test(enabled=false, priority=2)
+	@Test(enabled=true, priority=2)
 	public void search_centers_by_id() throws InterruptedException, IOException {
 		
 		click("inst_management_XPATH");
@@ -34,7 +34,7 @@ public class InstMngmt_centers extends TestBase {
 	}
 	
 	
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority=1)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority=1)
 	public void add_new_centers(Hashtable<String, String> data) throws InterruptedException, IOException {
 		
 		if (!data.get("runmode").equals("Y")) {
@@ -89,12 +89,13 @@ public class InstMngmt_centers extends TestBase {
 		//Click centers
 		click("centers_XPATH");
 
-		//Retrive 5th row values before opening it to view
 		
 		int row_number=Integer.parseInt(data.get("row"));
+		
+		//Retrive given row values before opening it to view
 		List<String> row = getRowValues(row_number);
 
-		//Click and view 3rd row
+		//Click and view (row_number)
 		viewRow(row_number);
 
 		//verify code

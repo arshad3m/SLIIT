@@ -13,7 +13,7 @@ import com.sliit.utilities.TestUtil;
 public class InstMngmt_centers extends TestBase {
 	
 	
-	@Test(enabled=true)
+	@Test(enabled=false, priority=2)
 	public void search_centers_by_id() throws InterruptedException, IOException {
 		
 		click("inst_management_XPATH");
@@ -34,7 +34,7 @@ public class InstMngmt_centers extends TestBase {
 	}
 	
 	
-	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority=1)
+	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority=1)
 	public void add_new_centers(Hashtable<String, String> data) throws InterruptedException, IOException {
 		
 		if (!data.get("runmode").equals("Y")) {
@@ -73,6 +73,84 @@ public class InstMngmt_centers extends TestBase {
 		
 		
 		
+	}
+	
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority=3)
+	public void view_centers(Hashtable<String, String> data) throws InterruptedException, IOException {
+		
+		if (!data.get("runmode").equals("Y")) {
+
+			throw new SkipException("Skipping the test case as the Run mode for data set is NO");
+		}
+
+		//Click institute management
+		click("inst_management_XPATH");
+
+		//Click centers
+		click("centers_XPATH");
+
+		//Retrive 5th row values before opening it to view
+		
+		int row_number=Integer.parseInt(data.get("row"));
+		List<String> row = getRowValues(row_number);
+
+		//Click and view 3rd row
+		viewRow(row_number);
+
+		//verify code
+		verifyViewRowValues(row.get(0),"center_code_value_XPATH");
+		
+		//verify name
+		verifyViewRowValues(row.get(1),"center_name_value_XPATH");
+		
+		//verify location
+		verifyViewRowValues(row.get(2),"center_location_value_XPATH");
+		
+		//verify status
+		verifyViewRowValues(row.get(3),"center_status_value_XPATH");
+
+
+
+
+	}
+	
+	
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority=4)
+	public void edit_centers(Hashtable<String, String> data) throws InterruptedException, IOException {
+		
+		if (!data.get("runmode").equals("Y")) {
+
+			throw new SkipException("Skipping the test case as the Run mode for data set is NO");
+		}
+
+		//Click institute management
+		click("inst_management_XPATH");
+
+		//Click centers
+		click("centers_XPATH");
+
+		//Retrive 5th row values before opening it to view
+		
+		int row_number=Integer.parseInt(data.get("row"));
+		
+		List<String> row = getRowValues(row_number);
+
+		//Edit row
+		editRow(row_number);
+		
+		//Update code value with new value
+		type("center_code_value_XPATH",data.get("new code"));
+		
+		type("center_name_value_XPATH",data.get("new name"));
+		
+		//Click save butotn
+		click("lcnts_save_button_XPATH");
+		
+		//Verify record is updated
+		verifyRecordSave();
+
+
+
 	}
 	
 

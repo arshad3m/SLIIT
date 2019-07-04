@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -773,6 +774,77 @@ public class TestBase {
 
 		}
 
+	}
+	
+	/**
+	 * @author ArshadM 
+	 * This method will verify following:
+	 * - Verify the records are in descending order
+	 * for the fist column and first 5 rows
+	 * @throws InterruptedException 
+	 */
+	public static void verifyTableDescendingOrder(String column_prefix) throws IOException, InterruptedException {
+		
+		test.log(LogStatus.INFO, "Verifying descending order of the first 5 records of the first column: "); 
+		
+		try {
+			if (getRecordCountForTable() > 0)
+				Assert.assertTrue(true);
+
+			else
+				assertTrue(false);
+		} catch (Throwable t) {
+
+			TestUtil.captureScreenshot();
+			// ReportNG
+			Reporter.log("<br>" + "No records found : " + t.getMessage() + "<br>");
+			Reporter.log("<a target=\"_blank\" href=" + TestUtil.screenshotName + "><img src=" + TestUtil.screenshotName
+					+ " height=200 width=200></img></a>");
+			Reporter.log("<br>");
+			Reporter.log("<br>");
+			// Extent Reports
+			test.log(LogStatus.FAIL, " No records found in the table : " + t.getMessage());
+			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
+		}
+		
+		List<String> first_column = getColumnValues(1);
+		List<Integer> column_values = new ArrayList<Integer>();
+		
+		try {
+			
+			for(int i=0; i<5;i++) {
+				
+				column_values.add(Integer.parseInt(first_column.get(i).replace(column_prefix, "")));
+			}
+			
+			List<Integer> copy = new ArrayList(column_values);
+		    Collections.sort(copy,Collections.reverseOrder());
+		    boolean state= copy.equals(column_values);
+		    
+		    if(state==true) {
+		    	Assert.assertTrue(true);
+		    }
+		    
+		    else {
+		    	Assert.assertTrue(false);
+		    }
+		    
+		} catch(Throwable t) {
+			
+			TestUtil.captureScreenshot();
+			// ReportNG
+			Reporter.log("<br>" + "Column values are not in descending order : " + t.getMessage() + "<br>");
+			Reporter.log("<a target=\"_blank\" href=" + TestUtil.screenshotName + "><img src=" + TestUtil.screenshotName
+					+ " height=200 width=200></img></a>");
+			Reporter.log("<br>");
+			Reporter.log("<br>");
+			// Extent Reports
+			test.log(LogStatus.FAIL, " Column values are not in descending order : " + t.getMessage());
+			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
+		}
+		
+		
+		
 	}
 	
 	

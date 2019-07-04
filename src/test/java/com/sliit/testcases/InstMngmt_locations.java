@@ -53,6 +53,10 @@ public class InstMngmt_locations extends TestBase {
 		//Verify record is saved
 		verifyRecordSave();
 		
+		//Verify table records are in descending order
+		verifyTableDescendingOrder("LOC");
+
+		
 	}
 
 	@Test(enabled = true,priority=2)

@@ -814,7 +814,10 @@ public class TestBase {
 			
 			for(int i=0; i<5;i++) {
 				
+				if(first_column.get(i).contains(column_prefix)) {
 				column_values.add(Integer.parseInt(first_column.get(i).replace(column_prefix, "")));
+				}
+				else break;
 			}
 			
 			List<Integer> copy = new ArrayList(column_values);

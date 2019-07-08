@@ -2,6 +2,7 @@ package com.sliit.testcases;
 
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.List;
 
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -63,5 +64,105 @@ public class InstMngmnt_departments extends TestBase{
 
 
 	}
+	
+	
+	@Test(enabled = true,priority=2)
+	public void search_departments() throws InterruptedException, IOException {
+
+		//Click institute managment
+		click("inst_management_XPATH");
+
+		//Click locations
+		click("departments_XPATH");
+
+		Thread.sleep(3000);
+
+		String keyword = "Networking";
+
+		//Enter serach keyword in the searchbox
+		search("search_box_XPATH", keyword);
+
+		//Verify search results
+		verifySearchResults(2, keyword);
+
+	}
+	
+	
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
+	public void view_departments(Hashtable<String, String> data) throws InterruptedException, IOException {
+
+		if (!data.get("runmode").equals("Y")) {
+
+			throw new SkipException("Skipping the test case as the Run mode for data set is NO");
+		}
+
+		// Click institute management
+		click("inst_management_XPATH");
+
+		// Click departments
+		click("departments_XPATH");
+
+		int row_number = Integer.parseInt(data.get("row"));
+
+		// Retrive given row values before opening it to view
+		List<String> row = getRowValues(row_number);
+
+		// Click and view (row_number)
+		viewRow(row_number);
+
+		// verify code
+		verifyViewRowValues(row.get(0), "dept_code_value_XPATH");
+
+		// verify name
+		verifyViewRowValues(row.get(1), "dept_name_value_XPATH");
+
+		// verify department
+		verifyViewRowValues(row.get(2), "dept_dept_value_XPATH");
+
+		// verify faculty
+		verifyViewRowValues(row.get(3), "dept_faculty_value_XPATH");
+		
+		//verify status
+		verifyViewRowValues(row.get(4), "dept_status_value_XPATH");
+
+
+	}
+	
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
+	public void edit_departments(Hashtable<String, String> data) throws InterruptedException, IOException {
+
+		if (!data.get("runmode").equals("Y")) {
+
+			throw new SkipException("Skipping the test case as the Run mode for data set is NO");
+		}
+
+		// Click institute management
+		click("inst_management_XPATH");
+
+		// Click centers
+		click("departments_XPATH");
+
+		// Retrive 5th row values before opening it to view
+
+		int row_number = Integer.parseInt(data.get("row"));
+
+		List<String> row = getRowValues(row_number);
+
+		// Edit row
+		editRow(row_number);
+
+		// Update code value with new value
+		type("dept_code_value_XPATH", data.get("new code"));
+
+		type("dept_name_value_XPATH", data.get("new name"));
+
+		// Click save butotn
+		click("lcnts_save_button_XPATH");
+
+		// Verify record is updated
+		verifyRecordSave();
+
+	}
+
 
 }

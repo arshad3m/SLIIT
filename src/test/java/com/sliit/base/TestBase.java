@@ -669,6 +669,8 @@ public class TestBase {
 	 * @throws InterruptedException 
 	 */
 	public static void editRow(int row_number) throws InterruptedException {
+		
+		Thread.sleep(3000);
 		String xpath=OR.getProperty("row_ellipsis_XPATH")+"["+row_number+"]";
 		
 		//click(xpath);

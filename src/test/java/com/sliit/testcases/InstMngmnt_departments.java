@@ -60,7 +60,7 @@ public class InstMngmnt_departments extends TestBase{
 
 		verifyRecordSave();
 		
-		verifyTableDescendingOrder("DEPT");
+		verifyTableDescendingOrder("Auto_DEPT");
 
 
 	}

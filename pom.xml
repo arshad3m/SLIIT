@@ -105,8 +105,19 @@
 			<version>3.6</version>
 		</dependency>
 
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>6.0.6 </version>
+		</dependency>
 
 
+		<!-- https://mvnrepository.com/artifact/org.apache.ibatis/ibatis-sqlmap -->
+		<dependency>
+			<groupId>org.apache.ibatis</groupId>
+			<artifactId>ibatis-sqlmap</artifactId>
+			<version>3.0-beta-6</version>
+		</dependency>
 
 
 	</dependencies>

@@ -2,10 +2,17 @@ package com.sliit.base;
 
 import static org.testng.Assert.assertTrue;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,6 +20,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -42,6 +50,12 @@ import com.sliit.utilities.ExcelReader;
 import com.sliit.utilities.ExtentManager;
 import com.sliit.utilities.TestUtil;
 
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
 /**
  * @author ArshadM
  *
@@ -70,10 +84,13 @@ public class TestBase {
 	/**
 	 * @author ArshadM initiating file input streams initiating browser driver
 	 *         inititating configurations initiating reports intitiating logs
+	 * @throws ClassNotFoundException 
 	 */
 
 	@BeforeSuite
-	public void setUp() {
+	public void setUp() throws ClassNotFoundException {
+		
+		
 
 		if (driver == null) {
 
@@ -106,6 +123,9 @@ public class TestBase {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			//clear db tables
+			clearDBScript();
 
 			if (System.getenv("browser") != null && !System.getenv("browser").isEmpty()) {
 
@@ -990,6 +1010,28 @@ public class TestBase {
 			click("confirm_inactivation_XPATH");
 		}
 	}
+	
+	
+
+	
+	/**
+	 * @author Arshad 
+	 * Clears the DB tables 
+	 * Tables are mentioned in the script
+	 * 
+	 */
+	public static void clearDBScript() {
+		String script = "src/test/resources/properties/db-delete-test-automation-records.sql";
+		try {
+			//Class.forName("com.mysql.jdbc.Driver");
+			new ScriptRunner(DriverManager.getConnection(config.getProperty("databaseurl"),config.getProperty("db_username"),config.getProperty("db_password")))
+					.runScript(new BufferedReader(new FileReader(script)));
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+	}
+
+
 
 	@AfterSuite
 	public void tearDown() {

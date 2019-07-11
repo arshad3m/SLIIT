@@ -120,7 +120,7 @@ public class InstMngmt_locations extends TestBase {
 		editRow(4);
 		
 		//Update code value with new value
-		type("lcnts_code_value_XPATH","Matara branch");
+		type("lcnts_code_value_XPATH","Auto_Matara branch");
 		
 		//Click save butotn
 		click("lcnts_save_button_XPATH");

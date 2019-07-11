@@ -54,7 +54,7 @@ public class InstMngmt_locations extends TestBase {
 		verifyRecordSave();
 		
 		//Verify table records are in descending order
-		verifyTableDescendingOrder("LOC");
+		verifyTableDescendingOrder("Auto_LOC");
 
 		
 	}

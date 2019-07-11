@@ -69,7 +69,7 @@ public class InstMngmt_centers extends TestBase {
 
 		verifyRecordSave();
 		
-		verifyTableDescendingOrder("CENTER");
+		verifyTableDescendingOrder("Auto_CENTER");
 
 
 	}

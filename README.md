@@ -9,6 +9,9 @@ Steps to run the test:
 5) Find the execution results in: target/surefire-reports/html/extent.html#!
 
 PS: If report contents are not showing properly,
+
 a) Type 'about:config' in address bar and search for property called 'security.csp.enable'.
+
 b) Set above property ('security.csp.enable') value to false.
+
 c) Refresh page.

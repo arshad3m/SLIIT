@@ -530,7 +530,7 @@ public class TestBase {
 			codes.add(list.get(i).getAttribute("innerText"));
 		}
 
-		if (list.size() > 10 || list.size()==9) {
+		if (list.size() >= 10 || list.size()==9) {
 
 		int	number_of_pages = Integer.parseInt(
 					driver.findElement(By.xpath(OR.getProperty("page_count_XPATH"))).getAttribute("innerText"));
@@ -549,6 +549,65 @@ public class TestBase {
 
 			}
 			
+			Thread.sleep(3000);
+			click("first_page_XPATH");
+			Thread.sleep(3000);
+
+		}
+
+		return codes;
+
+	}
+	
+	
+	
+	/**
+	 * @author ArshadM Navigate to newly openened tab
+	 * Retrive the all the ACTIVE values in the given column into a list
+	 * If there are more than 1 page, it would go to each page and read the values
+	 */
+	public static List<String> getActiveColumnValues(int column_number, int column_number_for_status) throws InterruptedException {
+
+		String column = OR.getProperty("list_column_XPATH") + "[" + column_number + "]";
+
+		String status_column = OR.getProperty("list_column_XPATH") + "[" + column_number_for_status + "]";
+
+		// Read listed elements in the first page into a list
+		List<WebElement> list = driver.findElements(By.xpath(column));
+
+		List<WebElement> status_list = driver.findElements(By.xpath(status_column));
+
+		// Derive the codes in the elements and store in a seperate list
+		List<String> codes = new ArrayList<String>();
+		for (int i = 0; i < list.size(); i++) {
+
+			if (status_list.get(i).getAttribute("innerText").equals("Active")) {
+				codes.add(list.get(i).getAttribute("innerText"));
+			}
+		}
+
+		if (list.size() >= 10 || list.size() == 9) {
+
+			int number_of_pages = Integer.parseInt(
+					driver.findElement(By.xpath(OR.getProperty("page_count_XPATH"))).getAttribute("innerText"));
+
+			// Do the above the remaining pages
+			for (int j = 0; j < number_of_pages - 1; j++) {
+				click("next_page_XPATH");
+
+				Thread.sleep(3000);
+
+				list = driver.findElements(By.xpath(column));
+				status_list = driver.findElements(By.xpath(status_column));
+
+				for (int i = 0; i < list.size(); i++) {
+					if (status_list.get(i).getAttribute("innerText").equals("Active")) {
+						codes.add(list.get(i).getAttribute("innerText"));
+					}
+				}
+
+			}
+
 			Thread.sleep(3000);
 			click("first_page_XPATH");
 			Thread.sleep(3000);

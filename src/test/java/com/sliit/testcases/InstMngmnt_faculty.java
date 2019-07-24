@@ -18,7 +18,7 @@ import com.sliit.utilities.TestUtil;
 
 public class InstMngmnt_faculty extends TestBase{
 	
-	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
+	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
 	public void add_new_faculty(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -58,7 +58,7 @@ public class InstMngmnt_faculty extends TestBase{
 
 	}
 	
-	@Test(enabled=true)
+	@Test(enabled=false)
 	public void verify_values_in_centers_dropdown() throws InterruptedException {
 		
 		click("inst_management_XPATH");
@@ -107,6 +107,26 @@ public class InstMngmnt_faculty extends TestBase{
 			
 		}
 		
+	}
+	
+	@Test(enabled=true)
+	public void search_faculty() throws InterruptedException, IOException {
+		
+		//Click institute managment
+		click("inst_management_XPATH");
+
+		//Click locations
+		click("faculty_XPATH");
+
+		Thread.sleep(3000);
+
+		String keyword = "FCT00";
+
+		//Enter serach keyword in the searchbox
+		search("search_box_XPATH", keyword);
+
+		//Verify search results
+		verifySearchResults(2, keyword);
 	}
 
 }

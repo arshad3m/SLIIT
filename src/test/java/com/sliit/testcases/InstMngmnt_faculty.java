@@ -18,7 +18,7 @@ import com.sliit.utilities.TestUtil;
 
 public class InstMngmnt_faculty extends TestBase{
 	
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
 	public void add_new_faculty(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -58,7 +58,7 @@ public class InstMngmnt_faculty extends TestBase{
 
 	}
 	
-	@Test(enabled=false)
+	@Test(enabled=true)
 	public void verify_values_in_centers_dropdown() throws InterruptedException {
 		
 		click("inst_management_XPATH");

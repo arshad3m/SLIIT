@@ -43,8 +43,8 @@ public class InstMngmt_awarding_institute extends TestBase {
 
 	}
 	
-	@Test(enabled =false,priority=2)
-	public void search_awarding_institute() throws InterruptedException, IOException {
+	@Test(enabled =true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
+	public void search_awarding_institute(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		//Click institute managment
 		click("inst_management_XPATH");
@@ -53,17 +53,16 @@ public class InstMngmt_awarding_institute extends TestBase {
 
 		Thread.sleep(3000);
 
-		String keyword = "b"; 
 
 		//Enter serach keyword in the searchbox
-		search("search_box_XPATH", keyword);
+		search("search_box_XPATH", data.get("keyword"));
 
 		//Verify search results
-		verifySearchResults(3, keyword);
+		verifySearchResults(3, data.get("keyword"));
 
 	}
 	
-	@Test(enabled =false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
+	@Test(enabled =true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
 	public void view_awarding_institutes(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {

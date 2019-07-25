@@ -109,7 +109,7 @@ public class InstMngmnt_faculty extends TestBase{
 		
 	}
 	
-	@Test(enabled=true)
+	@Test(enabled=true,priority = 3)
 	public void search_faculty() throws InterruptedException, IOException {
 		
 		//Click institute managment

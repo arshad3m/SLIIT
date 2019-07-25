@@ -28,13 +28,23 @@ public class InstMngmt_institute_details extends TestBase {
 		
 		click("inst_dtls_clear_XPATH");
 		
-		
+		Thread.sleep(2000);
 
 		type("inst_dtls_name_XPATH", data.get("name"));
+		
+		Thread.sleep(2000);
+
 
 		type("inst_dtls_address_XPATH", data.get("address"));
+		
+		Thread.sleep(2000);
+
 
 		type("inst_dtls_email_XPATH", data.get("email"));
+		Thread.sleep(2000);
+
+		
+		click("inst_dtls_minus_button_XPATH");
 
 		type("inst_dtls_telephone_XPATH", data.get("telephone"));
 		

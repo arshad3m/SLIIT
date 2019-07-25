@@ -821,13 +821,13 @@ public class TestBase {
 		
 		List<String> second_column=getColumnValues(2);
 		
-				
+		List<String> third_column=getColumnValues(3);		
 		try {
 		
 		for(int i=0;i<first_column.size();i++) {
 			
 	
-			if(first_column.get(i).toLowerCase().contains(search_keyword.toLowerCase())| second_column.get(i).toLowerCase().contains(search_keyword.toLowerCase())) {
+			if(first_column.get(i).toLowerCase().contains(search_keyword.toLowerCase())|| second_column.get(i).toLowerCase().contains(search_keyword.toLowerCase())|| third_column.get(i).toLowerCase().contains(search_keyword.toLowerCase())) {
 				
 				Assert.assertTrue(true);
 				

@@ -16,6 +16,8 @@
 			<class name="com.sliit.testcases.InstMngmt_centers" />
 			<class name="com.sliit.testcases.InstMngmnt_departments" />
 			<class name="com.sliit.testcases.InstMngmnt_faculty" />
+			<class name="com.sliit.testcases.InstMngmt_awarding_institute" />
+
 
 		</classes>
 	</test>

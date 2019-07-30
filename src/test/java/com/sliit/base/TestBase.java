@@ -942,6 +942,30 @@ public class TestBase {
 	}
 	
 	
+	
+	/**
+	 * @author ArshadM 
+	 * Click filter icon on given column
+	 * and enter keyword in the search box
+	 * @throws InterruptedException 
+	 */
+
+	public void filter(int col_number, String keyword) throws InterruptedException {
+		
+		Thread.sleep(3000);
+		
+		String filter_xapth=OR.getProperty("filter_XPATH")+"["+col_number+"]";
+		
+		WebElement element= driver.findElement(By.xpath(filter_xapth));
+		
+		click(element);
+		
+		
+		type("filter_searchbox_XPATH",keyword);
+		
+		Thread.sleep(4000);
+	}
+	
 
 	/**
 	 * @author ArshadM Close newly opened tab

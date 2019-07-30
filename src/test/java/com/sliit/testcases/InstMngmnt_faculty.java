@@ -128,5 +128,30 @@ public class InstMngmnt_faculty extends TestBase{
 		//Verify search results
 		verifySearchResults(2, keyword);
 	}
+	
+	
+	@Test(enabled=true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
+	public void filter_faculty(Hashtable<String, String> data) throws InterruptedException, IOException {
+		
+		//Click institute managment
+		click("inst_management_XPATH");
+
+		//Click locations
+		click("faculty_XPATH");
+		
+		//Pass column number and search keyword
+		filter(Integer.parseInt(data.get("column")),data.get("keyword"));
+		
+		List<String> vals= getColumnValues(Integer.parseInt(data.get("column")));
+		
+		for(int i=0; i<vals.size();i++) {
+			
+			verifyContains(vals.get(i), data.get("keyword"));
+		}
+		
+		
+		
+		
+	}
 
 }

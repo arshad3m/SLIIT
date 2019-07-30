@@ -54,7 +54,7 @@ public class InstMngmt_awarding_institute extends TestBase {
 		Thread.sleep(3000);
 
 
-		//Enter serach keyword in the searchbox
+		//Enter search keyword in the searchbox
 		search("search_box_XPATH", data.get("keyword"));
 
 		//Verify search results
@@ -96,4 +96,40 @@ public class InstMngmt_awarding_institute extends TestBase {
 
 	}
 	
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
+	public void edit_awarding_institute(Hashtable<String, String> data) throws InterruptedException, IOException {
+
+		if (!data.get("runmode").equals("Y")) {
+
+			throw new SkipException("Skipping the test case as the Run mode for data set is NO");
+		}
+
+		// Click institute management
+		click("inst_management_XPATH");
+
+		// Click centers
+		click("awrd_institute_XPATH");
+
+		// Retrieve 5th row values before opening it to view
+
+		int row_number = Integer.parseInt(data.get("row"));
+
+		List<String> row = getRowValues(row_number);
+
+		// Edit row
+		editRow(row_number);
+
+		// Update code value with new value
+		type("awrd_inst_code_value_XPATH", data.get("new code"));
+
+		type("awrd_inst_name_value_XPATH", data.get("new name"));
+
+		// Click save button
+		click("awrd_inst_save_XPATH");
+
+		// Verify record is updated
+		verifyRecordSave();
+
+	}
+
 }

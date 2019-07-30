@@ -133,6 +133,11 @@ public class InstMngmnt_faculty extends TestBase{
 	@Test(enabled=true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
 	public void filter_faculty(Hashtable<String, String> data) throws InterruptedException, IOException {
 		
+		if (!data.get("runmode").equals("Y")) {
+
+			throw new SkipException("Skipping the test case as the Run mode for data set is NO");
+		}
+		
 		//Click institute managment
 		click("inst_management_XPATH");
 

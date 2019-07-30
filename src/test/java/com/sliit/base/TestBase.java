@@ -530,7 +530,7 @@ public class TestBase {
 			codes.add(list.get(i).getAttribute("innerText"));
 		}
 
-		if (list.size() >= 10 || list.size()==9) {
+		if (list.size() > 10 ) {
 
 		int	number_of_pages = Integer.parseInt(
 					driver.findElement(By.xpath(OR.getProperty("page_count_XPATH"))).getAttribute("innerText"));

@@ -530,7 +530,7 @@ public class TestBase {
 			codes.add(list.get(i).getAttribute("innerText"));
 		}
 
-		if (list.size() >= 10 || list.size()==9) {
+		if (list.size() > 10 ) {
 
 		int	number_of_pages = Integer.parseInt(
 					driver.findElement(By.xpath(OR.getProperty("page_count_XPATH"))).getAttribute("innerText"));
@@ -941,6 +941,30 @@ public class TestBase {
 		verifyContains(message_after_save, "successfully!");
 	}
 	
+	
+	
+	/**
+	 * @author ArshadM 
+	 * Click filter icon on given column
+	 * and enter keyword in the search box
+	 * @throws InterruptedException 
+	 */
+
+	public void filter(int col_number, String keyword) throws InterruptedException {
+		
+		Thread.sleep(3000);
+		
+		String filter_xapth=OR.getProperty("filter_XPATH")+"["+col_number+"]";
+		
+		WebElement element= driver.findElement(By.xpath(filter_xapth));
+		
+		click(element);
+		
+		
+		type("filter_searchbox_XPATH",keyword);
+		
+		Thread.sleep(4000);
+	}
 	
 
 	/**

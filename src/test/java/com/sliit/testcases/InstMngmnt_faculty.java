@@ -108,25 +108,21 @@ public class InstMngmnt_faculty extends TestBase{
 		}
 		
 	}
-	
-	@Test(enabled=true,priority = 3)
-	public void search_faculty() throws InterruptedException, IOException {
-		
-		//Click institute managment
+	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=3)
+	public void search_faculty(Hashtable<String, String> data) throws InterruptedException, IOException {
+
+		//Click institute management
 		click("inst_management_XPATH");
 
-		//Click locations
-		click("faculty_XPATH");
+		click("document_type_XPATH");
 
 		Thread.sleep(3000);
 
-		String keyword = "FCT00";
-
-		//Enter serach keyword in the searchbox
-		search("search_box_XPATH", keyword);
+		//Enter search keyword in the search box
+		search("search_box_XPATH", data.get("keyword"));
 
 		//Verify search results
-		verifySearchResults(2, keyword);
-	}
+		verifySearchResults(4, data.get("keyword"));
 
+	}
 }

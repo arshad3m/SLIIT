@@ -59,24 +59,21 @@ public class InstMngmt_locations extends TestBase {
 		
 	}
 
-	@Test(enabled = true,priority=2)
-	public void search_locations() throws InterruptedException, IOException {
+	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
+	public void search_locations(Hashtable<String, String> data) throws InterruptedException, IOException {
 
-		//Click institute managment
+		//Click institute management
 		click("inst_management_XPATH");
 
-		//Click locations
-		click("locations_XPATH");
+		click("document_type_XPATH");
 
 		Thread.sleep(3000);
 
-		String keyword = "kandy";
-
-		//Enter serach keyword in the searchbox
-		search("lcnts_searchbox_XPATH", keyword);
+		//Enter search keyword in the search box
+		search("search_box_XPATH", data.get("keyword"));
 
 		//Verify search results
-		verifySearchResults(2, keyword);
+		verifySearchResults(4, data.get("keyword"));
 
 	}
 

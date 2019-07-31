@@ -66,24 +66,21 @@ public class InstMngmnt_departments extends TestBase{
 	}
 	
 	
-	@Test(enabled = true,priority=2)
-	public void search_departments() throws InterruptedException, IOException {
+	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
+	public void search_departments(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		//Click institute managment
 		click("inst_management_XPATH");
 
-		//Click locations
-		click("departments_XPATH");
+		click("document_type_XPATH");
 
 		Thread.sleep(3000);
 
-		String keyword = "Networking";
-
-		//Enter serach keyword in the searchbox
-		search("search_box_XPATH", keyword);
+		//Enter search keyword in the search box
+		search("search_box_XPATH", data.get("keyword"));
 
 		//Verify search results
-		verifySearchResults(2, keyword);
+		verifySearchResults(5, data.get("keyword"));
 
 	}
 	

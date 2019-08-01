@@ -108,7 +108,7 @@ public class InstMngmnt_faculty extends TestBase{
 		}
 		
 	}
-	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=3)
+	@Test(enabled =true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=3)
 	public void search_faculty(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		//Click institute management

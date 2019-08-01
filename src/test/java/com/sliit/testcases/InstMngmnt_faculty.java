@@ -114,7 +114,7 @@ public class InstMngmnt_faculty extends TestBase{
 		//Click institute management
 		click("inst_management_XPATH");
 
-		click("document_type_XPATH");
+		click("faculty_XPATH");
 
 		Thread.sleep(3000);
 

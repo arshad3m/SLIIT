@@ -65,7 +65,7 @@ public class InstMngmt_locations extends TestBase {
 		//Click institute management
 		click("inst_management_XPATH");
 
-		click("document_type_XPATH");
+		click("locations_XPATH");
 
 		Thread.sleep(3000);
 
@@ -73,7 +73,7 @@ public class InstMngmt_locations extends TestBase {
 		search("search_box_XPATH", data.get("keyword"));
 
 		//Verify search results
-		verifySearchResults(4, data.get("keyword"));
+		verifySearchResults(3, data.get("keyword"));
 
 	}
 

@@ -14,22 +14,20 @@ import com.sliit.utilities.TestUtil;
 
 public class InstMngmt_centers extends TestBase {
 
-	@Test(enabled = true, priority = 2)
-	public void search_centers_by_id() throws InterruptedException, IOException {
-
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 2)
+	public void search_centers(Hashtable<String, String> data) throws InterruptedException, IOException {
+		
 		click("inst_management_XPATH");
 
 		click("centers_XPATH");
 
 		Thread.sleep(3000);
 
-		String keyword = "library";
-
-		// Enter serach keyword in the searchbox
-		search("lcnts_searchbox_XPATH", keyword);
+		// Enter search keyword in the search box
+		search("lcnts_searchbox_XPATH",data.get("keyword"));
 
 		// Verify search results
-		verifySearchResults(2, keyword);
+		verifySearchResults(4, data.get("keyword"));
 
 	}
 

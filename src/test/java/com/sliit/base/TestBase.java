@@ -164,8 +164,7 @@ public class TestBase {
 			action = new Actions(driver);
 		}
 
-	}
-
+	}	
 	/**
 	 * @author ArshadM Wrapper mehtod to click on an element
 	 */
@@ -819,11 +818,12 @@ public class TestBase {
 			columnValues.addAll(getColumnValues(i));
 		}
 		try {
-			int resultsfound=0,rowCount=(columnValues.size()/how_many_columns);
+			int resultsfound,rowCount=(columnValues.size()/how_many_columns);
 			
 			//traverse along each row in the search results
 			for(int i=0;i<rowCount;i++)
 			{
+				resultsfound=0;
 				//traverse along the ith record
 				for(int nextValue=i; nextValue<columnValues.size(); nextValue=nextValue+rowCount) {
 					if(columnValues.get(nextValue).toLowerCase().contains(search_keyword.toLowerCase())) {

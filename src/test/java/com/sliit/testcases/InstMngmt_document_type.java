@@ -48,7 +48,7 @@ public class InstMngmt_document_type extends TestBase{
 
 	}
 	
-	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
+	@Test(enabled =true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
 	public void search_document_type(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		//Click institute managment
@@ -66,7 +66,7 @@ public class InstMngmt_document_type extends TestBase{
 
 	}
 	
-	@Test(enabled =false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
+	@Test(enabled =true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
 	public void view_document_type(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -100,7 +100,7 @@ public class InstMngmt_document_type extends TestBase{
 
 	}
 	
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
 	public void edit_document_type(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {

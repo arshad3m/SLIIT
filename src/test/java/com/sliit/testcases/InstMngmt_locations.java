@@ -127,5 +127,35 @@ public class InstMngmt_locations extends TestBase {
 		
 
 	}
+	
+	
+	@Test(enabled=true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
+	public void filter_locations(Hashtable<String, String> data) throws InterruptedException, IOException {
+		
+		if (!data.get("runmode").equals("Y")) {
+
+			throw new SkipException("Skipping the test case as the Run mode for data set is NO");
+		}
+		
+		//Click institute managment
+		click("inst_management_XPATH");
+
+		//Click locations
+		click("locations_XPATH");
+		
+		//Pass column number and search keyword
+		filter(Integer.parseInt(data.get("column")),data.get("keyword"));
+		
+		List<String> vals= getColumnValues(Integer.parseInt(data.get("column")));
+		
+		for(int i=0; i<vals.size();i++) {
+			
+			verifyContains(vals.get(i), data.get("keyword"));
+		}
+		
+		
+		
+		
+	}
 
 }

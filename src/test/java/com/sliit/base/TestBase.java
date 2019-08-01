@@ -85,10 +85,11 @@ public class TestBase {
 	 * @author ArshadM initiating file input streams initiating browser driver
 	 *         inititating configurations initiating reports intitiating logs
 	 * @throws ClassNotFoundException 
+	 * @throws InterruptedException 
 	 */
 
 	@BeforeSuite
-	public void setUp() throws ClassNotFoundException {
+	public void setUp() throws ClassNotFoundException, InterruptedException {
 
 		if (driver == null) {
 
@@ -157,9 +158,16 @@ public class TestBase {
 
 			driver.get(config.getProperty("testsiteurl"));
 			log.debug("Navigated to : " + config.getProperty("testsiteurl"));
+			
+			
 			driver.manage().window().maximize();
 			driver.manage().timeouts().implicitlyWait(Integer.parseInt(config.getProperty("implicit.wait")),
 					TimeUnit.SECONDS);
+			
+			login();
+			log.debug("User login done !!!");
+
+			
 			wait = new WebDriverWait(driver, 25);
 			action = new Actions(driver);
 		}
@@ -1110,6 +1118,24 @@ public class TestBase {
 		} catch (Exception e) {
 			System.err.println(e);
 		}
+	}
+	
+	
+	/**
+	 * @throws InterruptedException 
+	 * @authoer Arshad
+	 * Login functionality
+	 */
+	public static void login() throws InterruptedException {
+		
+		driver.findElement(By.xpath(OR.getProperty("username_XPATH"))).sendKeys(config.getProperty("username"));
+		
+		driver.findElement(By.xpath(OR.getProperty("password_XPATH"))).sendKeys(config.getProperty("password"));
+
+		driver.findElement(By.xpath(OR.getProperty("sign-in_XPATH"))).click();
+		
+		Thread.sleep(5000);
+
 	}
 
 

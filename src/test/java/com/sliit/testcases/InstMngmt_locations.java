@@ -59,7 +59,7 @@ public class InstMngmt_locations extends TestBase {
 		
 	}
 
-	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
+	@Test(enabled =true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
 	public void search_locations(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		//Click institute management

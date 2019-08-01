@@ -62,6 +62,12 @@ public class InstMngmt_locations extends TestBase {
 	@Test(enabled =true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
 	public void search_locations(Hashtable<String, String> data) throws InterruptedException, IOException {
 
+		if (!data.get("runmode").equals("Y")) {
+
+			throw new SkipException("Skipping the test case as the Run mode for data set is NO");
+		}
+		
+		
 		//Click institute management
 		click("inst_management_XPATH");
 

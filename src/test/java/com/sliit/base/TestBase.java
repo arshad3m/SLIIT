@@ -535,7 +535,7 @@ public class TestBase {
 			codes.add(list.get(i).getAttribute("innerText"));
 		}
 
-		if (list.size() > 10 ) {
+		if (list.size() > 10 || driver.findElements( By.xpath(OR.getProperty("page_count_XPATH")) ).size() != 0) {
 
 		int	number_of_pages = Integer.parseInt(
 					driver.findElement(By.xpath(OR.getProperty("page_count_XPATH"))).getAttribute("innerText"));
@@ -564,6 +564,28 @@ public class TestBase {
 
 	}
 	
+	
+	/**
+	 * @author ArshadM Navigate to newly openened tab
+	 * Retrive the all the values in the given column into a list on the first page only
+	 */
+	public static List<String> getColumnValues(int column_number, boolean first_page_only) throws InterruptedException {
+
+		String column=OR.getProperty("list_column_XPATH")+"["+column_number+"]";
+
+		// Read listed elements in the first page into a list
+		List<WebElement> list = driver.findElements(By.xpath(column));
+
+		// Derive the codes in the elements and store in a seperate list
+		List<String> codes = new ArrayList<String>();
+		for (int i = 0; i < list.size(); i++) {
+			codes.add(list.get(i).getAttribute("innerText"));
+		}
+
+
+		return codes;
+
+	}
 	
 	
 	/**
@@ -836,6 +858,7 @@ public class TestBase {
 				for(int nextValue=i; nextValue<columnValues.size(); nextValue=nextValue+rowCount) {
 					if(columnValues.get(nextValue).toLowerCase().contains(search_keyword.toLowerCase())) {
 						resultsfound++;
+						test.log(LogStatus.INFO,  "search keyword:"+search_keyword + " found in "+(i+1)+"th row");
 						break;
 					}				
 				}
@@ -872,7 +895,7 @@ public class TestBase {
 	 */
 	public static void verifyTableDescendingOrder(String column_prefix) throws IOException, InterruptedException {
 		
-		test.log(LogStatus.INFO, "Verifying descending order of the first 5 records of the first column: "); 
+		test.log(LogStatus.INFO, "Verifying descending order of the records of the first column (first page only): "); 
 		
 		try {
 			if (getRecordCountForTable() > 0)
@@ -894,7 +917,7 @@ public class TestBase {
 			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
 		}
 		
-		List<String> first_column = getColumnValues(1);
+		List<String> first_column = getColumnValues(1,true);
 		List<Integer> column_values = new ArrayList<Integer>();
 		
 		try {

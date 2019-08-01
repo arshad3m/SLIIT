@@ -89,8 +89,6 @@ public class TestBase {
 
 	@BeforeSuite
 	public void setUp() throws ClassNotFoundException {
-		
-		
 
 		if (driver == null) {
 
@@ -166,8 +164,7 @@ public class TestBase {
 			action = new Actions(driver);
 		}
 
-	}
-
+	}	
 	/**
 	 * @author ArshadM Wrapper mehtod to click on an element
 	 */
@@ -790,13 +787,10 @@ public class TestBase {
 	 * - Verify search results are more than 0
 	 * - Read all the values in the given number of columns
 	 * - Go through each row and make sure the search keyword is availale in any of the column
+	 * - updated to facilitate varying number of columns
 	 */
 	public static void verifySearchResults(int how_many_columns, String search_keyword) throws IOException, InterruptedException {
 		
-	//	verifyGreaterThan(getRecordCountForTable(), 0);
-		
-		test.log(LogStatus.INFO, "Verifying Search keyword: " + search_keyword + " in the listed records"); 
-			
 		try {
 			if (getRecordCountForTable() > 0)
 				Assert.assertTrue(true);
@@ -816,31 +810,37 @@ public class TestBase {
 			test.log(LogStatus.FAIL, " No records found in the table : " + t.getMessage());
 			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
 		}
-		
-		List<String> first_column=getColumnValues(1);
-		
-		List<String> second_column=getColumnValues(2);
-		
-		List<String> third_column=getColumnValues(3);		
-		try {
-		
-		for(int i=0;i<first_column.size();i++) {
-			
-	
-			if(first_column.get(i).toLowerCase().contains(search_keyword.toLowerCase())|| second_column.get(i).toLowerCase().contains(search_keyword.toLowerCase())|| third_column.get(i).toLowerCase().contains(search_keyword.toLowerCase())) {
-				
-				Assert.assertTrue(true);
-				
-			} 
-		
-			else {
-				test.log(LogStatus.INFO,  search_keyword + " does'nt exists in row: "+first_column.get(i));
-				assertTrue(false);
-				
-			}
+
+		List<String> columnValues=new ArrayList<String>();
+		//Add all records to one list
+		for(int i=1;i<=how_many_columns;i++)
+		{
+			columnValues.addAll(getColumnValues(i));
 		}
-		
-		} catch (Throwable t) {
+		try {
+			int resultsfound,rowCount=(columnValues.size()/how_many_columns);
+			
+			//traverse along each row in the search results
+			for(int i=0;i<rowCount;i++)
+			{
+				resultsfound=0;
+				//traverse along the ith record
+				for(int nextValue=i; nextValue<columnValues.size(); nextValue=nextValue+rowCount) {
+					if(columnValues.get(nextValue).toLowerCase().contains(search_keyword.toLowerCase())) {
+						resultsfound++;
+						break;
+					}				
+				}
+				if(resultsfound>0) {
+					assertTrue(true);
+				}
+				else {
+					test.log(LogStatus.INFO,  search_keyword + " doesn't exist");
+					assertTrue(false);
+				}
+			}
+			
+		}catch (Throwable t) {
 
 			TestUtil.captureScreenshot();
 			// ReportNG
@@ -854,9 +854,7 @@ public class TestBase {
 			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
 
 		}
-
 	}
-	
 	/**
 	 * @author ArshadM 
 	 * This method will verify following:

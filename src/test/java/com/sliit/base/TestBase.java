@@ -410,7 +410,7 @@ public class TestBase {
 	public static void verifyContains(String text, String word) throws IOException {
 		try {
 
-			assertTrue(text.contains(word));
+			assertTrue(text.toLowerCase().contains(word.toLowerCase()));
 			test.log(LogStatus.INFO, "Asserting " + text + "contains: " + word);
 
 		} catch (Throwable t) {

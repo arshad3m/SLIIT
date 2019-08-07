@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -86,10 +87,11 @@ public class TestBase {
 	 *         inititating configurations initiating reports intitiating logs
 	 * @throws ClassNotFoundException 
 	 * @throws InterruptedException 
+	 * @throws IOException 
 	 */
 
 	@BeforeSuite
-	public void setUp() throws ClassNotFoundException, InterruptedException {
+	public void setUp() throws ClassNotFoundException, InterruptedException, IOException {
 
 		if (driver == null) {
 
@@ -1146,10 +1148,11 @@ public class TestBase {
 	
 	/**
 	 * @throws InterruptedException 
+	 * @throws IOException 
 	 * @authoer Arshad
 	 * Login functionality
 	 */
-	public static void login() throws InterruptedException {
+	public static void login() throws InterruptedException, IOException {
 		
 		driver.findElement(By.xpath(OR.getProperty("username_XPATH"))).sendKeys(config.getProperty("username"));
 		
@@ -1157,12 +1160,35 @@ public class TestBase {
 
 		driver.findElement(By.xpath(OR.getProperty("sign-in_XPATH"))).click();
 		
-		Thread.sleep(5000);
+		Thread.sleep(3000);
+
 
 	}
+	/**
+	 * @throws InterruptedException 
+	 * @throws IOException 
+	 * @authoer Jayashani
+	 * Logout functionality
+	 */
+	public static void logout() throws InterruptedException, IOException {
+		
+		driver.findElement(By.xpath(OR.getProperty("profile_XAPTH"))).click();;
+		
+		driver.findElement(By.xpath(OR.getProperty("logout_XPATH"))).click();;
 
+		String message_after_save = getTextOfElement("logout_success_message_XPATH");
+		
+		verifyContains(message_after_save, "successfully!");
 
-
+	}
+	
+	@AfterSuite
+	public void userLogout() throws InterruptedException, IOException {
+		logout();
+		Thread.sleep(3000);
+		log.debug("User successfully loggedout of the system!");
+		
+	}
 	@AfterSuite
 	public void tearDown() {
 
@@ -1172,7 +1198,6 @@ public class TestBase {
 
 		log.debug("test execution completed !!!");
 	}
-
 	@BeforeMethod
 	public void beforeTest() throws InterruptedException {
 		closeNewTab();

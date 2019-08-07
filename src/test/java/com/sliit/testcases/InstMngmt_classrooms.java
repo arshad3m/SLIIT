@@ -12,7 +12,7 @@ import com.sliit.utilities.TestUtil;
 
 public class InstMngmt_classrooms extends TestBase {
 
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
 	public void add_new_classrooms(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -26,43 +26,49 @@ public class InstMngmt_classrooms extends TestBase {
 
 		Thread.sleep(3000);
 
-		click("clear_changes_XPATH");
+		click("clssrm_create_new_XPATH");
 		
 		Thread.sleep(3000);
-		//Click clear button
-		click("lcnts_clear_changes_XPATH");
 
 		type("clssrm_code_XPATH", data.get("code"));
 
 		type("clssrm_name_XPATH", data.get("name"));
-		
+
+		//Select class type from the dropdown
+		click("clssrm_type_XPATH");
+		type("clssrm_type_type_XPATH", data.get("type"));
+		click("clssrm_type_dd_value_XPATH");
+
 		//Add Study capacity and Exam capacity
 		type("clssrm_study_capacity_XPATH", data.get("study capacity"));
 		type("clssrm_exam_capacity_XPATH", data.get("exam capacity"));
-		
+
 		//Select center from dropdown
+		Thread.sleep(3000);
 		click("clssrm_center_XPATH");
-		Thread.sleep(3000);
 		type("clssrm_type_center_XPATH", data.get("center"));
-		
-		//Select Faculty from dropdown
-		click("clssrm_faculty_XPATH");
 		Thread.sleep(3000);
-		type("clssrm_type_faculty_XPATH", data.get("faculty"));
+		click("clssrm_center_dd_value_XPATH");
 		
-		//set status
+		//Select Faculty from drop-down
+		Thread.sleep(3000);
+		click("clssrm_faculty_XPATH");
+		type("clssrm_type_faculty_XPATH", data.get("faculty"));
+		Thread.sleep(3000);
+		click("clssrm_faculty_dd_value_XPATH");
+		
 		setStatus("clssrm_status_XPATH", data.get("status"));
 
 		click("clssrm_save_XPATH");
 
 		verifyRecordSave();
 		
-		verifyTableDescendingOrder("Auto_CR");
+		verifyTableDescendingOrder("Auto_CR_R-");
 
 
 	}
 	
-	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
+	@Test(enabled =true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
 	public void search_classrooms(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		//Click institute management
@@ -80,7 +86,7 @@ public class InstMngmt_classrooms extends TestBase {
 
 	}
 	
-	@Test(enabled =false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
+	@Test(enabled =true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
 	public void view_classrooms(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -91,7 +97,7 @@ public class InstMngmt_classrooms extends TestBase {
 		// Click institute management
 		click("inst_management_XPATH");
 
-		// Click departments
+		// Click classrooms
 		click("classroom_XPATH");
 
 		int row_number = Integer.parseInt(data.get("row"));
@@ -102,31 +108,38 @@ public class InstMngmt_classrooms extends TestBase {
 		// Click and view (row_number)
 		viewRow(row_number);
 
-		// verify code
+	// verify code
 		verifyViewRowValues(row.get(0), "clssrm_code_value_XPATH");
 
 		// verify name
 		verifyViewRowValues(row.get(1), "clssrm_name_value_XPATH");
 		
-		//verify center
-		verifyViewRowValues(row.get(2), "clssrm_center_value_XPATH");
-		
-		//verify faculty
-		verifyViewRowValues(row.get(2), "clssrm_faculty_value_XPATH");
+		//verify type
+		verifyViewRowValues(row.get(2), "clssrm_type_value_XPATH");
 		
 		//verify study capacity
-		verifyViewRowValues(row.get(2), "clssrm_study_capacity_value_XPATH");
-		
+		verifyViewRowValues(row.get(5), "clssrm_study_capacity_value_XPATH");
+				
 		//verify exam capacity
-		verifyViewRowValues(row.get(2), "clssrm_exam_capacity_value_XPATH");		
+		verifyViewRowValues(row.get(6), "clssrm_exam_capacity_value_XPATH");	
+				
+		//verify center
+		verifyViewRowValues(row.get(3), "clssrm_center_value_XPATH");
+		
+		//verify faculty
+		//verifyViewRowValues(row.get(4), "clssrm_faculty_value_XPATH");	
 		
 		//verify status
-		verifyViewRowValues(row.get(2), "clssrm_status_value_XPATH");
-
+		verifyViewRowValues(row.get(7), "clssrm_status_value_XPATH");
+		/*	
+			for(int i=0;i<8;i++)
+			{
+				System.out.println(row.get(i));
+			}*/
 
 	}
 	
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
 	public void edit_classrooms(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -137,7 +150,7 @@ public class InstMngmt_classrooms extends TestBase {
 		// Click institute management
 		click("inst_management_XPATH");
 
-		// Click centers
+		// Click classrooms
 		click("classroom_XPATH");
 
 		// Retrieve 5th row values before opening it to view
@@ -165,4 +178,31 @@ public class InstMngmt_classrooms extends TestBase {
 		verifyRecordSave();
 
 	}
+	@Test(enabled=true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
+	public void filter_classrooms(Hashtable<String, String> data) throws InterruptedException, IOException {
+		
+		if (!data.get("runmode").equals("Y")) {
+
+			throw new SkipException("Skipping the test case as the Run mode for data set is NO");
+		}
+		
+		
+		//Click institute managment
+		click("inst_management_XPATH");
+
+		//Click classrooms
+		click("classroom_XPATH");
+		
+		//Pass column number and search keyword
+		filter(Integer.parseInt(data.get("column")),data.get("keyword"));
+		
+		List<String> vals= getColumnValues(Integer.parseInt(data.get("column")));
+		
+		for(int i=0; i<vals.size();i++) {
+			
+			verifyContains(vals.get(i), data.get("keyword"));
+
+		}
+	}
+	
 }

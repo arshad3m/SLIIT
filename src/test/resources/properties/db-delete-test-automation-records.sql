@@ -33,5 +33,8 @@ where code like 'Auto_%';
 delete from sims.faculty
 where code like 'Auto_%';
 
+delete from sims.classroom
+where code like 'Auto_%';
+
 delete from sims.documentType
 where code like 'Auto_%';

@@ -31,7 +31,7 @@ public class InstMngmt_centers extends TestBase {
 
 	}
 
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
 	public void add_new_centers(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -72,7 +72,7 @@ public class InstMngmt_centers extends TestBase {
 
 	}
 
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
 	public void view_centers(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -108,7 +108,7 @@ public class InstMngmt_centers extends TestBase {
 
 	}
 
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
 	public void edit_centers(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -145,7 +145,7 @@ public class InstMngmt_centers extends TestBase {
 	}
 	
 	
-	@Test(enabled=false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
+	@Test(enabled=true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
 	public void filter_centers(Hashtable<String, String> data) throws InterruptedException, IOException {
 		
 		if (!data.get("runmode").equals("Y")) {

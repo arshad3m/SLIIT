@@ -50,6 +50,8 @@ public class InstMngmt_institute_details extends TestBase {
 		
 		click("inst_dtls_plus_button_XPATH");
 		
+		type("inst_dtls_skype_XPATH", data.get("skype"));
+		
 		//uploading a logo
 		upload("inst_dtls_upload_XPATH",data.get("logo"));
 

@@ -965,9 +965,13 @@ public class TestBase {
 	
 	public static void verifyRecordSave() throws InterruptedException, IOException {
 		
+	//	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("lcnts_success_message_XPATH"))));
+		
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("lcnts_success_message_XPATH"))));
+
 		String message_after_save = getTextOfElement("lcnts_success_message_XPATH");
 
-		Thread.sleep(3000);
+		//Thread.sleep(3000);
 
 		verifyContains(message_after_save, "successfully!");
 	}
@@ -1166,36 +1170,48 @@ public class TestBase {
 	 * @throws InterruptedException 
 	 * @throws IOException 
 	 * @authoer Jayashani
+	 * changed by arshad 
 	 * Logout functionality
 	 */
 	public static void logout() throws InterruptedException, IOException {
 		
-		driver.findElement(By.xpath(OR.getProperty("profile_XAPTH"))).click();;
 		
-		driver.findElement(By.xpath(OR.getProperty("logout_XPATH"))).click();;
-
-		String message_after_save = getTextOfElement("logout_success_message_XPATH");
+		WebElement element = driver.findElement(By.xpath(OR.getProperty("profile_XPATH")));
+		wait.until(ExpectedConditions.elementToBeClickable(element));
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].click();", element);
 		
-		verifyContains(message_after_save, "successfully!");
 
-	}
-	
-	@AfterSuite
-	public void userLogout() throws InterruptedException, IOException {
-		logout();
-		Thread.sleep(3000);
+		
+		element = driver.findElement(By.xpath(OR.getProperty("logout_XPATH")));
+		wait.until(ExpectedConditions.elementToBeClickable(element));
+		 js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].click();", element);
+		
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("logout_success_message_XPATH"))));
+		
 		log.debug("User successfully loggedout of the system!");
 		
-	}
-	@AfterSuite
-	public void tearDown() {
+		//String message_after_save = getTextOfElement("logout_success_message_XPATH");
+		
+		//verifyContains(message_after_save, "successfully!");
 
+	}
+
+	@AfterSuite
+	public void tearDown() throws InterruptedException, IOException {
+
+		logout();
+		
 		if (driver != null) {
 			driver.quit();
 		}
 
 		log.debug("test execution completed !!!");
 	}
+	
+	
 	@BeforeMethod
 	public void beforeTest() throws InterruptedException {
 		closeNewTab();

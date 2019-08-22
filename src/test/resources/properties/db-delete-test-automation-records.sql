@@ -23,14 +23,14 @@ where code like 'Auto_%';
 delete from sims.department
 where code like 'Auto_%';
 
+delete from sims.centerFaculty 
+where (centerFaculty.centerId in (select id from sims.center where code like 'Auto_%') AND centerFaculty.centerId <>0);
+
+delete from sims.centerFaculty
+where (centerFaculty.facultyId in (select id from sims.faculty where code like 'Auto_%') AND centerFaculty.facultyId <> 0);
+
 delete from sims.faculty
 where code like 'Auto_%';
-
-delete from sims.centerFaculty
-where centerFaculty.centerId in (select id from sims.center where code like 'Auto_%');
-
-delete from sims.centerFaculty
-where centerFaculty.facultyId in (select id from sims.faculty where code like 'Auto_%');
 
 delete from sims.center
 where code like 'Auto_%';

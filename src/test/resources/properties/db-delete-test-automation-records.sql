@@ -11,8 +11,19 @@
  * Modified By : <name>
  *
  */
- 
+ delete from sims.documentType
+where code like 'Auto_%';
+
+delete from sims.classroom
+where code like 'Auto_%';
+
 delete from sims.awardingInstitute
+where code like 'Auto_%';
+
+delete from sims.department
+where code like 'Auto_%';
+
+delete from sims.faculty
 where code like 'Auto_%';
 
 delete from sims.centerFaculty
@@ -27,14 +38,9 @@ where code like 'Auto_%';
 delete from sims.location
 where code like 'Auto_%';
 
-delete from sims.department
-where code like 'Auto_%';
 
-delete from sims.faculty
-where code like 'Auto_%';
 
-delete from sims.classroom
-where code like 'Auto_%';
 
-delete from sims.documentType
-where code like 'Auto_%';
+
+
+

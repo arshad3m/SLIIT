@@ -32,6 +32,13 @@ public class InstMngmt_awarding_institute extends TestBase {
 
 		type("awrd_inst_name_XPATH", data.get("name"));
 		
+		//Select country from dropdown
+		Thread.sleep(3000);
+		click("awrd_inst_country_XPATH");
+		type("awrd_inst_type_country_XPATH", data.get("country"));
+		Thread.sleep(3000);
+		click("awrd_inst_country_dd_value_XPATH");
+		
 		setStatus("awrd_inst_status_XPATH", data.get("status"));
 
 		click("awrd_inst_save_XPATH");
@@ -54,11 +61,11 @@ public class InstMngmt_awarding_institute extends TestBase {
 		Thread.sleep(3000);
 
 
-		//Enter search keyword in the searchbox
+		//Enter search keyword in the search box
 		search("search_box_XPATH", data.get("keyword"));
 
 		//Verify search results
-		verifySearchResults(3, data.get("keyword"));
+		verifySearchResults(4, data.get("keyword"));
 
 	}
 	
@@ -91,7 +98,7 @@ public class InstMngmt_awarding_institute extends TestBase {
 		verifyViewRowValues(row.get(1), "awrd_inst_name_value_XPATH");
 		
 		//verify status
-		verifyViewRowValues(row.get(2), "awrd_inst_status_value_XPATH");
+		verifyViewRowValues(row.get(3), "awrd_inst_status_value_XPATH");
 
 
 	}

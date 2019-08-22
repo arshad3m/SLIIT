@@ -144,6 +144,8 @@ public class InstMngmnt_faculty extends TestBase{
 		//Pass column number and search keyword
 		filter(Integer.parseInt(data.get("column")),data.get("keyword"));
 		
+		Thread.sleep(3000);
+		
 		List<String> vals= getColumnValues(Integer.parseInt(data.get("column")));
 		
 		for(int i=0; i<vals.size();i++) {

@@ -50,7 +50,7 @@ public class InstMngmnt_departments extends TestBase{
 
 		// Type the location name in the dropdown search
 		type("dept_type_faculty_XPATH", data.get("faculty"));
-
+		
 		// Click on the first result
 		click("dept_faculty_dd_value_XPATH");
 

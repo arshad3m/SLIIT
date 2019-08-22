@@ -35,7 +35,7 @@ public class InstMngmnt_departments extends TestBase{
 
 		click("dept_head_XPATH");
 
-		Thread.sleep(3000);
+		Thread.sleep(4000);
 
 		// Type the location name in the dropdown search
 		type("dept_type_head_XPATH", data.get("head"));

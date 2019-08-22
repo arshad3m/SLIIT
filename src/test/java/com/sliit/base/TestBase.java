@@ -141,7 +141,7 @@ public class TestBase {
 
 			if (config.getProperty("browser").equals("firefox")) {
 
-				// System.setProperty("webdriver.gecko.driver", "gecko.exe");
+				System.setProperty("webdriver.gecko.driver", "\\src\\test\\resources\\executables\\geckodriver.exe");
 				driver = new FirefoxDriver();
 
 			} else if (config.getProperty("browser").equals("chrome")) {
@@ -153,7 +153,7 @@ public class TestBase {
 			} else if (config.getProperty("browser").equals("ie")) {
 
 				System.setProperty("webdriver.ie.driver",
-						System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\IEDriverServer.exe");
+						System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\MicrosoftWebDriver.exe");
 				driver = new InternetExplorerDriver();
 
 			}
@@ -975,8 +975,6 @@ public class TestBase {
 
 		verifyContains(message_after_save, "successfully!");
 	}
-	
-	
 	
 	/**
 	 * @author ArshadM 

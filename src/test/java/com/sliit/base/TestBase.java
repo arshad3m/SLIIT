@@ -998,7 +998,7 @@ public class TestBase {
 		
 		type("filter_searchbox_XPATH",keyword);
 		
-		Thread.sleep(6000);
+		Thread.sleep(8000);
 	}
 	
 

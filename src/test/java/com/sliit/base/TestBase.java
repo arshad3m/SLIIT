@@ -1222,7 +1222,7 @@ public class TestBase {
 	
 	public void copyLogFiles() throws IOException {
 		
-		String timeStamp = new SimpleDateFormat("y-M-dd, E 'at' h.m a").format(new java.util.Date());
+		String timeStamp = new SimpleDateFormat("y-M-dd, E 'at' h.mm a").format(new java.util.Date());
 		
 		File srcDir = new File(System.getProperty("user.dir") + "\\target\\surefire-reports\\html");
 		File destDir = new File(System.getProperty("user.dir") + "\\target\\surefire-reports\\"+timeStamp);

@@ -13,13 +13,7 @@
 		<classes>
 
 			<class name="com.sliit.testcases.InstMngmt_institute_details" />
-			<class name="com.sliit.testcases.InstMngmt_locations" /> 
-			<class name="com.sliit.testcases.InstMngmt_centers" />
-			<class name="com.sliit.testcases.InstMngmnt_departments" />
-			<class name="com.sliit.testcases.InstMngmnt_faculty" />
-			<class name="com.sliit.testcases.InstMngmt_awarding_institute" />
-			<class name="com.sliit.testcases.InstMngmt_document_type" />
-			<class name="com.sliit.testcases.InstMngmt_classrooms" />
+
 
 
 		</classes>

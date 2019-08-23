@@ -1204,17 +1204,19 @@ public class TestBase {
 	@AfterSuite
 	public void tearDown() throws InterruptedException, IOException {
 
-		logout();
+		//logout();
 		
-		if (driver != null) {
-			driver.quit();
-		}
+
 
 		log.debug("test execution completed !!!");
 		
 		Thread.sleep(10000);
 		
 		copyLogFiles();
+		
+		if (driver != null) {
+			driver.quit();
+		}
 	}
 	
 	

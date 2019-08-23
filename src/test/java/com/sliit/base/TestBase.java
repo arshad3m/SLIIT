@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -1209,6 +1211,21 @@ public class TestBase {
 		}
 
 		log.debug("test execution completed !!!");
+		
+		Thread.sleep(10000);
+		
+		copyLogFiles();
+	}
+	
+	
+	public void copyLogFiles() throws IOException {
+		
+		String timeStamp = new SimpleDateFormat("y-M-dd, E 'at' h.m a").format(new java.util.Date());
+		
+		File srcDir = new File(System.getProperty("user.dir") + "\\target\\surefire-reports\\html");
+		File destDir = new File(System.getProperty("user.dir") + "\\target\\surefire-reports\\"+timeStamp);
+		FileUtils.copyDirectory(srcDir, destDir);
+		System.out.println("Created reports directory with timestamp");
 	}
 	
 	

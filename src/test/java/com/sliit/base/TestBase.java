@@ -926,7 +926,7 @@ public class TestBase {
 		
 		try {
 			
-			for(int i=0; i<5;i++) {
+			for(int i=0; i<first_column.size()-1 && i<5 ;i++) {
 				
 				if(first_column.get(i).contains(column_prefix)) {
 				column_values.add(Integer.parseInt(first_column.get(i).replace(column_prefix, "")));

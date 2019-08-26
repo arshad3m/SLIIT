@@ -973,7 +973,7 @@ public class TestBase {
 
 		String message_after_save = getTextOfElement("lcnts_success_message_XPATH");
 
-		//Thread.sleep(3000);
+		Thread.sleep(2000);
 
 		verifyContains(message_after_save, "successfully!");
 	}

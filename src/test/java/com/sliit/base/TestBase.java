@@ -998,6 +998,8 @@ public class TestBase {
 		
 		type("filter_searchbox_XPATH",keyword);
 		
+		driver.findElement(By.xpath(OR.getProperty("filter_searchbox_XPATH"))).sendKeys(Keys.ENTER);
+		
 		Thread.sleep(8000);
 	}
 	

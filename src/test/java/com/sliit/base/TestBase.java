@@ -1000,7 +1000,7 @@ public class TestBase {
 		
 		driver.findElement(By.xpath(OR.getProperty("filter_searchbox_XPATH"))).sendKeys(Keys.ENTER);
 		
-		Thread.sleep(8000);
+		Thread.sleep(10000);
 	}
 	
 

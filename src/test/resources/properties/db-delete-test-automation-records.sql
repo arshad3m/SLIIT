@@ -11,6 +11,7 @@
  * Modified By : <name>
  * 
  */
+
 use sims;
 SET SQL_SAFE_UPDATES = 0;
 
@@ -51,7 +52,7 @@ delete from classroomFaculty
 where (classroomFaculty.facultyId in (select id from faculty where code like 'Auto_%') AND classroomFaculty.facultyId <>0);
 
 delete from classroom
-where code like 'Auto_%';
+where code like 'Auto_%' or centerId in (Select id from center where code like 'Auto_%')	;
 
 delete from awardingInstitute
 where code like 'Auto_%';
@@ -69,13 +70,7 @@ delete from faculty
 where code like 'Auto_%';
 
 delete from center
-where code like 'Auto_%';
+where code like 'Auto_%' or locationId in (select id from location where code like 'Auto_%' );
 
 delete from location
 where code like 'Auto_%';
-
-
-
-
-
-

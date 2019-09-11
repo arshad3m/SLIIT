@@ -55,7 +55,6 @@ public class InstMngmnt_faculty extends TestBase{
 		
 		verifyTableDescendingOrder("Auto_FCT");
 
-
 	}
 	
 	@Test(enabled=true)
@@ -153,10 +152,37 @@ public class InstMngmnt_faculty extends TestBase{
 			verifyContains(vals.get(i), data.get("keyword"));
 		}
 		
-		
-		
-		
+				
 	}
+	
+	@Test(enabled=true)
+	public void verify_breadcrumbs() throws InterruptedException, IOException{
+
+		click("inst_management_XPATH");
+		click("faculty_XPATH");
+		
+		//Create mode
+		click("fclt_create_new_XPATH");
+		Thread.sleep(3000);
+		verifyBreadrumbs("Add","Faculty");
+		
+		
+		// Edit mode
+		editRow(1);
+		Thread.sleep(3000);
+		verifyBreadrumbs("Edit","Faculty");
+					
+		
+		//View mode
+		viewRow(1);
+		Thread.sleep(3000);
+		verifyBreadrumbs("View","Faculty");
+		
+			
+		//Home
+		verifyBreadrumbs("Home","Dashboard");
+	}
+	
 
 	}
 

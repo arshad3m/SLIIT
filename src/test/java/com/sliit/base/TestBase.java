@@ -201,7 +201,7 @@ public class TestBase {
 			wait.until(ExpectedConditions.elementToBeClickable(element));
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			js.executeScript("arguments[0].click();", element);
-			test.log(LogStatus.INFO, "Clickingg on : " + element.toString().replace("_XPATH", ""));
+			test.log(LogStatus.INFO, "Clickingg on : " + element.toString().replace("_XPATH", ""));		
 		}
 	}
 	
@@ -1193,14 +1193,79 @@ public class TestBase {
 
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("logout_success_message_XPATH"))));
 		
-		log.debug("User successfully loggedout of the system!");
+		log.debug("User successfully logged out of the system!");
 		
 		//String message_after_save = getTextOfElement("logout_success_message_XPATH");
 		
 		//verifyContains(message_after_save, "successfully!");
 
 	}
+	
+	/**
+	 * @throws InterruptedException 
+	 * @throws IOException 
+	 * @authoer Jayashani
+	 * Verify Breadcrumbs for different views
+	 */
+	private static void verifyBreadcrumb_title(String operation) throws IOException {
+		try {
+			if(driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText().equals(operation))
+				Assert.assertTrue(true);
 
+			else
+				assertTrue(false);
+			
+		}catch (Throwable t)
+		{
+
+			TestUtil.captureScreenshot();
+			// ReportNG
+			Reporter.log("<br>" + "Title Verification failed : " + t.getMessage() + "<br>");
+			// Extent Reports
+			test.log(LogStatus.FAIL, " Title Verification failed : " + t.getMessage());
+			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
+		
+		}
+	}
+	private static void verifyBreadrumb_navigation(String xpath,String operation,String category) throws InterruptedException, IOException{
+		
+			try {
+			
+			//Bread-crumb Navigation
+			driver.findElement(By.xpath(OR.getProperty(xpath))).click();
+			test.log(LogStatus.INFO, "Navigating to "+ operation+" "+ category +" using breadcumbs");
+			Thread.sleep(3000);
+			
+			//Verify Navigation
+			driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText().equals(category);
+			test.log(LogStatus.PASS, "Verify navigation ");
+			
+		}
+		catch(Throwable t)
+		{
+			TestUtil.captureScreenshot();
+			// ReportNG
+			Reporter.log("<br>" + "Breadcrumb Verification failed : " + t.getMessage() + "<br>");
+
+			// Extent Reports
+			test.log(LogStatus.FAIL, " Breadcrumb Verification failed : " + t.getMessage());
+			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
+		}
+	}
+	public static void verifyBreadrumbs(String operation, String category) throws InterruptedException, IOException{
+		if(operation.equals("Home"))
+		{
+			//verify navigation to home
+			verifyBreadrumb_navigation("home_XPATH",operation,"");
+		}else
+		{
+			verifyBreadcrumb_title(operation.concat(" ").concat(category));
+			//verify navigation to grid
+			verifyBreadrumb_navigation("brdcrmb_XPATH",operation,category);
+		}
+		
+	}
+	
 	@AfterSuite
 	public void tearDown() throws InterruptedException, IOException {
 

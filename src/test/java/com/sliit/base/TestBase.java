@@ -1255,6 +1255,7 @@ public class TestBase {
 		}
 	}
 	public static void verifyBreadrumbs(String operation, String category) throws InterruptedException, IOException{
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(OR.getProperty("home_XPATH"))));
 		if(operation.equals("Home"))
 		{
 			//verify navigation to home

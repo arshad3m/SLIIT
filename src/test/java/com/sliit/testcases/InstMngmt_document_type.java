@@ -171,19 +171,16 @@ public class InstMngmt_document_type extends TestBase{
 
 			//Create mode
 			click("dcmnt_typ_create_new_XPATH");
-			Thread.sleep(3000);
 			verifyBreadrumbs("Add","Document Type");
 			
 			
 			// Edit mode
 			editRow(1);
-			Thread.sleep(3000);
 			verifyBreadrumbs("Edit","Document Type");
 						
 			
 			//View mode
 			viewRow(1);
-			Thread.sleep(3000);
 			verifyBreadrumbs("View","Document Type");
 			
 				

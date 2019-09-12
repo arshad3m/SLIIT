@@ -198,19 +198,16 @@ public class InstMngmnt_departments extends TestBase{
 
 		//Create mode
 		click("dept_create_new_XPATH");
-		Thread.sleep(3000);
 		verifyBreadrumbs("Add","Department");
 		
 		
 		// Edit mode
 		editRow(1);
-		Thread.sleep(3000);
 		verifyBreadrumbs("Edit","Department");
 					
 		
 		//View mode
 		viewRow(1);
-		Thread.sleep(3000);
 		verifyBreadrumbs("View","Department");
 		
 			

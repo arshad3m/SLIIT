@@ -415,7 +415,7 @@ public class TestBase {
 		try {
 
 			assertTrue(text.toLowerCase().contains(word.toLowerCase()));
-			test.log(LogStatus.INFO, "Asserting " + text + "contains: " + word);
+			test.log(LogStatus.INFO, "Asserting " + text + " contains: " + word);
 
 		} catch (Throwable t) {
 
@@ -1211,11 +1211,9 @@ public class TestBase {
 	 */
 	private static void verifyBreadcrumb_title(String operation) throws IOException {
 		try {
-			if(driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText().equals(operation))
-				Assert.assertTrue(true);
 
-			else
-				assertTrue(false);
+			verifyEqualsIgnoreCase(operation, driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText());
+
 			
 		}catch (Throwable t)
 		{
@@ -1234,13 +1232,15 @@ public class TestBase {
 			try {
 			
 			//Bread-crumb Navigation
-			driver.findElement(By.xpath(OR.getProperty(xpath))).click();
-			test.log(LogStatus.INFO, "Navigating to "+ operation+" "+ category +" using breadcumbs");
-			Thread.sleep(3000);
+			click(xpath);
 			
+			if(operation !="Home") {
+			
+			wait.until(ExpectedConditions.elementToBeClickable(By.xpath(OR.getProperty("home_XPATH"))));
+			}
 			//Verify Navigation
-			driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText().equals(category);
-			test.log(LogStatus.PASS, "Verify navigation ");
+			verifyContains(driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText(), category);
+			
 			
 		}
 		catch(Throwable t)
@@ -1259,7 +1259,7 @@ public class TestBase {
 		if(operation.equals("Home"))
 		{
 			//verify navigation to home
-			verifyBreadrumb_navigation("home_XPATH",operation,"");
+			verifyBreadrumb_navigation("home_XPATH",operation,"dashboard");
 		}else
 		{
 			verifyBreadcrumb_title(operation.concat(" ").concat(category));

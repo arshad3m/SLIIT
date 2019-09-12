@@ -13,7 +13,7 @@ import com.sliit.utilities.TestUtil;
 public class InstMngmnt_departments extends TestBase{
 	
 	
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
 	public void add_new_departments(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -66,7 +66,7 @@ public class InstMngmnt_departments extends TestBase{
 	}
 	
 	
-	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
+	@Test(enabled =true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
 	public void search_departments(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		//Click institute managment
@@ -85,7 +85,7 @@ public class InstMngmnt_departments extends TestBase{
 	}
 	
 	
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
 	public void view_departments(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -125,7 +125,7 @@ public class InstMngmnt_departments extends TestBase{
 
 	}
 	
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
 	public void edit_departments(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -162,7 +162,7 @@ public class InstMngmnt_departments extends TestBase{
 	}
 	
 	
-	@Test(enabled=false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
+	@Test(enabled=true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
 	public void filter_departments(Hashtable<String, String> data) throws InterruptedException, IOException {
 		
 		if (!data.get("runmode").equals("Y")) {
@@ -198,19 +198,16 @@ public class InstMngmnt_departments extends TestBase{
 
 		//Create mode
 		click("dept_create_new_XPATH");
-		Thread.sleep(3000);
 		verifyBreadrumbs("Add","Department");
 		
 		
 		// Edit mode
 		editRow(1);
-		Thread.sleep(3000);
 		verifyBreadrumbs("Edit","Department");
 					
 		
 		//View mode
 		viewRow(1);
-		Thread.sleep(3000);
 		verifyBreadrumbs("View","Department");
 		
 			

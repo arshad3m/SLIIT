@@ -185,11 +185,37 @@ public class InstMngmnt_departments extends TestBase{
 		for(int i=0; i<vals.size();i++) {
 			
 			verifyContains(vals.get(i), data.get("keyword"));
-		}
+		}	
+		
+	}
+	@Test(enabled=true)
+	public void verify_breadcrumbs() throws InterruptedException, IOException{
+		// Click institute management
+		click("inst_management_XPATH");
+
+		// Click Department
+		click("departments_XPATH");
+
+		//Create mode
+		click("dept_create_new_XPATH");
+		Thread.sleep(3000);
+		verifyBreadrumbs("Add","Department");
 		
 		
+		// Edit mode
+		editRow(1);
+		Thread.sleep(3000);
+		verifyBreadrumbs("Edit","Department");
+					
 		
+		//View mode
+		viewRow(1);
+		Thread.sleep(3000);
+		verifyBreadrumbs("View","Department");
 		
+			
+		//Home
+		verifyBreadrumbs("Home","Dashboard");
 	}
 
 

@@ -168,12 +168,32 @@ public class InstMngmt_centers extends TestBase {
 		for(int i=0; i<vals.size();i++) {
 			
 			verifyContains(vals.get(i), data.get("keyword"));
-		}
-		
-		
-		
+		}	
 		
 	}
+	@Test(enabled=true)
+	public void verify_breadcrumbs() throws InterruptedException, IOException{
 
+		click("inst_management_XPATH");
+		click("centers_XPATH");
+		
+		//Create mode
+		click("center_create_new_XPATH");
+		verifyBreadrumbs("Add","Center");
+		
+		
+		// Edit mode
+		editRow(1);
+		verifyBreadrumbs("Edit","Center");
+					
+		
+		//View mode
+		viewRow(1);
+		verifyBreadrumbs("View","Center");
+		
+			
+		//Home
+		verifyBreadrumbs("Home","Dashboard");
+	}
 
 }

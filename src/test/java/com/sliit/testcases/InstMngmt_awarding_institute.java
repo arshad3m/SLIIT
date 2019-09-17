@@ -165,8 +165,30 @@ public class InstMngmt_awarding_institute extends TestBase {
 		}
 		
 		
+	}
+	@Test(enabled=true)
+	public void verify_breadcrumbs() throws InterruptedException, IOException{
+
+		click("inst_management_XPATH");
+		click("awrd_institute_XPATH");
+		
+		//Create mode
+		click("awrd_inst_create_new_XPATH");
+		verifyBreadrumbs("Add","Awarding Institute");
 		
 		
+		// Edit mode
+		editRow(1);
+		verifyBreadrumbs("Edit","Awarding Institute");
+					
+		
+		//View mode
+		viewRow(1);
+		verifyBreadrumbs("View","Awarding Institute");
+		
+			
+		//Home
+		verifyBreadrumbs("Home","Dashboard");
 	}
 
 }

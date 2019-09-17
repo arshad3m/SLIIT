@@ -163,19 +163,16 @@ public class InstMngmnt_faculty extends TestBase{
 		
 		//Create mode
 		click("fclt_create_new_XPATH");
-		Thread.sleep(3000);
 		verifyBreadrumbs("Add","Faculty");
 		
 		
 		// Edit mode
 		editRow(1);
-		Thread.sleep(3000);
 		verifyBreadrumbs("Edit","Faculty");
 					
 		
 		//View mode
 		viewRow(1);
-		Thread.sleep(3000);
 		verifyBreadrumbs("View","Faculty");
 		
 			

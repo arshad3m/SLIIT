@@ -179,19 +179,16 @@ public class InstMngmt_centers extends TestBase {
 		
 		//Create mode
 		click("center_create_new_XPATH");
-		Thread.sleep(3000);
 		verifyBreadrumbs("Add","Center");
 		
 		
 		// Edit mode
 		editRow(1);
-		Thread.sleep(3000);
 		verifyBreadrumbs("Edit","Center");
 					
 		
 		//View mode
 		viewRow(1);
-		Thread.sleep(3000);
 		verifyBreadrumbs("View","Center");
 		
 			

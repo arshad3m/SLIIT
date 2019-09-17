@@ -212,19 +212,16 @@ public class InstMngmt_classrooms extends TestBase {
 		
 		//Create mode
 		click("clssrm_create_new_XPATH");
-		Thread.sleep(3000);
 		verifyBreadrumbs("Add","Classroom");
 		
 		
 		// Edit mode
 		editRow(1);
-		Thread.sleep(3000);
 		verifyBreadrumbs("Edit","Classroom");
 					
 		
 		//View mode
 		viewRow(1);
-		Thread.sleep(3000);
 		verifyBreadrumbs("View","Classroom");
 		
 			

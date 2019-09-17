@@ -174,19 +174,16 @@ public class InstMngmt_awarding_institute extends TestBase {
 		
 		//Create mode
 		click("awrd_inst_create_new_XPATH");
-		Thread.sleep(3000);
 		verifyBreadrumbs("Add","Awarding Institute");
 		
 		
 		// Edit mode
 		editRow(1);
-		Thread.sleep(3000);
 		verifyBreadrumbs("Edit","Awarding Institute");
 					
 		
 		//View mode
 		viewRow(1);
-		Thread.sleep(3000);
 		verifyBreadrumbs("View","Awarding Institute");
 		
 			

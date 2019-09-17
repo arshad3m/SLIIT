@@ -131,11 +131,7 @@ public class InstMngmt_classrooms extends TestBase {
 		
 		//verify status
 		verifyViewRowValues(row.get(7), "clssrm_status_value_XPATH");
-		/*	
-			for(int i=0;i<8;i++)
-			{
-				System.out.println(row.get(i));
-			}*/
+
 
 	}
 	

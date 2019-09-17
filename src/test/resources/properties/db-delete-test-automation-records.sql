@@ -39,7 +39,7 @@ delete from programType
 where code like 'Auto_%';
 
 delete from academicYear
-where year like 'Auto_%' or academicYear.awardingInstituteId in (select id from awardingInstitute where code like 'Auto_%')
+where description like 'Auto_%' or academicYear.awardingInstituteId in (select id from awardingInstitute where code like 'Auto_%')
 or academicYear.facultyId in (select id from faculty where code like 'Auto_%') AND Id <>0;
 
 delete from documentType

@@ -1241,7 +1241,7 @@ public class TestBase {
 			//Verify Navigation
 			
 			else
-				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(OR.getProperty("dashboard_XPATH"))));
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("dashboard_XPATH"))));
 			verifyContains(driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText(), category);
 			
 			

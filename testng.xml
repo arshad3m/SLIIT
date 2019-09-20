@@ -20,8 +20,11 @@
 			<class name="com.sliit.testcases.InstMngmt_awarding_institute" /> 
 			<class name="com.sliit.testcases.InstMngmt_document_type" /> 
 			<class name="com.sliit.testcases.InstMngmt_classrooms" /> 
-			
+	
 			<class name="com.sliit.testcases.PrgMngmnt_academic_years" />
+			<class name="com.sliit.testcases.PrgMngmnt_program_types" />
+			<class name="com.sliit.testcases.PrgMngmnt_subjects" />
+			<class name="com.sliit.testcases.PrgMngmnt_qualifications_types" />
 
 		</classes>
 	</test>

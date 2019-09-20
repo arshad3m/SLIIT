@@ -769,7 +769,20 @@ public class TestBase {
 		
 		verifyEquals(row_values, getTextAttribute(field_xpath));
 	}
-	
+public static void verifyToggleButton(String row_value,String xpath ) throws IOException, InterruptedException {
+		
+		Thread.sleep(3000);
+		//test.log(LogStatus.INFO, "rw value " +row_value +"checkbox_state = " + driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
+		String togglebtn_state;
+		String text=driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked");
+		System.out.println(text);
+		if(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked").equals("true"))
+			togglebtn_state= "required";
+		else togglebtn_state= "not required";
+		
+		verifyEquals(row_value,togglebtn_state );
+		
+	}
 	
 	
 	/**

@@ -23,7 +23,6 @@
 	
 			<class name="com.sliit.testcases.PrgMngmnt_academic_years" />
 			<class name="com.sliit.testcases.PrgMngmnt_program_types" />
-			<class name="com.sliit.testcases.PrgMngmnt_subjects" />
 
 		</classes>
 	</test>

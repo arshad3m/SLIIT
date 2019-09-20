@@ -111,7 +111,7 @@ public class PrgMngmnt_academic_years extends TestBase{
 		
 	}
 	
-	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
+	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
 	public void edit_academic_years(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {

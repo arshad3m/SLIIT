@@ -1239,6 +1239,9 @@ public class TestBase {
 			wait.until(ExpectedConditions.elementToBeClickable(By.xpath(OR.getProperty("home_XPATH"))));
 			}
 			//Verify Navigation
+			
+			else
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("dashboard_XPATH"))));
 			verifyContains(driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText(), category);
 			
 			

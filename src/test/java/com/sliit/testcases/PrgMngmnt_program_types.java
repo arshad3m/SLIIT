@@ -99,19 +99,15 @@ public class PrgMngmnt_program_types extends TestBase{
 		//verify description
 		verifyViewRowValues(row.get(2), "prgrm_typ_description_value_XPATH");	
 				
-		//verify aptitude test
-		verifyToggleButton(row.get(3),"prgrm_typ_aptitude_value_XPATH");
-			
-		
-		/*
-		 * //verify interview
-		 * verifyToggleButton(row.get(4),"prgrm_typ_interview_value_XPATH","Required",
-		 * "Not Required");
-		 * 
-		 * //verify research proposal
-		 * verifyToggleButton(row.get(5),"prgrm_typ_research_proposal_value_XPATH",
-		 * "Required", "Not Required");
-		 */
+		// verify aptitude test
+		verifyToggleButton(row.get(3), "prgrm_typ_aptitude_value_XPATH", "Required", "Not Required");
+
+		// verify interview
+		verifyToggleButton(row.get(4), "prgrm_typ_interview_value_XPATH", "Required", "Not Required");
+
+		// verify research proposal
+		verifyToggleButton(row.get(5), "prgrm_typ_research_proposal_value_XPATH", "Required", "Not Required");
+		 
 		
 	}
 	@Test(enabled=false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)

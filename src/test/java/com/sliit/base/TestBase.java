@@ -333,7 +333,7 @@ public class TestBase {
 		try {
 
 			Assert.assertEquals(actual, expected);
-			test.log(LogStatus.INFO, "Verifying the expected text: " + expected);
+			test.log(LogStatus.INFO, "Verified the expected text: " + expected);
 
 		} catch (Throwable t) {
 

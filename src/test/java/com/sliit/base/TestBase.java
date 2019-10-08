@@ -143,7 +143,7 @@ public class TestBase {
 
 			if (config.getProperty("browser").equals("firefox")) {
 
-				System.setProperty("webdriver.gecko.driver", "\\src\\test\\resources\\executables\\geckodriver.exe");
+				System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") +"\\src\\test\\resources\\executables\\geckodriver.exe");
 				driver = new FirefoxDriver();
 
 			} else if (config.getProperty("browser").equals("chrome")) {
@@ -306,7 +306,7 @@ public class TestBase {
 		try {
 
 			Assert.assertEquals(actual.toLowerCase(), expected.toLowerCase());
-			test.log(LogStatus.INFO, "Verifying the expected text: " + expected);
+			test.log(LogStatus.INFO, "Verified the expected text: " + expected);
 
 		} catch (Throwable t) {
 
@@ -333,7 +333,7 @@ public class TestBase {
 		try {
 
 			Assert.assertEquals(actual, expected);
-			test.log(LogStatus.INFO, "Verifying the expected text: " + expected);
+			test.log(LogStatus.INFO, "Verified the expected text: " + expected);
 
 		} catch (Throwable t) {
 
@@ -769,8 +769,27 @@ public class TestBase {
 		
 		verifyEquals(row_values, getTextAttribute(field_xpath));
 	}
+
+	public static void verifyToggleButton(String row_value, String xpath, String positive, String negative) throws IOException, InterruptedException {
+
+		
+		boolean status=Boolean.parseBoolean(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
+		
+		String togglebtn_state;
+		
+		if(status)
+			togglebtn_state= positive;
+		
+		else togglebtn_state= negative;
+		
+		test.log(LogStatus.INFO, " Verifying toggle button status of : " + xpath);
+		verifyEqualsIgnoreCase(row_value,togglebtn_state );
+		
+
+	}
 	
 	
+
 	
 	/**
 	 * @author ArshadM 

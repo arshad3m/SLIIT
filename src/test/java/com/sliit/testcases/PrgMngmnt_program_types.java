@@ -12,7 +12,7 @@ import com.sliit.utilities.TestUtil;
 
 public class PrgMngmnt_program_types extends TestBase{
 	
-	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
+	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
 	public void add_new_program_types(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -55,7 +55,7 @@ public class PrgMngmnt_program_types extends TestBase{
 
 
 	}
-	@Test(enabled =true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
+	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
 	public void search_program_types(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		click("prg_management_XPATH");
@@ -99,17 +99,18 @@ public class PrgMngmnt_program_types extends TestBase{
 		//verify description
 		verifyViewRowValues(row.get(2), "prgrm_typ_description_value_XPATH");	
 				
-		//verify aptitude test
-		//verifyViewRowValues(row.get(3), "prgrm_typ_aptitude_value_XPATH");	
-		
-		//verify interview
-		//verifyViewRowValues(row.get(3), "prgrm_typ_interview_value_XPATH");	
-		
-		//verify interview
-		//verifyViewRowValues(row.get(3), "prgrm_typ_research_proposal_value_XPATH");	
+		// verify aptitude test
+		verifyToggleButton(row.get(3), "prgrm_typ_aptitude_value_XPATH", "Required", "Not Required");
+
+		// verify interview
+		verifyToggleButton(row.get(4), "prgrm_typ_interview_value_XPATH", "Required", "Not Required");
+
+		// verify research proposal
+		verifyToggleButton(row.get(5), "prgrm_typ_research_proposal_value_XPATH", "Required", "Not Required");
+		 
 		
 	}
-	@Test(enabled=true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
+	@Test(enabled=false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
 	public void filter_program_types(Hashtable<String, String> data) throws InterruptedException, IOException {
 		
 		if (!data.get("runmode").equals("Y")) {
@@ -133,7 +134,7 @@ public class PrgMngmnt_program_types extends TestBase{
 
 		}
 	}
-	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
+	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
 	public void edit_program_types(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -179,7 +180,7 @@ public class PrgMngmnt_program_types extends TestBase{
 
 	}
 	
-	@Test(enabled=true,priority=6)
+	@Test(enabled=false,priority=6)
 	public void verify_breadcrumbs() throws InterruptedException, IOException{
 
 		click("prg_management_XPATH");

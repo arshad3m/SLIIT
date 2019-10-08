@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.logging.FileHandler;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -27,7 +28,6 @@ public class TestUtil extends TestBase {
 
 		FileUtils.copyFile(scrFile,
 				new File(System.getProperty("user.dir") + "\\target\\surefire-reports\\html\\" + screenshotName));
-
 	}
 
 	@DataProvider(name="dp")

@@ -28,10 +28,14 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -154,9 +158,15 @@ public class TestBase {
 				log.debug("Chrome Launched !!!");
 			} else if (config.getProperty("browser").equals("ie")) {
 
-				System.setProperty("webdriver.ie.driver",
-						System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\MicrosoftWebDriver.exe");
-				driver = new InternetExplorerDriver();
+				System.setProperty("webdriver.chrome.driver",
+						System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\msedgedriver.exe");
+				
+				ChromeOptions chromeOptions = new ChromeOptions();
+			    chromeOptions.setBinary(
+			            "C:\\Program Files (x86)\\Microsoft\\Edge Beta\\Application\\msedge.exe");
+			    MutableCapabilities edgeOptions = new EdgeOptions().merge(chromeOptions);
+				
+				driver = new ChromeDriver(edgeOptions);
 
 			}
 

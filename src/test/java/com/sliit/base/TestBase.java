@@ -785,14 +785,6 @@ public class TestBase {
 		
 		boolean status=Boolean.parseBoolean(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
 		
-		Thread.sleep(3000);
-		test.log(LogStatus.INFO, "rw value " +row_value +"toggle_state = " + driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
-		String togglebtn_state;
-		//String text=driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked");
-		//System.out.println(text);
-		if(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked").equals("true"))
-			togglebtn_state= "Required";
-		else togglebtn_state= "Not Required";
 		String togglebtn_state;
 		
 		if(status)
@@ -1249,7 +1241,7 @@ public class TestBase {
 	private static void verifyBreadcrumb_title(String operation) throws IOException {
 		try {
 
-			verifyContains(driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText(),operation);
+			verifyEqualsIgnoreCase(operation, driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText());
 
 			
 		}catch (Throwable t)

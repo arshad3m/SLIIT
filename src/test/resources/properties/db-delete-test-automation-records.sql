@@ -15,43 +15,6 @@
 use sims;
 SET SQL_SAFE_UPDATES = 0;
 
-/*Deleting from program table */
-delete from specializationCenter
-where specialization in (select id from specialization
-where programId in (select id from program where code like 'Auto_%'))and specialization<>0;
-
-delete from specialization
-where programId in (select id from program where code like 'Auto_%') and id <>0;
-
-delete from program
-where code like 'Auto_%';
-
-/*Deleting from  learning outcomes table */
-delete from learningOutcome
-where code like 'Auto_%';
-
-/*Deleting from Entry Criterion table*/
-delete from entryCriterionResult
-where (entryCriterionId in (select id from entryCriterion where code like 'Auto_%') AND Id <>0);
-
-delete from entryCriterionOutcome
-where (entryCriterionId in (select id from entryCriterion where code like 'Auto_%') AND id <>0);
-
-delete from entryCriterion
-where code like 'Auto_%';
-
-/*Deleting from  qualification outcomes table  */
-delete from qualificationTypeOutcome
-where (qualificationTypeId in (select id from qualificationType where code like 'Auto_%') AND Id <>0);
-
-delete from qualificationType
-where code like 'Auto_%';
-
-/* Deleting from  Assessment criterion table */
-delete from assessmentCriterion
-where code like 'Auto_%';
-
-/* Deleting from  subjects table */
 delete from session
 where code like 'Auto_%' or subjectId in (select id from subject where code like 'Auto_%'
 or subject.awardingInstituteId in (select id from awardingInstitute where code like 'Auto_%')
@@ -72,11 +35,9 @@ or facultyId in (select id from faculty where code like 'Auto_%')
 or departmentId in (select id from department where code like 'Auto_%')
 ;
 
-/* Deleting from  Program Types table */
 delete from programType
 where code like 'Auto_%';
 
-/* Deleting from  Academic Year table */
 delete from academicYear
 where description like 'Auto_%' or academicYear.awardingInstituteId in (select id from awardingInstitute where code like 'Auto_%')
 or academicYear.facultyId in (select id from faculty where code like 'Auto_%') AND Id <>0;

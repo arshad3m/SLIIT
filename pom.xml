@@ -5,6 +5,10 @@
 	<groupId>com.upnorway</groupId>
 	<artifactId>DataDrivenFramework</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+	</properties>
 	<dependencies>
 
 		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
@@ -21,8 +25,17 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>2.53.1</version>
+			<version>3.6.0</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-server -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>4.0.0-alpha-2</version>
+		</dependency>
+
+
 
 
 		<!-- https://mvnrepository.com/artifact/com.relevantcodes/extentreports -->
@@ -70,9 +83,18 @@
 		</dependency>
 
 
-		<!-- Dependency for POI API -->
-		<!-- http://mvnrepository.com/artifact/org.apache.poi/poi -->
+<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+<dependency>
+    <groupId>commons-io</groupId>
+    <artifactId>commons-io</artifactId>
+    <version>2.6</version>
+</dependency>
+
+
+
 		<dependency>
+
+
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.6</version>
@@ -104,6 +126,7 @@
 			<artifactId>poi-ooxml-schemas</artifactId>
 			<version>3.6</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>mysql</groupId>

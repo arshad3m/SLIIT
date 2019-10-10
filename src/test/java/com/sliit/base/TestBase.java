@@ -28,10 +28,14 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -143,7 +147,7 @@ public class TestBase {
 
 			if (config.getProperty("browser").equals("firefox")) {
 
-				System.setProperty("webdriver.gecko.driver", "\\src\\test\\resources\\executables\\geckodriver.exe");
+				System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") +"\\src\\test\\resources\\executables\\geckodriver.exe");
 				driver = new FirefoxDriver();
 
 			} else if (config.getProperty("browser").equals("chrome")) {
@@ -154,9 +158,15 @@ public class TestBase {
 				log.debug("Chrome Launched !!!");
 			} else if (config.getProperty("browser").equals("ie")) {
 
-				System.setProperty("webdriver.ie.driver",
-						System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\MicrosoftWebDriver.exe");
-				driver = new InternetExplorerDriver();
+				System.setProperty("webdriver.chrome.driver",
+						System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\msedgedriver.exe");
+				
+				ChromeOptions chromeOptions = new ChromeOptions();
+			    chromeOptions.setBinary(
+			            "C:\\Program Files (x86)\\Microsoft\\Edge Beta\\Application\\msedge.exe");
+			    MutableCapabilities edgeOptions = new EdgeOptions().merge(chromeOptions);
+				
+				driver = new ChromeDriver(edgeOptions);
 
 			}
 
@@ -306,7 +316,7 @@ public class TestBase {
 		try {
 
 			Assert.assertEquals(actual.toLowerCase(), expected.toLowerCase());
-			test.log(LogStatus.INFO, "Verifying the expected text: " + expected);
+			test.log(LogStatus.INFO, "Verified the expected text: " + expected);
 
 		} catch (Throwable t) {
 
@@ -333,7 +343,7 @@ public class TestBase {
 		try {
 
 			Assert.assertEquals(actual, expected);
-			test.log(LogStatus.INFO, "Verifying the expected text: " + expected);
+			test.log(LogStatus.INFO, "Verified the expected text: " + expected);
 
 		} catch (Throwable t) {
 
@@ -769,7 +779,11 @@ public class TestBase {
 		
 		verifyEquals(row_values, getTextAttribute(field_xpath));
 	}
-public static void verifyToggleButton(String row_value,String xpath ) throws IOException, InterruptedException {
+
+	public static void verifyToggleButton(String row_value, String xpath, String positive, String negative) throws IOException, InterruptedException {
+
+		
+		boolean status=Boolean.parseBoolean(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
 		
 		Thread.sleep(3000);
 		test.log(LogStatus.INFO, "rw value " +row_value +"toggle_state = " + driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
@@ -779,11 +793,21 @@ public static void verifyToggleButton(String row_value,String xpath ) throws IOE
 		if(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked").equals("true"))
 			togglebtn_state= "Required";
 		else togglebtn_state= "Not Required";
+		String togglebtn_state;
 		
-		verifyEquals(row_value,togglebtn_state );
+		if(status)
+			togglebtn_state= positive;
 		
+		else togglebtn_state= negative;
+		
+		test.log(LogStatus.INFO, " Verifying toggle button status of : " + xpath);
+		verifyEqualsIgnoreCase(row_value,togglebtn_state );
+		
+
 	}
 	
+	
+
 	
 	/**
 	 * @author ArshadM 

@@ -26,7 +26,7 @@ public class InstMngmt_institute_details extends TestBase {
 		
 		Thread.sleep(3000);
 		
-		click("inst_dtls_clear_XPATH");
+		//click("inst_dtls_clear_XPATH");
 		
 		Thread.sleep(2000);
 

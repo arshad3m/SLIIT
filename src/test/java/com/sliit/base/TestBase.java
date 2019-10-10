@@ -772,13 +772,13 @@ public class TestBase {
 public static void verifyToggleButton(String row_value,String xpath ) throws IOException, InterruptedException {
 		
 		Thread.sleep(3000);
-		//test.log(LogStatus.INFO, "rw value " +row_value +"checkbox_state = " + driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
+		test.log(LogStatus.INFO, "rw value " +row_value +"toggle_state = " + driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
 		String togglebtn_state;
-		String text=driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked");
-		System.out.println(text);
+		//String text=driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked");
+		//System.out.println(text);
 		if(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked").equals("true"))
-			togglebtn_state= "required";
-		else togglebtn_state= "not required";
+			togglebtn_state= "Required";
+		else togglebtn_state= "Not Required";
 		
 		verifyEquals(row_value,togglebtn_state );
 		
@@ -1225,7 +1225,7 @@ public static void verifyToggleButton(String row_value,String xpath ) throws IOE
 	private static void verifyBreadcrumb_title(String operation) throws IOException {
 		try {
 
-			verifyEqualsIgnoreCase(operation, driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText());
+			verifyContains(driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText(),operation);
 
 			
 		}catch (Throwable t)

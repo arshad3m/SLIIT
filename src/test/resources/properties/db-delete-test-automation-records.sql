@@ -13,7 +13,7 @@
  */
 
 use sims;
-SET SQL_SAFE_UPDATES = 0;
+SET SQL_SAFE_UPDATES=0;
 
 /*Deleting from program table */
 delete from specializationCenter
@@ -48,7 +48,10 @@ delete from qualificationType
 where code like 'Auto_%';
 
 /* Deleting from  Assessment criterion table */
-delete from assessmentCriterion
+Delete from subAssessment
+where assessmentCriterionId in (Select ID from assessmentCriterion where code like 'Auto_%') and id<>0;
+
+Delete from assessmentCriterion
 where code like 'Auto_%';
 
 /* Deleting from  subjects table */

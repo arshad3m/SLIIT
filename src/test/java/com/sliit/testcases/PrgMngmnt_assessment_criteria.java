@@ -10,10 +10,10 @@ import org.testng.annotations.Test;
 import com.sliit.base.TestBase;
 import com.sliit.utilities.TestUtil;
 
-public class PrgMngmnt_qualification_types extends TestBase{
+public class PrgMngmnt_assessment_criteria extends TestBase{
 
 	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
-	public void add_new_qualification_types(Hashtable<String, String> data) throws InterruptedException, IOException {
+	public void add_new_assessment_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
 
@@ -22,17 +22,17 @@ public class PrgMngmnt_qualification_types extends TestBase{
 
 		click("prg_management_XPATH");
 
-		click("qualification_types_XPATH");
+		click("assessment_criteria_XPATH");
 
 		click("create_new_XPATH"); 
-		type("qlfctn_typ_code_XPATH", data.get("code"));
-		type("qlfctn_typ_name_XPATH", data.get("name"));
+		type("assmnt_crtr_code_XPATH", data.get("code"));
+		type("assmnt_crtr_name_XPATH", data.get("name"));
 		
 		setStatus("status_XPATH", data.get("status"));
-		type("qlfctn_typ_outcomes_XPATH", data.get("outcome1"));
-		click("qlfctn_typ_plus_btn_XPATH");
-		type("qlfctn_typ_outcomes_XPATH", data.get("outcome2"));
-		click("qlfctn_typ_plus_btn_XPATH");
+        type("assmnt_crtr_sub_assess_XPATH", data.get("sub assessment1"));
+		click("assmnt_crtr_plus_btn_XPATH");
+		type("assmnt_crtr_sub_assess_XPATH", data.get("sub assessment2"));
+		click("assmnt_crtr_plus_btn_XPATH");
 
 		click("save_XPATH");
 		
@@ -40,16 +40,16 @@ public class PrgMngmnt_qualification_types extends TestBase{
 
 		verifyRecordSave();
 		
-		verifyTableDescendingOrder("Auto_QT_");
+		verifyTableDescendingOrder("Auto_AC_");
 
 
 	}
 	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
-	public void search_qualification_types(Hashtable<String, String> data) throws InterruptedException, IOException {
+	public void search_assessment_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		click("prg_management_XPATH");
 
-		click("qualification_types_XPATH");
+		click("assessment_criteria_XPATH");
 
 		Thread.sleep(3000);
 
@@ -61,7 +61,7 @@ public class PrgMngmnt_qualification_types extends TestBase{
 
 	}
 	@Test(enabled =true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
-	public void view_qualification_types(Hashtable<String, String> data) throws InterruptedException, IOException {
+	public void view_assessment_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
 
@@ -70,7 +70,7 @@ public class PrgMngmnt_qualification_types extends TestBase{
 
 		click("prg_management_XPATH");
 
-		click("qualification_types_XPATH");
+		click("assessment_criteria_XPATH");
 		int row_number = Integer.parseInt(data.get("row"));
 
 		// Retrieve given row values before opening it to view
@@ -80,19 +80,19 @@ public class PrgMngmnt_qualification_types extends TestBase{
 		viewRow(row_number);
 		Thread.sleep(3000);
 		// verify code
-		verifyViewRowValues(row.get(0), "qlfctn_typ_code_value_XPATH");
+		verifyViewRowValues(row.get(0), "assmnt_crtr_code_value_XPATH");
 
 		// verify name
-		verifyViewRowValues(row.get(1), "qlfctn_typ_name_value_XPATH");
+		verifyViewRowValues(row.get(1), "assmnt_crtr_name_value_XPATH");
 			
 		//verify status
-		verifyViewRowValues(row.get(3), "qlfctn_typ_status_value_XPATH");	
+		verifyViewRowValues(row.get(3), "assmnt_crtr_status_value_XPATH");	
 	
 		 
 		
 	}
 	@Test(enabled=false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
-	public void filter_qualification_types(Hashtable<String, String> data) throws InterruptedException, IOException {
+	public void filter_assessment_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 		
 		if (!data.get("runmode").equals("Y")) {
 
@@ -102,7 +102,7 @@ public class PrgMngmnt_qualification_types extends TestBase{
 		
 		click("prg_management_XPATH");
 
-		click("qualification_types_XPATH");
+		click("assessment_criteria_XPATH");
 		
 		//Pass column number and search keyword
 		filter(Integer.parseInt(data.get("column")),data.get("keyword"));
@@ -115,8 +115,8 @@ public class PrgMngmnt_qualification_types extends TestBase{
 
 		}
 	}
-	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
-	public void edit_qualification_types(Hashtable<String, String> data) throws InterruptedException, IOException {
+	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
+	public void edit_assessment_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
 
@@ -125,7 +125,7 @@ public class PrgMngmnt_qualification_types extends TestBase{
 
 		click("prg_management_XPATH");
 
-		click("qualification_types_XPATH");
+		click("assessment_criteria_XPATH");
 
 
 		int row_number = Integer.parseInt(data.get("row"));
@@ -136,12 +136,11 @@ public class PrgMngmnt_qualification_types extends TestBase{
 		editRow(row_number);
 
 		//updating  code,name and description with new values
-		type("qlfctn_typ_code_value_XPATH", data.get("new code"));
-		type("qlfctn_typ_name_value_XPATH", data.get("new name"));
-		type("qlfctn_typ_outcomes_edit_value_XPATH", data.get("new outcome1"));	
-		click("qlfctn_typ_plus_btn_value_XPATH");
-		
-		// Click save button
+		type("assmnt_crtr_code_value_XPATH", data.get("new code"));
+		type("assmnt_crtr_name_value_XPATH", data.get("new name"));
+		type("assmnt_crtr_sub_assess_edit_value_XPATH", data.get("new sub assessment"));	
+		click("assmnt_crtr_plus_btn_value_XPATH");
+
 		click("save_XPATH");
 
 		// Verify record is updated
@@ -149,25 +148,25 @@ public class PrgMngmnt_qualification_types extends TestBase{
 
 	}
 	
-	@Test(enabled=false,priority=6)
+	@Test(enabled=true,priority=6)
 	public void verify_breadcrumbs() throws InterruptedException, IOException{
 
 		click("prg_management_XPATH");
 
-		click("qualification_types_XPATH");
+		click("assessment_criteria_XPATH");
 		
 		//Create mode
 		click("create_new_XPATH");
-		verifyBreadrumbs("Add","Qualification Types");		
+		verifyBreadrumbs("Add","Assessment Criteri");		
 		Thread.sleep(3000);
 		
 		// Edit mode
 		editRow(1);
-		verifyBreadrumbs("Edit","Qualification Type");
+		verifyBreadrumbs("Edit","Assessment Criteri");
 		
 		//View mode
 		viewRow(1);
-		verifyBreadrumbs("View","Qualification Type");
+		verifyBreadrumbs("View","Assessment Criteri");
 		
 		//Home
 		verifyBreadrumbs("Home","Dashboard"); 

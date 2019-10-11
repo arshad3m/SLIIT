@@ -782,17 +782,8 @@ public class TestBase {
 
 	public static void verifyToggleButton(String row_value, String xpath, String positive, String negative) throws IOException, InterruptedException {
 
-		
 		boolean status=Boolean.parseBoolean(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
 		
-		Thread.sleep(3000);
-		test.log(LogStatus.INFO, "rw value " +row_value +"toggle_state = " + driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
-		String togglebtn_state;
-		//String text=driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked");
-		//System.out.println(text);
-		if(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked").equals("true"))
-			togglebtn_state= "Required";
-		else togglebtn_state= "Not Required";
 		String togglebtn_state;
 		
 		if(status)

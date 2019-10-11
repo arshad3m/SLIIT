@@ -12,7 +12,7 @@ import com.sliit.utilities.TestUtil;
 
 public class PrgMngmnt_assessment_criteria extends TestBase{
 
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
 	public void add_new_assessment_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -44,7 +44,7 @@ public class PrgMngmnt_assessment_criteria extends TestBase{
 
 
 	}
-	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
+	@Test(enabled =true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
 	public void search_assessment_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		click("prg_management_XPATH");
@@ -91,7 +91,7 @@ public class PrgMngmnt_assessment_criteria extends TestBase{
 		 
 		
 	}
-	@Test(enabled=false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
+	@Test(enabled=true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
 	public void filter_assessment_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 		
 		if (!data.get("runmode").equals("Y")) {
@@ -115,7 +115,7 @@ public class PrgMngmnt_assessment_criteria extends TestBase{
 
 		}
 	}
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
 	public void edit_assessment_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {

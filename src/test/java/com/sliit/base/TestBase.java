@@ -782,7 +782,6 @@ public class TestBase {
 
 	public static void verifyToggleButton(String row_value, String xpath, String positive, String negative) throws IOException, InterruptedException {
 
-		
 		boolean status=Boolean.parseBoolean(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
 		
 		String togglebtn_state;

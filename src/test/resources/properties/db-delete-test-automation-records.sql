@@ -75,11 +75,9 @@ or facultyId in (select id from faculty where code like 'Auto_%')
 or departmentId in (select id from department where code like 'Auto_%')
 ;
 
-/* Deleting from  Program Types table */
 delete from programType
 where code like 'Auto_%';
 
-/* Deleting from  Academic Year table */
 delete from academicYear
 where description like 'Auto_%' or academicYear.awardingInstituteId in (select id from awardingInstitute where code like 'Auto_%')
 or academicYear.facultyId in (select id from faculty where code like 'Auto_%') AND Id <>0;

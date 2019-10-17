@@ -1240,7 +1240,7 @@ public class TestBase {
 	private static void verifyBreadcrumb_title(String operation) throws IOException {
 		try {
 
-			verifyContains(driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText(),operation);
+			verifyEqualsIgnoreCase(operation, driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText());
 
 			
 		}catch (Throwable t)

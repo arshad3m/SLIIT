@@ -131,11 +131,7 @@ public class InstMngmt_classrooms extends TestBase {
 		
 		//verify status
 		verifyViewRowValues(row.get(7), "clssrm_status_value_XPATH");
-		/*	
-			for(int i=0;i<8;i++)
-			{
-				System.out.println(row.get(i));
-			}*/
+
 
 	}
 	
@@ -204,5 +200,28 @@ public class InstMngmt_classrooms extends TestBase {
 
 		}
 	}
-	
+	@Test(enabled=true)
+	public void verify_breadcrumbs() throws InterruptedException, IOException{
+
+		click("inst_management_XPATH");
+		click("classroom_XPATH");
+		
+		//Create mode
+		click("clssrm_create_new_XPATH");
+		verifyBreadrumbs("Add","Classroom");
+		
+		
+		// Edit mode
+		editRow(1);
+		verifyBreadrumbs("Edit","Classroom");
+					
+		
+		//View mode
+		viewRow(1);
+		verifyBreadrumbs("View","Classroom");
+		
+			
+		//Home
+		verifyBreadrumbs("Home","Dashboard");
+	}
 }

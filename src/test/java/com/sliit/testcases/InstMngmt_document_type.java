@@ -12,7 +12,7 @@ import com.sliit.utilities.TestUtil;
 
 public class InstMngmt_document_type extends TestBase{
 
-	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
+	@Test(enabled =true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
 	public void add_new_document_type(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -51,7 +51,7 @@ public class InstMngmt_document_type extends TestBase{
 	@Test(enabled =true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
 	public void search_document_type(Hashtable<String, String> data) throws InterruptedException, IOException {
 
-		//Click institute managment
+		//Click institute management
 		click("inst_management_XPATH");
 
 		click("document_type_XPATH");
@@ -128,7 +128,7 @@ public class InstMngmt_document_type extends TestBase{
 
 		type("dcmnt_typ_name_value_XPATH", data.get("new name"));
 
-		// Click save butotn
+		// Click save button
 		click("dcmnt_typ_save_XPATH");
 
 		// Verify record is updated
@@ -144,7 +144,7 @@ public class InstMngmt_document_type extends TestBase{
 			throw new SkipException("Skipping the test case as the Run mode for data set is NO");
 		}
 		
-		//Click institute managment
+		//Click institute management
 		click("inst_management_XPATH");
 
 		//Click locations
@@ -160,8 +160,34 @@ public class InstMngmt_document_type extends TestBase{
 			verifyContains(vals.get(i), data.get("keyword"));
 		}
 		
-		
-		
-		
 	}
+		@Test(enabled=true)
+		public void verify_breadcrumbs() throws InterruptedException, IOException{
+			// Click institute management
+			click("inst_management_XPATH");
+
+			// Click Document type
+			click("document_type_XPATH");
+
+			//Create mode
+			click("dcmnt_typ_create_new_XPATH");
+			verifyBreadrumbs("Add","Document Type");
+			
+			
+			// Edit mode
+			editRow(1);
+			verifyBreadrumbs("Edit","Document Type");
+						
+			
+			//View mode
+			viewRow(1);
+			verifyBreadrumbs("View","Document Type");
+			
+				
+			//Home
+			verifyBreadrumbs("Home","Dashboard");
+		}
+		
 }
+	
+

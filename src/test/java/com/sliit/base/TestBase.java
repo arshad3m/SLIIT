@@ -28,10 +28,14 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -143,7 +147,7 @@ public class TestBase {
 
 			if (config.getProperty("browser").equals("firefox")) {
 
-				System.setProperty("webdriver.gecko.driver", "\\src\\test\\resources\\executables\\geckodriver.exe");
+				System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") +"\\src\\test\\resources\\executables\\geckodriver.exe");
 				driver = new FirefoxDriver();
 
 			} else if (config.getProperty("browser").equals("chrome")) {
@@ -154,9 +158,15 @@ public class TestBase {
 				log.debug("Chrome Launched !!!");
 			} else if (config.getProperty("browser").equals("ie")) {
 
-				System.setProperty("webdriver.ie.driver",
-						System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\MicrosoftWebDriver.exe");
-				driver = new InternetExplorerDriver();
+				System.setProperty("webdriver.chrome.driver",
+						System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\msedgedriver.exe");
+				
+				ChromeOptions chromeOptions = new ChromeOptions();
+			    chromeOptions.setBinary(
+			            "C:\\Program Files (x86)\\Microsoft\\Edge Beta\\Application\\msedge.exe");
+			    MutableCapabilities edgeOptions = new EdgeOptions().merge(chromeOptions);
+				
+				driver = new ChromeDriver(edgeOptions);
 
 			}
 
@@ -201,7 +211,7 @@ public class TestBase {
 			wait.until(ExpectedConditions.elementToBeClickable(element));
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			js.executeScript("arguments[0].click();", element);
-			test.log(LogStatus.INFO, "Clickingg on : " + element.toString().replace("_XPATH", ""));
+			test.log(LogStatus.INFO, "Clickingg on : " + element.toString().replace("_XPATH", ""));		
 		}
 	}
 	
@@ -306,7 +316,7 @@ public class TestBase {
 		try {
 
 			Assert.assertEquals(actual.toLowerCase(), expected.toLowerCase());
-			test.log(LogStatus.INFO, "Verifying the expected text: " + expected);
+			test.log(LogStatus.INFO, "Verified the expected text: " + expected);
 
 		} catch (Throwable t) {
 
@@ -333,7 +343,7 @@ public class TestBase {
 		try {
 
 			Assert.assertEquals(actual, expected);
-			test.log(LogStatus.INFO, "Verifying the expected text: " + expected);
+			test.log(LogStatus.INFO, "Verified the expected text: " + expected);
 
 		} catch (Throwable t) {
 
@@ -415,7 +425,7 @@ public class TestBase {
 		try {
 
 			assertTrue(text.toLowerCase().contains(word.toLowerCase()));
-			test.log(LogStatus.INFO, "Asserting " + text + "contains: " + word);
+			test.log(LogStatus.INFO, "Asserting " + text + " contains: " + word);
 
 		} catch (Throwable t) {
 
@@ -769,8 +779,27 @@ public class TestBase {
 		
 		verifyEquals(row_values, getTextAttribute(field_xpath));
 	}
+
+	public static void verifyToggleButton(String row_value, String xpath, String positive, String negative) throws IOException, InterruptedException {
+
+		
+		boolean status=Boolean.parseBoolean(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
+		
+		String togglebtn_state;
+		
+		if(status)
+			togglebtn_state= positive;
+		
+		else togglebtn_state= negative;
+		
+		test.log(LogStatus.INFO, " Verifying toggle button status of : " + xpath);
+		verifyEqualsIgnoreCase(row_value,togglebtn_state );
+		
+
+	}
 	
 	
+
 	
 	/**
 	 * @author ArshadM 
@@ -926,7 +955,7 @@ public class TestBase {
 		
 		try {
 			
-			for(int i=0; i<5;i++) {
+			for(int i=0; i<first_column.size()-1 && i<5 ;i++) {
 				
 				if(first_column.get(i).contains(column_prefix)) {
 				column_values.add(Integer.parseInt(first_column.get(i).replace(column_prefix, "")));
@@ -973,7 +1002,7 @@ public class TestBase {
 
 		String message_after_save = getTextOfElement("lcnts_success_message_XPATH");
 
-		//Thread.sleep(3000);
+		Thread.sleep(2000);
 
 		verifyContains(message_after_save, "successfully!");
 	}
@@ -998,7 +1027,9 @@ public class TestBase {
 		
 		type("filter_searchbox_XPATH",keyword);
 		
-		Thread.sleep(6000);
+		driver.findElement(By.xpath(OR.getProperty("filter_searchbox_XPATH"))).sendKeys(Keys.ENTER);
+		
+		Thread.sleep(10000);
 	}
 	
 
@@ -1193,14 +1224,83 @@ public class TestBase {
 
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("logout_success_message_XPATH"))));
 		
-		log.debug("User successfully loggedout of the system!");
+		log.debug("User successfully logged out of the system!");
 		
 		//String message_after_save = getTextOfElement("logout_success_message_XPATH");
 		
 		//verifyContains(message_after_save, "successfully!");
 
 	}
+	
+	/**
+	 * @throws InterruptedException 
+	 * @throws IOException 
+	 * @authoer Jayashani
+	 * Verify Breadcrumbs for different views
+	 */
+	private static void verifyBreadcrumb_title(String operation) throws IOException {
+		try {
 
+			verifyEqualsIgnoreCase(operation, driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText());
+
+			
+		}catch (Throwable t)
+		{
+
+			TestUtil.captureScreenshot();
+			// ReportNG
+			Reporter.log("<br>" + "Title Verification failed : " + t.getMessage() + "<br>");
+			// Extent Reports
+			test.log(LogStatus.FAIL, " Title Verification failed : " + t.getMessage());
+			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
+		
+		}
+	}
+	private static void verifyBreadrumb_navigation(String xpath,String operation,String category) throws InterruptedException, IOException{
+		
+			try {
+			
+			//Bread-crumb Navigation
+			click(xpath);
+			
+			if(operation !="Home") {
+			
+			wait.until(ExpectedConditions.elementToBeClickable(By.xpath(OR.getProperty("home_XPATH"))));
+			}
+			//Verify Navigation
+			
+			else
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("dashboard_XPATH"))));
+			verifyContains(driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText(), category);
+			
+			
+		}
+		catch(Throwable t)
+		{
+			TestUtil.captureScreenshot();
+			// ReportNG
+			Reporter.log("<br>" + "Breadcrumb Verification failed : " + t.getMessage() + "<br>");
+
+			// Extent Reports
+			test.log(LogStatus.FAIL, " Breadcrumb Verification failed : " + t.getMessage());
+			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
+		}
+	}
+	public static void verifyBreadrumbs(String operation, String category) throws InterruptedException, IOException{
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(OR.getProperty("home_XPATH"))));
+		if(operation.equals("Home"))
+		{
+			//verify navigation to home
+			verifyBreadrumb_navigation("home_XPATH",operation,"dashboard");
+		}else
+		{
+			verifyBreadcrumb_title(operation.concat(" ").concat(category));
+			//verify navigation to grid
+			verifyBreadrumb_navigation("brdcrmb_XPATH",operation,category);
+		}
+		
+	}
+	
 	@AfterSuite
 	public void tearDown() throws InterruptedException, IOException {
 
@@ -1222,7 +1322,7 @@ public class TestBase {
 	
 	public void copyLogFiles() throws IOException {
 		
-		String timeStamp = new SimpleDateFormat("y-M-dd, E 'at' h.m a").format(new java.util.Date());
+		String timeStamp = new SimpleDateFormat("y-M-dd, E 'at' h.mm a").format(new java.util.Date());
 		
 		File srcDir = new File(System.getProperty("user.dir") + "\\target\\surefire-reports\\html");
 		File destDir = new File(System.getProperty("user.dir") + "\\target\\surefire-reports\\"+timeStamp);

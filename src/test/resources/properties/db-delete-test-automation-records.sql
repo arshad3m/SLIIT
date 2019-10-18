@@ -16,15 +16,21 @@ use sims;
 SET SQL_SAFE_UPDATES=0;
 
 /*Deleting from program table */
+/*Deleting from program table */
 delete from specializationCenter
-where specialization in (select id from specialization
-where programId in (select id from program where code like 'Auto_%'))and specialization<>0;
+where specialization in (select id from specialization where (programId in (select id from program where code like 'Auto_%') 
+or departmentId in (select id from department where code like 'Auto_%')) )
+or center in (select id from center where code like 'Auto_%');
 
 delete from specialization
-where programId in (select id from program where code like 'Auto_%') and id <>0;
+where name like 'Auto_%' 
+or programId in (select id from program where code like 'Auto_%' or (awardingInstituteId in (select id from awardingInstitute where code like 'Auto_%')
+or facultyId in (select id from faculty where code like 'Auto_%'))) 
+or departmentId in (select id from department where code like 'Auto_%');
 
 delete from program
-where code like 'Auto_%';
+where code like 'Auto_%' or awardingInstituteId in (select id from awardingInstitute where code like 'Auto_%')
+or facultyId in (select id from faculty where code like 'Auto_%');
 
 /*Deleting from  learning outcomes table */
 delete from learningOutcome
@@ -57,8 +63,6 @@ where code like 'Auto_%';
 /* Deleting from  subjects table */
 delete from session
 where code like 'Auto_%' or subjectId in (select id from subject where code like 'Auto_%'
-or subject.awardingInstituteId in (select id from awardingInstitute where code like 'Auto_%')
-or subject.facultyId in (select id from faculty where code like 'Auto_%') 
 or subject.departmentId in (select id from department where code like 'Auto_%'))
 ;
  
@@ -70,11 +74,10 @@ where mainSubject in (select id from subject where code like 'Auto_%');
 
 delete from subject
 where code like 'Auto_%' 
-or awardingInstituteId in (select id from awardingInstitute where code like 'Auto_%')
-or facultyId in (select id from faculty where code like 'Auto_%') 
 or departmentId in (select id from department where code like 'Auto_%')
 ;
 
+/* Deleting from  program type */
 delete from programType
 where code like 'Auto_%';
 
@@ -85,6 +88,7 @@ or academicYear.facultyId in (select id from faculty where code like 'Auto_%') A
 delete from documentType
 where code like 'Auto_%';
 
+/* Delete Classrooms */
 delete from classroomFaculty 
 where (classroomFaculty.classroomId in (select id from classroom where code like 'Auto_%') AND classroomFaculty.classroomId <>0);
 

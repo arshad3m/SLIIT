@@ -171,7 +171,7 @@ public class InstMngmt_centers extends TestBase {
 		}	
 		
 	}
-	@Test(enabled=true)
+	@Test(enabled=true, priority=6)
 	public void verify_breadcrumbs() throws InterruptedException, IOException{
 
 		click("inst_management_XPATH");

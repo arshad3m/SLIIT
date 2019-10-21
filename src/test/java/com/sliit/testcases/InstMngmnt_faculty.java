@@ -57,7 +57,7 @@ public class InstMngmnt_faculty extends TestBase{
 
 	}
 	
-	@Test(enabled=true)
+	@Test(enabled=true, priority=7)
 	public void verify_values_in_centers_dropdown() throws InterruptedException {
 		
 		click("inst_management_XPATH");
@@ -155,7 +155,7 @@ public class InstMngmnt_faculty extends TestBase{
 				
 	}
 	
-	@Test(enabled=true)
+	@Test(enabled=true, priority=6)
 	public void verify_breadcrumbs() throws InterruptedException, IOException{
 
 		click("inst_management_XPATH");

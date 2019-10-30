@@ -12,7 +12,7 @@ import com.sliit.utilities.TestUtil;
 
 public class PrgMngmnt_entry_criteria extends TestBase{
 
-	@Test(enabled =true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
+	@Test(enabled =false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
 	public void add_new_entry_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -23,20 +23,23 @@ public class PrgMngmnt_entry_criteria extends TestBase{
 		click("prg_management_XPATH");
 
 		click("entry_criteria_XPATH");
-
+		
 		click("create_new_XPATH"); 
 		type("entry_crtr_code_XPATH", data.get("code"));
 		type("entry_crtr_name_XPATH", data.get("name"));
 		
-		setStatus("status_XPATH", data.get("status"));
 		
 		//select qualification type
-		type("entry_crtr_qualification_type_XPATH", data.get("type"));
+		click("entry_crtr_qualification_type_XPATH");
+		Thread.sleep(3000);
+		type("entry_crtr_type_qualification_type_XPATH", data.get("type"));
 		Thread.sleep(3000);
 		click("entry_crtr_qualification_type_dd_value_XPATH");
 		
 		//Select Qualification outcome
-		type("entry_crtr_qualification_outcome_XPATH", data.get("outcome"));
+		Thread.sleep(3000); // waiting for Outcomes dropdown to load
+		click("entry_crtr_qualification_outcome_XPATH");
+		type("entry_crtr_type_qualification_outcome_XPATH", data.get("outcome"));
 		Thread.sleep(3000);
 		click("entry_crtr_qualification_outcome_dd_value_XPATH");
 		
@@ -44,10 +47,13 @@ public class PrgMngmnt_entry_criteria extends TestBase{
 		type("entry_crtr_subjects_XPATH", data.get("subject1"));
 		click("entry_crtr_subjects_plus_btn_XPATH");
 		//Add Results
-		type("entry_crtr_results_XPATH", data.get("result1"));
-		type("entry_crtr_results_XPATH", data.get("result1"));
+		
+		type("entry_crtr_grade_XPATH", data.get("grade"));
+		type("entry_crtr_value_XPATH", data.get("value"));
 		click("entry_crtr_results_plus_btn_XPATH");
 
+		setStatus("status_XPATH", data.get("status"));
+		
 		click("save_XPATH");
 
 		verifyRecordSave();
@@ -72,7 +78,7 @@ public class PrgMngmnt_entry_criteria extends TestBase{
 		verifySearchResults(7, data.get("keyword"));
 
 	}
-	@Test(enabled =false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
+	@Test(enabled =true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
 	public void view_entry_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -161,7 +167,7 @@ public class PrgMngmnt_entry_criteria extends TestBase{
 
 	}
 	
-	@Test(enabled=false,priority=6)
+	@Test(enabled=true,priority=6)
 	public void verify_breadcrumbs() throws InterruptedException, IOException{
 
 		click("prg_management_XPATH");
@@ -170,16 +176,16 @@ public class PrgMngmnt_entry_criteria extends TestBase{
 		
 		//Create mode
 		click("create_new_XPATH");
-		verifyBreadrumbs("Add","Entry Criterion");		
+		verifyBreadrumbs("Add","Entry Criteria");		
 		Thread.sleep(3000);
 		
 		// Edit mode
 		editRow(1);
-		verifyBreadrumbs("Edit","Entry Criterion");
+		verifyBreadrumbs("Edit","Entry Criteri");
 		
 		//View mode
 		viewRow(1);
-		verifyBreadrumbs("View","Entry Criterion");
+		verifyBreadrumbs("View","Entry Criteri");
 		
 		//Home
 		verifyBreadrumbs("Home","Dashboard"); 

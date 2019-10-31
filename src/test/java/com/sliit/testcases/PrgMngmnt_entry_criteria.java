@@ -12,7 +12,7 @@ import com.sliit.utilities.TestUtil;
 
 public class PrgMngmnt_entry_criteria extends TestBase{
 
-	@Test(enabled =false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
+	@Test(enabled =true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
 	public void add_new_entry_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -58,11 +58,11 @@ public class PrgMngmnt_entry_criteria extends TestBase{
 
 		verifyRecordSave();
 		
-		verifyTableDescendingOrder("Auto_QT_");
+		verifyTableDescendingOrder("Auto_ET_");
 
 
 	}
-	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
+	@Test(enabled =true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
 	public void search_entry_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		click("prg_management_XPATH");
@@ -104,12 +104,12 @@ public class PrgMngmnt_entry_criteria extends TestBase{
 		verifyViewRowValues(row.get(1), "qlfctn_typ_name_value_XPATH");
 			
 		//verify status
-		verifyViewRowValues(row.get(3), "qlfctn_typ_status_value_XPATH");	
+		verifyViewRowValues(row.get(4), "qlfctn_typ_status_value_XPATH");	
 	
 		 
 		
 	}
-	@Test(enabled=false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
+	@Test(enabled=true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
 	public void filter_entry_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 		
 		if (!data.get("runmode").equals("Y")) {
@@ -133,7 +133,7 @@ public class PrgMngmnt_entry_criteria extends TestBase{
 
 		}
 	}
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
 	public void edit_entry_criteria(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -156,9 +156,31 @@ public class PrgMngmnt_entry_criteria extends TestBase{
 		//updating  code,name and description with new values
 		type("qlfctn_typ_code_value_XPATH", data.get("new code"));
 		type("qlfctn_typ_name_value_XPATH", data.get("new name"));
-		/*type("qlfctn_typ_outcomes_edit_value_XPATH", data.get("new outcome1"));	
-		click("qlfctn_typ_plus_btn_value_XPATH");
-		*/
+		
+		//select qualification type
+		Thread.sleep(3000);
+		click("entry_crtr_qualification_type_XPATH");
+		Thread.sleep(3000);
+		type("entry_crtr_type_qualification_type_XPATH", data.get("new type"));
+		Thread.sleep(3000);
+		click("entry_crtr_qualification_type_dd_value_XPATH");
+				
+		//Select Qualification outcome
+		Thread.sleep(3000); // waiting for Outcomes dropdown to load
+		click("entry_crtr_qualification_outcome_XPATH");
+		type("entry_crtr_type_qualification_outcome_XPATH", data.get("new outcome"));
+		Thread.sleep(3000);
+		click("entry_crtr_qualification_outcome_dd_value_XPATH");
+				
+		//Add Subjects
+		type("entry_crtr_subjects_XPATH", data.get("new subject"));
+		click("entry_crtr_subjects_plus_btn_XPATH");
+		//Add Results
+				
+		type("entry_crtr_grade_XPATH", data.get("new grade"));
+		type("entry_crtr_value_XPATH", data.get("new value"));
+		click("entry_crtr_results_plus_btn_XPATH");
+		
 		// Click save button
 		click("save_XPATH");
 
@@ -176,16 +198,17 @@ public class PrgMngmnt_entry_criteria extends TestBase{
 		
 		//Create mode
 		click("create_new_XPATH");
-		verifyBreadrumbs("Add","Entry Criteria");		
+		verifyBreadrumbs("Add","Entry Criterion");		
 		Thread.sleep(3000);
 		
 		// Edit mode
 		editRow(1);
-		verifyBreadrumbs("Edit","Entry Criteri");
+		verifyBreadrumbs("Edit","Entry Criterion");
+		Thread.sleep(3000);
 		
 		//View mode
 		viewRow(1);
-		verifyBreadrumbs("View","Entry Criteri");
+		verifyBreadrumbs("View","Entry Criterion");
 		
 		//Home
 		verifyBreadrumbs("Home","Dashboard"); 

@@ -15,7 +15,17 @@
 use sims;
 SET SQL_SAFE_UPDATES=0;
 
-/*Deleting from program table */
+
+/*Deleting from Grades table */
+delete from gradeMark
+where gradeId in (select * from grade where code like 'Auto_%');
+
+delete from gradeSpecialization
+where gradeId in (select * from grade where code like 'Auto_%');
+
+delete from grade
+where code like 'Auto_%';
+
 /*Deleting from program table */
 delete from specializationCenter
 where specialization in (select id from specialization where (programId in (select id from program where code like 'Auto_%') 

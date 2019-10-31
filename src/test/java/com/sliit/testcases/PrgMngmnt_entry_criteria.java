@@ -98,13 +98,13 @@ public class PrgMngmnt_entry_criteria extends TestBase{
 		viewRow(row_number);
 
 		// verify code
-		verifyViewRowValues(row.get(0), "qlfctn_typ_code_value_XPATH");
+		verifyViewRowValues(row.get(0), "entry_crtr_code_value_XPATH");
 
 		// verify name
-		verifyViewRowValues(row.get(1), "qlfctn_typ_name_value_XPATH");
+		verifyViewRowValues(row.get(1), "entry_crtr_name_value_XPATH");
 			
 		//verify status
-		verifyViewRowValues(row.get(4), "qlfctn_typ_status_value_XPATH");	
+		verifyViewRowValues(row.get(4), "entry_crtr_status_value_XPATH");	
 	
 		 
 		

@@ -154,8 +154,8 @@ public class PrgMngmnt_entry_criteria extends TestBase{
 		editRow(row_number);
 
 		//updating  code,name and description with new values
-		type("qlfctn_typ_code_value_XPATH", data.get("new code"));
-		type("qlfctn_typ_name_value_XPATH", data.get("new name"));
+		type("entry_crtr_code_value_XPATH", data.get("new code"));
+		type("entry_crtr_name_value_XPATH", data.get("new name"));
 		
 		//select qualification type
 		Thread.sleep(3000);

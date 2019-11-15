@@ -132,7 +132,9 @@ public class TestBase {
 			}
 			
 			//clear db tables
-			clearDBScript();
+		//	clearDBScript();
+			
+			restoreDB();
 
 			if (System.getenv("browser") != null && !System.getenv("browser").isEmpty()) {
 
@@ -1177,6 +1179,19 @@ public class TestBase {
 		} catch (Exception e) {
 			System.err.println(e);
 		}
+	}
+	
+	
+	
+	public static void restoreDB() throws IOException {
+		
+	//	String command="mysql -u "+config.getProperty("db_username")+" -p "+config.getProperty("db_password")+" sims "+"C:\\Users\\arshadm\\Documents\\dumps\\Dump20191021.sql";
+		
+	//	String executeCmd = "C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE --user=" + config.getProperty("db_username") + "--password=" + config.getProperty("db_password")+ "sims -e source "+"C:\\Users\\arshadm\\Documents\\dumps\\Dump20191021.sql";  
+		
+		String[] executeCmd = new String[]{"C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\mysql.exe","sims", "--user=" + config.getProperty("db_username"), "--password=" + config.getProperty("db_password"), "-e", " source " + "C:\\Users\\arshadm\\Documents\\dumps\\Dump20191021.sql"};
+		
+		Runtime.getRuntime().exec(executeCmd);
 	}
 	
 	

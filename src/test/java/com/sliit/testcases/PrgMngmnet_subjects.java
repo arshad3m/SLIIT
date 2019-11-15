@@ -12,7 +12,7 @@ import com.sliit.utilities.TestUtil;
 
 public class PrgMngmnet_subjects extends TestBase{
 	
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
 	public void add_subjects(Hashtable<String, String> data) throws InterruptedException, IOException {
 		if (!data.get("runmode").equals("Y")) {
 
@@ -64,7 +64,7 @@ public class PrgMngmnet_subjects extends TestBase{
 		
 	}
 	
-	@Test(enabled = false, priority = 2)
+	@Test(enabled = true, priority = 2)
 	public void searchSubjects() throws InterruptedException, IOException {
 		
 

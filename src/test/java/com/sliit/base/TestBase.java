@@ -132,7 +132,7 @@ public class TestBase {
 			}
 			
 			//clear db tables
-		//	clearDBScript();
+			clearDBScript();
 			
 			restoreDB();
 

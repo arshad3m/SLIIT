@@ -134,7 +134,7 @@ public class TestBase {
 			//clear db tables
 			clearDBScript();
 			
-			restoreDB();
+//			restoreDB();
 
 			if (System.getenv("browser") != null && !System.getenv("browser").isEmpty()) {
 

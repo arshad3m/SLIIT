@@ -168,7 +168,7 @@ public class PrgMngmnt_academic_years extends TestBase{
 
 		}
 	}
-	@Test(enabled=true,priority=5)
+	@Test(enabled=true,priority=6)
 	public void verify_breadcrumbs() throws InterruptedException, IOException{
 
 		click("prg_management_XPATH");

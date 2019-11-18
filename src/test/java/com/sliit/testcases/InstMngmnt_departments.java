@@ -188,7 +188,7 @@ public class InstMngmnt_departments extends TestBase{
 		}	
 		
 	}
-	@Test(enabled=true)
+	@Test(enabled=true, priority=6)
 	public void verify_breadcrumbs() throws InterruptedException, IOException{
 		// Click institute management
 		click("inst_management_XPATH");

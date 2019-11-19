@@ -20,7 +20,6 @@
 			<class name="com.sliit.testcases.InstMngmt_awarding_institute" /> 
 			<class name="com.sliit.testcases.InstMngmt_document_type" /> 
 			<class name="com.sliit.testcases.InstMngmt_classrooms" />
-	
 			<class name="com.sliit.testcases.PrgMngmnt_academic_years" />
 			<class name="com.sliit.testcases.PrgMngmnt_program_types" />
 			<class name="com.sliit.testcases.PrgMngmnt_assessment_criteria"/>
@@ -28,6 +27,7 @@
 			<class name="com.sliit.testcases.PrgMngmnt_entry_criteria"/>
 			<class name="com.sliit.testcases.PrgMngmnt_level_completion_outcomes"/>
 			<class name="com.sliit.testcases.PrgMngmnt_programs" />
+			<class name="com.sliit.testcases.PrgMngmnet_subjects" />
 			
 		</classes>
 	</test>

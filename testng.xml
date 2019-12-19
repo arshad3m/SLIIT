@@ -28,6 +28,7 @@
 			<class name="com.sliit.testcases.PrgMngmnt_entry_criteria"/>
 			<class name="com.sliit.testcases.PrgMngmnt_level_completion_outcomes"/>
 			<class name="com.sliit.testcases.PrgMngmnt_programs" />
+			<class name="com.sliit.testcases.PrgMngmnt_grades" />
 			
 		</classes>
 	</test>

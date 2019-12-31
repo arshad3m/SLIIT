@@ -22,7 +22,7 @@
 			<class name="com.sliit.testcases.PrgMngmnt_academic_years" />
 			<class name="com.sliit.testcases.PrgMngmnt_program_types" />
 			<class name="com.sliit.testcases.PrgMngmnt_assessment_criteria" />
-			<class name="com.sliit.testcases.PrgMngmnt_qualification_types" />1
+			<class name="com.sliit.testcases.PrgMngmnt_qualification_types" />
 			<class name="com.sliit.testcases.PrgMngmnt_entry_criteria" />
 			<class
 				name="com.sliit.testcases.PrgMngmnt_level_completion_outcomes" />

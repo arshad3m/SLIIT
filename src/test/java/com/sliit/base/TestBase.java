@@ -381,7 +381,6 @@ public class TestBase {
 			
 			String newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[2]/ul[2]/li["+value+"]/div");
 			OR.setProperty("temp_XPATH", newlocator_XPATH);
-			test.log(LogStatus.INFO, newlocator_XPATH);
 			click("temp_XPATH");
 
 		}

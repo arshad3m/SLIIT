@@ -343,6 +343,54 @@ public class TestBase {
 	}
 
 	/**
+	 * @author JayashaniG Wrapper method for selecting the any value from a drop down
+	 * @throws InterruptedException
+	 */
+	public static void selectFromDropdown(String locator, int value) throws InterruptedException {
+		if (locator.endsWith("_CSS")) {
+			dropdown = driver.findElement(By.cssSelector(OR.getProperty(locator)));
+		} else if (locator.endsWith("_XPATH")) {
+			dropdown = driver.findElement(By.xpath(OR.getProperty(locator)));
+		} else if (locator.endsWith("_ID")) {
+			dropdown = driver.findElement(By.id(OR.getProperty(locator)));
+		}
+
+
+		int count = driver.findElements(By.xpath(OR.getProperty(locator).replace("/span", ""))).size();
+		
+		click(locator);
+		Thread.sleep(3000);
+		if (count == 1) {
+			
+
+			String newlocator_XPATH="";
+			
+			if(OR.getProperty(locator).endsWith("/div/span")) {
+			newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[1]/ul[2]/li[1]/div");
+			}
+			
+			if(OR.getProperty(locator).endsWith("/div/div/*")) {
+				newlocator_XPATH = OR.getProperty(locator).replace("/div/*", "/div/*/div/div[2]/ul[2]/li[1]/div");
+			}
+			
+			
+			OR.setProperty("temp_XPATH", newlocator_XPATH);
+			click("temp_XPATH");
+
+		} else {
+			
+			String newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[2]/ul[2]/li["+value+"]/div");
+			OR.setProperty("temp_XPATH", newlocator_XPATH);
+			click("temp_XPATH");
+
+		}
+			
+
+		click("prgm_header_XPATH");
+		Thread.sleep(1000);
+
+	}
+	/**
 	 * @author ArshadM Check if an element is present
 	 */
 	public boolean isElementPresent(By by) {
@@ -364,8 +412,8 @@ public class TestBase {
 
 		try {
 
-			Assert.assertEquals(actual.toLowerCase(), expected.toLowerCase());
-			test.log(LogStatus.INFO, "Verified the expected text: " + expected);
+		test.log(LogStatus.INFO, "Verified the expected text: " + expected);	Assert.assertEquals(actual.toLowerCase(), expected.toLowerCase());
+			
 
 		} catch (Throwable t) {
 

@@ -62,7 +62,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 /**
  * @author ArshadM
  *
@@ -91,9 +90,9 @@ public class TestBase {
 	/**
 	 * @author ArshadM initiating file input streams initiating browser driver
 	 *         inititating configurations initiating reports intitiating logs
-	 * @throws ClassNotFoundException 
-	 * @throws InterruptedException 
-	 * @throws IOException 
+	 * @throws ClassNotFoundException
+	 * @throws InterruptedException
+	 * @throws IOException
 	 */
 
 	@BeforeSuite
@@ -130,11 +129,11 @@ public class TestBase {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			//clear db tables
-		//	clearDBScript();
-			
-			restoreDB();
+
+			// clear db tables
+			clearDBScript();
+
+			// restoreDB();
 
 			if (System.getenv("browser") != null && !System.getenv("browser").isEmpty()) {
 
@@ -149,7 +148,8 @@ public class TestBase {
 
 			if (config.getProperty("browser").equals("firefox")) {
 
-				System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") +"\\src\\test\\resources\\executables\\geckodriver.exe");
+				System.setProperty("webdriver.gecko.driver",
+						System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\geckodriver.exe");
 				driver = new FirefoxDriver();
 
 			} else if (config.getProperty("browser").equals("chrome")) {
@@ -162,33 +162,31 @@ public class TestBase {
 
 				System.setProperty("webdriver.chrome.driver",
 						System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\msedgedriver.exe");
-				
+
 				ChromeOptions chromeOptions = new ChromeOptions();
-			    chromeOptions.setBinary(
-			            "C:\\Program Files (x86)\\Microsoft\\Edge Beta\\Application\\msedge.exe");
-			    MutableCapabilities edgeOptions = new EdgeOptions().merge(chromeOptions);
-				
+				chromeOptions.setBinary("C:\\Program Files (x86)\\Microsoft\\Edge Beta\\Application\\msedge.exe");
+				MutableCapabilities edgeOptions = new EdgeOptions().merge(chromeOptions);
+
 				driver = new ChromeDriver(edgeOptions);
 
 			}
 
 			driver.get(config.getProperty("testsiteurl"));
 			log.debug("Navigated to : " + config.getProperty("testsiteurl"));
-			
-			
+
 			driver.manage().window().maximize();
 			driver.manage().timeouts().implicitlyWait(Integer.parseInt(config.getProperty("implicit.wait")),
 					TimeUnit.SECONDS);
-			
+
 			login();
 			log.debug("User login done !!!");
 
-			
 			wait = new WebDriverWait(driver, 25);
 			action = new Actions(driver);
 		}
 
-	}	
+	}
+
 	/**
 	 * @author ArshadM Wrapper mehtod to click on an element
 	 */
@@ -196,29 +194,26 @@ public class TestBase {
 	public static void click(String locator) {
 
 		try {
-		if (locator.endsWith("_CSS")) {
-			driver.findElement(By.cssSelector(OR.getProperty(locator))).click();
-		} else if (locator.endsWith("_XPATH")) {
-			Actions action = new Actions(driver);
-			action.moveToElement(driver.findElement(By.xpath(OR.getProperty(locator)))).perform();
-			wait.until(ExpectedConditions.elementToBeClickable(By.xpath(OR.getProperty(locator)))).click();
-			// driver.findElement(By.xpath(OR.getProperty(locator))).click();
-		} else if (locator.endsWith("_ID")) {
-			driver.findElement(By.id(OR.getProperty(locator))).click();
-		}
-		test.log(LogStatus.INFO, "Clicking on : " + locator.toString().replace("_XPATH", ""));
-		
-		}catch(Throwable t) {
+			if (locator.endsWith("_CSS")) {
+				driver.findElement(By.cssSelector(OR.getProperty(locator))).click();
+			} else if (locator.endsWith("_XPATH")) {
+				Actions action = new Actions(driver);
+				action.moveToElement(driver.findElement(By.xpath(OR.getProperty(locator)))).perform();
+				wait.until(ExpectedConditions.elementToBeClickable(By.xpath(OR.getProperty(locator)))).click();
+				// driver.findElement(By.xpath(OR.getProperty(locator))).click();
+			} else if (locator.endsWith("_ID")) {
+				driver.findElement(By.id(OR.getProperty(locator))).click();
+			}
+			test.log(LogStatus.INFO, "Clicking on : " + locator.toString().replace("_XPATH", ""));
+
+		} catch (Throwable t) {
 			WebElement element = driver.findElement(By.xpath(OR.getProperty(locator)));
 			wait.until(ExpectedConditions.elementToBeClickable(element));
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			js.executeScript("arguments[0].click();", element);
-			test.log(LogStatus.INFO, "Clickingg on : " + element.toString().replace("_XPATH", ""));		
+			test.log(LogStatus.INFO, "Clickingg on : " + element.toString().replace("_XPATH", ""));
 		}
 	}
-	
-	
-	
 
 	public static void click(WebElement element) {
 		wait.until(ExpectedConditions.elementToBeClickable(element));
@@ -296,6 +291,106 @@ public class TestBase {
 	}
 
 	/**
+	 * @author ArshadM Wrapper method for selecting the first value from a drop down
+	 * @throws InterruptedException
+	 */
+	public static void selectFirstValue(String locator) throws InterruptedException {
+		if (locator.endsWith("_CSS")) {
+			dropdown = driver.findElement(By.cssSelector(OR.getProperty(locator)));
+		} else if (locator.endsWith("_XPATH")) {
+			dropdown = driver.findElement(By.xpath(OR.getProperty(locator)));
+		} else if (locator.endsWith("_ID")) {
+			dropdown = driver.findElement(By.id(OR.getProperty(locator)));
+		}
+
+		// Select select = new Select(dropdown);
+
+		int count = driver.findElements(By.xpath(OR.getProperty(locator).replace("/span", ""))).size();
+		if (count == 1) {
+			click(locator);
+
+			String newlocator_XPATH="";
+			
+			if(OR.getProperty(locator).endsWith("/div/span")) {
+			newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[1]/ul[2]/li[1]/div");
+			}
+			
+			if(OR.getProperty(locator).endsWith("/div/div/*")) {
+				newlocator_XPATH = OR.getProperty(locator).replace("/div/*", "/div/*/div/div[2]/ul[2]/li[1]/div");
+			}
+			
+			
+			OR.setProperty("temp_XPATH", newlocator_XPATH);
+			click("temp_XPATH");
+
+		} else {
+			//// *[@id='faculty']/div/div[2]/ul[2]/li[1]
+			click(locator);
+
+			String newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[2]/ul[2]/li[1]/div");
+			OR.setProperty("temp_XPATH", newlocator_XPATH);
+			click("temp_XPATH");
+
+		}
+		// select.selectByVisibleText(value);
+
+	//	test.log(LogStatus.INFO,
+		//		"Selecting from dropdown : " + locator.toString().replace("_XPATH", "") + " value as "+getTextAttribute("temp_XPATH"));
+
+		click("prgm_header_XPATH");
+		Thread.sleep(1000);
+
+	}
+
+	/**
+	 * @author JayashaniG Wrapper method for selecting the any value from a drop down
+	 * @throws InterruptedException
+	 */
+	public static void selectFromDropdown(String locator, int value) throws InterruptedException {
+		if (locator.endsWith("_CSS")) {
+			dropdown = driver.findElement(By.cssSelector(OR.getProperty(locator)));
+		} else if (locator.endsWith("_XPATH")) {
+			dropdown = driver.findElement(By.xpath(OR.getProperty(locator)));
+		} else if (locator.endsWith("_ID")) {
+			dropdown = driver.findElement(By.id(OR.getProperty(locator)));
+		}
+
+
+		int count = driver.findElements(By.xpath(OR.getProperty(locator).replace("/span", ""))).size();
+		
+		click(locator);
+		Thread.sleep(3000);
+		if (count == 1) {
+			
+
+			String newlocator_XPATH="";
+			
+			if(OR.getProperty(locator).endsWith("/div/span")) {
+			newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[1]/ul[2]/li[1]/div");
+			}
+			
+			if(OR.getProperty(locator).endsWith("/div/div/*")) {
+				newlocator_XPATH = OR.getProperty(locator).replace("/div/*", "/div/*/div/div[2]/ul[2]/li[1]/div");
+			}
+			
+			
+			OR.setProperty("temp_XPATH", newlocator_XPATH);
+			click("temp_XPATH");
+
+		} else {
+			
+			String newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[2]/ul[2]/li["+value+"]/div");
+			OR.setProperty("temp_XPATH", newlocator_XPATH);
+			click("temp_XPATH");
+
+		}
+			
+
+		click("prgm_header_XPATH");
+		Thread.sleep(1000);
+
+	}
+	/**
 	 * @author ArshadM Check if an element is present
 	 */
 	public boolean isElementPresent(By by) {
@@ -317,8 +412,8 @@ public class TestBase {
 
 		try {
 
-			Assert.assertEquals(actual.toLowerCase(), expected.toLowerCase());
-			test.log(LogStatus.INFO, "Verified the expected text: " + expected);
+		test.log(LogStatus.INFO, "Verified the expected text: " + expected);	Assert.assertEquals(actual.toLowerCase(), expected.toLowerCase());
+			
 
 		} catch (Throwable t) {
 
@@ -391,8 +486,7 @@ public class TestBase {
 
 		}
 	}
-	
-	
+
 	public static void verifyLessThan(int value, int shouldBeLessThanThis) throws IOException {
 
 		try {
@@ -420,8 +514,6 @@ public class TestBase {
 
 		}
 	}
-	
-	
 
 	public static void verifyContains(String text, String word) throws IOException {
 		try {
@@ -477,10 +569,9 @@ public class TestBase {
 		}
 	}
 
-	
 	/**
-	 * @author ArshadM Navigate to newly openened tab
-	 * Verify the element is not available
+	 * @author ArshadM Navigate to newly openened tab Verify the element is not
+	 *         available
 	 */
 	public void verifyElementExistNot(String xpath) throws IOException {
 
@@ -512,35 +603,30 @@ public class TestBase {
 
 		}
 	}
-	
-	
-	
+
 	/**
-	 * @author ArshadM 
-	 * Search
-	 * @throws InterruptedException 
+	 * @author ArshadM Search
+	 * @throws InterruptedException
 	 */
 	public static void search(String search_box_xpath, String searchword) throws InterruptedException {
-		
+
 		type(search_box_xpath, searchword);
 
 		driver.findElement(By.xpath(OR.getProperty(search_box_xpath))).sendKeys(Keys.ENTER);
 		test.log(LogStatus.INFO, "Hitting enter key");
-		
+
 		Thread.sleep(3000);
 
 	}
 
-	
-	
 	/**
-	 * @author ArshadM Navigate to newly openened tab
-	 * Retrive the all the values in the given column into a list
-	 * If there are more than 1 page, it would go to each page and read the values
+	 * @author ArshadM Navigate to newly openened tab Retrive the all the values in
+	 *         the given column into a list If there are more than 1 page, it would
+	 *         go to each page and read the values
 	 */
 	public static List<String> getColumnValues(int column_number) throws InterruptedException {
 
-		String column=OR.getProperty("list_column_XPATH")+"["+column_number+"]";
+		String column = OR.getProperty("list_column_XPATH") + "[" + column_number + "]";
 
 		// Read listed elements in the first page into a list
 		List<WebElement> list = driver.findElements(By.xpath(column));
@@ -551,9 +637,9 @@ public class TestBase {
 			codes.add(list.get(i).getAttribute("innerText"));
 		}
 
-		if (list.size() > 10 || driver.findElements( By.xpath(OR.getProperty("page_count_XPATH")) ).size() != 0) {
+		if (list.size() > 10 || driver.findElements(By.xpath(OR.getProperty("page_count_XPATH"))).size() != 0) {
 
-		int	number_of_pages = Integer.parseInt(
+			int number_of_pages = Integer.parseInt(
 					driver.findElement(By.xpath(OR.getProperty("page_count_XPATH"))).getAttribute("innerText"));
 
 			// Do the above the remaining pages
@@ -569,7 +655,7 @@ public class TestBase {
 				}
 
 			}
-			
+
 			Thread.sleep(3000);
 			click("first_page_XPATH");
 			Thread.sleep(3000);
@@ -579,15 +665,14 @@ public class TestBase {
 		return codes;
 
 	}
-	
-	
+
 	/**
-	 * @author ArshadM Navigate to newly openened tab
-	 * Retrive the all the values in the given column into a list on the first page only
+	 * @author ArshadM Navigate to newly openened tab Retrive the all the values in
+	 *         the given column into a list on the first page only
 	 */
 	public static List<String> getColumnValues(int column_number, boolean first_page_only) throws InterruptedException {
 
-		String column=OR.getProperty("list_column_XPATH")+"["+column_number+"]";
+		String column = OR.getProperty("list_column_XPATH") + "[" + column_number + "]";
 
 		// Read listed elements in the first page into a list
 		List<WebElement> list = driver.findElements(By.xpath(column));
@@ -598,18 +683,17 @@ public class TestBase {
 			codes.add(list.get(i).getAttribute("innerText"));
 		}
 
-
 		return codes;
 
 	}
-	
-	
+
 	/**
-	 * @author ArshadM Navigate to newly openened tab
-	 * Retrive the all the ACTIVE values in the given column into a list
-	 * If there are more than 1 page, it would go to each page and read the values
+	 * @author ArshadM Navigate to newly openened tab Retrive the all the ACTIVE
+	 *         values in the given column into a list If there are more than 1 page,
+	 *         it would go to each page and read the values
 	 */
-	public static List<String> getActiveColumnValues(int column_number, int column_number_for_status) throws InterruptedException {
+	public static List<String> getActiveColumnValues(int column_number, int column_number_for_status)
+			throws InterruptedException {
 
 		String column = OR.getProperty("list_column_XPATH") + "[" + column_number + "]";
 
@@ -660,21 +744,19 @@ public class TestBase {
 		return codes;
 
 	}
-	
-	
+
 	/**
-	 * @author ArshadM 
-	 * Retrive the values for a given row.
-	 * The return value will be an string consisting the column values sepearted by space
-	 * @throws InterruptedException 
-	 * @throws IOException 
+	 * @author ArshadM Retrive the values for a given row. The return value will be
+	 *         an string consisting the column values sepearted by space
+	 * @throws InterruptedException
+	 * @throws IOException
 	 */
-	
+
 	public static List<String> getRowValues(int row_number) throws IOException, InterruptedException {
-		
-		//verifyGreaterThan(getRecordCountForTable(), 0);
-		
-		//First make sure there are rows in the table
+
+		// verifyGreaterThan(getRecordCountForTable(), 0);
+
+		// First make sure there are rows in the table
 		try {
 			if (getRecordCountForTable() > 0)
 				Assert.assertTrue(true);
@@ -694,45 +776,34 @@ public class TestBase {
 			test.log(LogStatus.FAIL, " No records found in the table : " + t.getMessage());
 			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
 		}
-		
-		
-		String row=OR.getProperty("list_row_XPATH")+"["+row_number+"]";
-		List<String> values = new ArrayList<String>();
-		List<String> values2=new ArrayList<String>();
 
-		if(row_number <10 | row_number == 10) {
-			
-			List<WebElement> list= driver.findElements(By.xpath(row));
-			
-			for(int i=0;i<list.size();i++) {
+		String row = OR.getProperty("list_row_XPATH") + "[" + row_number + "]";
+		List<String> values = new ArrayList<String>();
+		List<String> values2 = new ArrayList<String>();
+
+		if (row_number < 10 | row_number == 10) {
+
+			List<WebElement> list = driver.findElements(By.xpath(row));
+
+			for (int i = 0; i < list.size(); i++) {
 				values.add(list.get(i).getAttribute("innerText"));
 			}
 		}
-		
-		values2=Arrays.asList(values.get(0).split("\n"));
-		
-		return values2;
-		
-		
-	}
-	
-	
-	
-	
-	
 
-	
-	
+		values2 = Arrays.asList(values.get(0).split("\n"));
+
+		return values2;
+
+	}
+
 	/**
-	 * @author ArshadM 
-	 * View any row of a grid
-	 * Provide the row number as a parameter
-	 * @throws InterruptedException 
-	 * @throws IOException 
+	 * @author ArshadM View any row of a grid Provide the row number as a parameter
+	 * @throws InterruptedException
+	 * @throws IOException
 	 */
 	public static void viewRow(int row_number) throws InterruptedException, IOException {
-		
-		//First make sure there are rows in the table
+
+		// First make sure there are rows in the table
 
 		try {
 			if (getRecordCountForTable() > 0)
@@ -753,108 +824,94 @@ public class TestBase {
 			test.log(LogStatus.FAIL, " No records found in the table : " + t.getMessage());
 			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
 		}
-		
-		
-		
-		String xpath=OR.getProperty("row_ellipsis_XPATH")+"["+row_number+"]";
-		//click(xpath);
-		
-		
+
+		String xpath = OR.getProperty("row_ellipsis_XPATH") + "[" + row_number + "]";
+		// click(xpath);
+
 		WebElement element = driver.findElement(By.xpath(xpath));
 		click(element);
 		click("view_row_XPATH");
-		
+
 		Thread.sleep(5000);
 
-		
 	}
-	
-	
-	public static void verifyViewRowValues(String row_values, String field_xpath) throws IOException, InterruptedException {
-		
-		
-		//List<String> row=row_values;
-		
-	//	viewRow(5);
-		
+
+	public static void verifyViewRowValues(String row_values, String field_xpath)
+			throws IOException, InterruptedException {
+
+		// List<String> row=row_values;
+
+		// viewRow(5);
+
 		Thread.sleep(3000);
-		
+
 		verifyEquals(row_values, getTextAttribute(field_xpath));
 	}
 
-	public static void verifyToggleButton(String row_value, String xpath, String positive, String negative) throws IOException, InterruptedException {
+	public static void verifyToggleButton(String row_value, String xpath, String positive, String negative)
+			throws IOException, InterruptedException {
 
-		boolean status=Boolean.parseBoolean(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
-		
+		boolean status = Boolean
+				.parseBoolean(driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("checked"));
+
 		String togglebtn_state;
-		
-		if(status)
-			togglebtn_state= positive;
-		
-		else togglebtn_state= negative;
-		
+
+		if (status)
+			togglebtn_state = positive;
+
+		else
+			togglebtn_state = negative;
+
 		test.log(LogStatus.INFO, " Verifying toggle button status of : " + xpath);
-		verifyEqualsIgnoreCase(row_value,togglebtn_state );
-		
+		verifyEqualsIgnoreCase(row_value, togglebtn_state);
 
 	}
-	
-	
 
-	
 	/**
-	 * @author ArshadM 
-	 * Edit any row of a grid
-	 * Provide the row number as a parameter
-	 * @throws InterruptedException 
+	 * @author ArshadM Edit any row of a grid Provide the row number as a parameter
+	 * @throws InterruptedException
 	 */
 	public static void editRow(int row_number) throws InterruptedException {
-		
+
 		Thread.sleep(3000);
-		String xpath=OR.getProperty("row_ellipsis_XPATH")+"["+row_number+"]";
-		
-		//click(xpath);
+		String xpath = OR.getProperty("row_ellipsis_XPATH") + "[" + row_number + "]";
+
+		// click(xpath);
 		WebElement element = driver.findElement(By.xpath(xpath));
 		click(element);
 		click("edit_row_XPATH");
-		
+
 		Thread.sleep(4000);
 	}
-	
-	
+
 	/**
-	 * @author ArshadM 
-	 * Retrive the number of results returned from the pagination text
-	 * @throws InterruptedException 
-	 * @throws IOException 
+	 * @author ArshadM Retrive the number of results returned from the pagination
+	 *         text
+	 * @throws InterruptedException
+	 * @throws IOException
 	 */
 	public static int getRecordCountForTable() throws InterruptedException, IOException {
-		
+
 		Thread.sleep(4000);
-		
-	
-		 String result = driver.findElement(By.xpath(OR.getProperty("results_count_XPATH")))
-				.getAttribute("innerText");
-		 
+
+		String result = driver.findElement(By.xpath(OR.getProperty("results_count_XPATH"))).getAttribute("innerText");
 
 		String array[] = result.split(" ");
-		
+
 		int count = Integer.parseInt(array[4]);
-		
+
 		return count;
 	}
-	
-	
+
 	/**
-	 * @author ArshadM 
-	 * This method will verify following:
-	 * - Verify search results are more than 0
-	 * - Read all the values in the given number of columns
-	 * - Go through each row and make sure the search keyword is availale in any of the column
-	 * - updated to facilitate varying number of columns
+	 * @author ArshadM This method will verify following: - Verify search results
+	 *         are more than 0 - Read all the values in the given number of columns
+	 *         - Go through each row and make sure the search keyword is availale in
+	 *         any of the column - updated to facilitate varying number of columns
 	 */
-	public static void verifySearchResults(int how_many_columns, String search_keyword) throws IOException, InterruptedException {
-		
+	public static void verifySearchResults(int how_many_columns, String search_keyword)
+			throws IOException, InterruptedException {
+
 		try {
 			if (getRecordCountForTable() > 0)
 				Assert.assertTrue(true);
@@ -875,37 +932,35 @@ public class TestBase {
 			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
 		}
 
-		List<String> columnValues=new ArrayList<String>();
-		//Add all records to one list
-		for(int i=1;i<=how_many_columns;i++)
-		{
+		List<String> columnValues = new ArrayList<String>();
+		// Add all records to one list
+		for (int i = 1; i <= how_many_columns; i++) {
 			columnValues.addAll(getColumnValues(i));
 		}
 		try {
-			int resultsfound,rowCount=(columnValues.size()/how_many_columns);
-			
-			//traverse along each row in the search results
-			for(int i=0;i<rowCount;i++)
-			{
-				resultsfound=0;
-				//traverse along the ith record
-				for(int nextValue=i; nextValue<columnValues.size(); nextValue=nextValue+rowCount) {
-					if(columnValues.get(nextValue).toLowerCase().contains(search_keyword.toLowerCase())) {
+			int resultsfound, rowCount = (columnValues.size() / how_many_columns);
+
+			// traverse along each row in the search results
+			for (int i = 0; i < rowCount; i++) {
+				resultsfound = 0;
+				// traverse along the ith record
+				for (int nextValue = i; nextValue < columnValues.size(); nextValue = nextValue + rowCount) {
+					if (columnValues.get(nextValue).toLowerCase().contains(search_keyword.toLowerCase())) {
 						resultsfound++;
-						test.log(LogStatus.INFO,  "search keyword:"+search_keyword + " found in "+(i+1)+"th row");
+						test.log(LogStatus.INFO,
+								"search keyword:" + search_keyword + " found in " + (i + 1) + "th row");
 						break;
-					}				
+					}
 				}
-				if(resultsfound>0) {
+				if (resultsfound > 0) {
 					assertTrue(true);
-				}
-				else {
-					test.log(LogStatus.INFO,  search_keyword + " doesn't exist");
+				} else {
+					test.log(LogStatus.INFO, search_keyword + " doesn't exist");
 					assertTrue(false);
 				}
 			}
-			
-		}catch (Throwable t) {
+
+		} catch (Throwable t) {
 
 			TestUtil.captureScreenshot();
 			// ReportNG
@@ -920,17 +975,16 @@ public class TestBase {
 
 		}
 	}
+
 	/**
-	 * @author ArshadM 
-	 * This method will verify following:
-	 * - Verify the records are in descending order
-	 * for the fist column and first 5 rows
-	 * @throws InterruptedException 
+	 * @author ArshadM This method will verify following: - Verify the records are
+	 *         in descending order for the fist column and first 5 rows
+	 * @throws InterruptedException
 	 */
 	public static void verifyTableDescendingOrder(String column_prefix) throws IOException, InterruptedException {
-		
-		test.log(LogStatus.INFO, "Verifying descending order of the records of the first column (first page only): "); 
-		
+
+		test.log(LogStatus.INFO, "Verifying descending order of the records of the first column (first page only): ");
+
 		try {
 			if (getRecordCountForTable() > 0)
 				Assert.assertTrue(true);
@@ -950,34 +1004,34 @@ public class TestBase {
 			test.log(LogStatus.FAIL, " No records found in the table : " + t.getMessage());
 			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
 		}
-		
-		List<String> first_column = getColumnValues(1,true);
+
+		List<String> first_column = getColumnValues(1, true);
 		List<Integer> column_values = new ArrayList<Integer>();
-		
+
 		try {
-			
-			for(int i=0; i<first_column.size()-1 && i<5 ;i++) {
-				
-				if(first_column.get(i).contains(column_prefix)) {
-				column_values.add(Integer.parseInt(first_column.get(i).replace(column_prefix, "")));
-				}
-				else break;
+
+			for (int i = 0; i < first_column.size() - 1 && i < 5; i++) {
+
+				if (first_column.get(i).contains(column_prefix)) {
+					column_values.add(Integer.parseInt(first_column.get(i).replace(column_prefix, "")));
+				} else
+					break;
 			}
-			
+
 			List<Integer> copy = new ArrayList(column_values);
-		    Collections.sort(copy,Collections.reverseOrder());
-		    boolean state= copy.equals(column_values);
-		    
-		    if(state==true) {
-		    	Assert.assertTrue(true);
-		    }
-		    
-		    else {
-		    	Assert.assertTrue(false);
-		    }
-		    
-		} catch(Throwable t) {
-			
+			Collections.sort(copy, Collections.reverseOrder());
+			boolean state = copy.equals(column_values);
+
+			if (state == true) {
+				Assert.assertTrue(true);
+			}
+
+			else {
+				Assert.assertTrue(false);
+			}
+
+		} catch (Throwable t) {
+
 			TestUtil.captureScreenshot();
 			// ReportNG
 			Reporter.log("<br>" + "Column values are not in descending order : " + t.getMessage() + "<br>");
@@ -989,17 +1043,15 @@ public class TestBase {
 			test.log(LogStatus.FAIL, " Column values are not in descending order : " + t.getMessage());
 			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
 		}
-		
-		
-		
+
 	}
-	
-	
+
 	public static void verifyRecordSave() throws InterruptedException, IOException {
-		
-	//	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("lcnts_success_message_XPATH"))));
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("lcnts_success_message_XPATH"))));
+
+		// wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("lcnts_success_message_XPATH"))));
+
+		wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("lcnts_success_message_XPATH"))));
 
 		String message_after_save = getTextOfElement("lcnts_success_message_XPATH");
 
@@ -1007,32 +1059,29 @@ public class TestBase {
 
 		verifyContains(message_after_save, "successfully!");
 	}
-	
+
 	/**
-	 * @author ArshadM 
-	 * Click filter icon on given column
-	 * and enter keyword in the search box
-	 * @throws InterruptedException 
+	 * @author ArshadM Click filter icon on given column and enter keyword in the
+	 *         search box
+	 * @throws InterruptedException
 	 */
 
 	public void filter(int col_number, String keyword) throws InterruptedException {
-		
+
 		Thread.sleep(3000);
-		
-		String filter_xapth=OR.getProperty("filter_XPATH")+"["+col_number+"]";
-		
-		WebElement element= driver.findElement(By.xpath(filter_xapth));
-		
+
+		String filter_xapth = OR.getProperty("filter_XPATH") + "[" + col_number + "]";
+
+		WebElement element = driver.findElement(By.xpath(filter_xapth));
+
 		click(element);
-		
-		
-		type("filter_searchbox_XPATH",keyword);
-		
+
+		type("filter_searchbox_XPATH", keyword);
+
 		driver.findElement(By.xpath(OR.getProperty("filter_searchbox_XPATH"))).sendKeys(Keys.ENTER);
-		
+
 		Thread.sleep(10000);
 	}
-	
 
 	/**
 	 * @author ArshadM Close newly opened tab
@@ -1074,11 +1123,8 @@ public class TestBase {
 		// driver.switchTo().window(originalHandle);
 	}
 
-	
-	
 	/**
-	 * @author ArshadM 
-	 * Get text attribute of the element
+	 * @author ArshadM Get text attribute of the element
 	 * 
 	 */
 	public static String getTextOfElement(String xpath) {
@@ -1087,72 +1133,65 @@ public class TestBase {
 		test.log(LogStatus.INFO, "Reading value of " + xpath.toString().replace("_XPATH", " "));
 		return text;
 	}
-	
-	
-	
+
 	/**
-	 * @author ArshadM 
-	 * Get text attribute of the element
+	 * @author ArshadM Get text attribute of the element
 	 * 
 	 */
 	public static String getTextAttribute(String xpath) {
-		
+
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(OR.getProperty(xpath)))));
 		String text = driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("value");
 		test.log(LogStatus.INFO, "Reading value of " + xpath.toString().replace("_XPATH", " "));
-		
-		if(text==null) {
-			text=driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("innerText");
+
+		if (text == null) {
+			text = driver.findElement(By.xpath(OR.getProperty(xpath))).getAttribute("innerText");
 		}
-		
-		if(text.equals("Active x")) {
-			text="Active";
-			
+
+		if (text.equals("Active x")) {
+			text = "Active";
+
 		}
-		
-		if(text.equals("Inactive x")) {
-			text="Inactive";
-			
+
+		if (text.equals("Inactive x")) {
+			text = "Inactive";
+
 		}
-		
-		if(text.endsWith(" x")) {
-			
-			text=text.replace(text.substring(text.length()-2, text.length()-0), "");
+
+		if (text.endsWith(" x")) {
+
+			text = text.replace(text.substring(text.length() - 2, text.length() - 0), "");
 		}
-		return text;	
-		
+		return text;
+
 	}
-	
+
 	/**
-	 * @author Jayashani 
-	 * Upload given file
-	 * @throws InterruptedException 
+	 * @author Jayashani Upload given file
+	 * @throws InterruptedException
 	 * 
 	 */
 	public static void upload(String locator, String path) throws InterruptedException {
-		
+
 		WebElement uploadElement = driver.findElement(By.xpath(OR.getProperty(locator)));
-	     
-       // File file = new File(OR.getProperty(path));
-		 File file = new File(path);
-        uploadElement.sendKeys(file.getAbsolutePath());
-        test.log(LogStatus.INFO, "Uploading file: "+path);
-        
-        Thread.sleep(3000);
+
+		// File file = new File(OR.getProperty(path));
+		File file = new File(path);
+		uploadElement.sendKeys(file.getAbsolutePath());
+		test.log(LogStatus.INFO, "Uploading file: " + path);
+
+		Thread.sleep(3000);
 	}
-	
-	
+
 	/**
-	 * @author Arshad 
-	 * Set active or inactive status
-	 * based on the paramter passed
-	 * @throws InterruptedException 
+	 * @author Arshad Set active or inactive status based on the paramter passed
+	 * @throws InterruptedException
 	 * 
 	 */
-	public static void setStatus( String drop_down,String status) {
-		
+	public static void setStatus(String drop_down, String status) {
+
 		click(drop_down);
-		
+
 		if (status.equals("Active")) {
 			click("active_XPATH");
 		} else {
@@ -1160,106 +1199,98 @@ public class TestBase {
 			click("confirm_inactivation_XPATH");
 		}
 	}
-	
-	
 
-	
 	/**
-	 * @author Arshad 
-	 * Clears the DB tables 
-	 * Tables are mentioned in the script
+	 * @author Arshad Clears the DB tables Tables are mentioned in the script
 	 * 
 	 */
 	public static void clearDBScript() {
 		String script = "src/test/resources/properties/db-delete-test-automation-records.sql";
 		try {
-			//Class.forName("com.mysql.jdbc.Driver");
-			new ScriptRunner(DriverManager.getConnection(config.getProperty("databaseurl"),config.getProperty("db_username"),config.getProperty("db_password")))
-					.runScript(new BufferedReader(new FileReader(script)));
+			// Class.forName("com.mysql.jdbc.Driver");
+			new ScriptRunner(DriverManager.getConnection(config.getProperty("databaseurl"),
+					config.getProperty("db_username"), config.getProperty("db_password")))
+							.runScript(new BufferedReader(new FileReader(script)));
 		} catch (Exception e) {
 			System.err.println(e);
 		}
 	}
-	
-	
-	
+
 	public static void restoreDB() throws IOException {
-		
-	//	String command="mysql -u "+config.getProperty("db_username")+" -p "+config.getProperty("db_password")+" sims "+"C:\\Users\\arshadm\\Documents\\dumps\\Dump20191021.sql";
-		
-	//	String executeCmd = "C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE --user=" + config.getProperty("db_username") + "--password=" + config.getProperty("db_password")+ "sims -e source "+"C:\\Users\\arshadm\\Documents\\dumps\\Dump20191021.sql";  
-		
-		String[] executeCmd = new String[]{"C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\mysql.exe","sims", "--user=" + config.getProperty("db_username"), "--password=" + config.getProperty("db_password"), "-e", " source " + "C:\\Users\\arshadm\\Documents\\dumps\\Dump20191021.sql"};
-		
+
+		// String command="mysql -u "+config.getProperty("db_username")+" -p
+		// "+config.getProperty("db_password")+" sims
+		// "+"C:\\Users\\arshadm\\Documents\\dumps\\Dump20191021.sql";
+
+		// String executeCmd = "C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE
+		// --user=" + config.getProperty("db_username") + "--password=" +
+		// config.getProperty("db_password")+ "sims -e source
+		// "+"C:\\Users\\arshadm\\Documents\\dumps\\Dump20191021.sql";
+
+		String[] executeCmd = new String[] { "C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\mysql.exe", "sims",
+				"--user=" + config.getProperty("db_username"), "--password=" + config.getProperty("db_password"), "-e",
+				" source " + "C:\\Users\\arshadm\\Documents\\dumps\\Dump20191021.sql" };
+
 		Runtime.getRuntime().exec(executeCmd);
 	}
-	
-	
+
 	/**
-	 * @throws InterruptedException 
-	 * @throws IOException 
-	 * @authoer Arshad
-	 * Login functionality
+	 * @throws InterruptedException
+	 * @throws IOException
+	 * @authoer Arshad Login functionality
 	 */
 	public static void login() throws InterruptedException, IOException {
-		
+
 		driver.findElement(By.xpath(OR.getProperty("username_XPATH"))).sendKeys(config.getProperty("username"));
-		
+
 		driver.findElement(By.xpath(OR.getProperty("password_XPATH"))).sendKeys(config.getProperty("password"));
 
 		driver.findElement(By.xpath(OR.getProperty("sign-in_XPATH"))).click();
-		
+
 		Thread.sleep(3000);
 
-
 	}
+
 	/**
-	 * @throws InterruptedException 
-	 * @throws IOException 
-	 * @authoer Jayashani
-	 * changed by arshad 
-	 * Logout functionality
+	 * @throws InterruptedException
+	 * @throws IOException
+	 * @authoer Jayashani changed by arshad Logout functionality
 	 */
 	public static void logout() throws InterruptedException, IOException {
-		
-		
+
 		WebElement element = driver.findElement(By.xpath(OR.getProperty("profile_XPATH")));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].click();", element);
-		
 
-		
 		element = driver.findElement(By.xpath(OR.getProperty("logout_XPATH")));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
-		 js = (JavascriptExecutor) driver;
+		js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].click();", element);
-		
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("logout_success_message_XPATH"))));
-		
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath(OR.getProperty("logout_success_message_XPATH"))));
+
 		log.debug("User successfully logged out of the system!");
-		
-		//String message_after_save = getTextOfElement("logout_success_message_XPATH");
-		
-		//verifyContains(message_after_save, "successfully!");
+
+		// String message_after_save = getTextOfElement("logout_success_message_XPATH");
+
+		// verifyContains(message_after_save, "successfully!");
 
 	}
-	
+
 	/**
-	 * @throws InterruptedException 
-	 * @throws IOException 
-	 * @authoer Jayashani
-	 * Verify Breadcrumbs for different views
+	 * @throws InterruptedException
+	 * @throws IOException
+	 * @authoer Jayashani Verify Breadcrumbs for different views
 	 */
 	private static void verifyBreadcrumb_title(String operation) throws IOException {
 		try {
 
-			verifyEqualsIgnoreCase(operation, driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText());
+			verifyEqualsIgnoreCase(operation,
+					driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText());
 
-			
-		}catch (Throwable t)
-		{
+		} catch (Throwable t) {
 
 			TestUtil.captureScreenshot();
 			// ReportNG
@@ -1267,30 +1298,29 @@ public class TestBase {
 			// Extent Reports
 			test.log(LogStatus.FAIL, " Title Verification failed : " + t.getMessage());
 			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
-		
+
 		}
 	}
-	private static void verifyBreadrumb_navigation(String xpath,String operation,String category) throws InterruptedException, IOException{
-		
-			try {
-			
-			//Bread-crumb Navigation
+
+	private static void verifyBreadrumb_navigation(String xpath, String operation, String category)
+			throws InterruptedException, IOException {
+
+		try {
+
+			// Bread-crumb Navigation
 			click(xpath);
-			
-			if(operation !="Home") {
-			
-			wait.until(ExpectedConditions.elementToBeClickable(By.xpath(OR.getProperty("home_XPATH"))));
+
+			if (operation != "Home") {
+
+				wait.until(ExpectedConditions.elementToBeClickable(By.xpath(OR.getProperty("home_XPATH"))));
 			}
-			//Verify Navigation
-			
+			// Verify Navigation
+
 			else
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("dashboard_XPATH"))));
 			verifyContains(driver.findElement(By.xpath(OR.getProperty("page_title_XPATH"))).getText(), category);
-			
-			
-		}
-		catch(Throwable t)
-		{
+
+		} catch (Throwable t) {
 			TestUtil.captureScreenshot();
 			// ReportNG
 			Reporter.log("<br>" + "Breadcrumb Verification failed : " + t.getMessage() + "<br>");
@@ -1300,51 +1330,46 @@ public class TestBase {
 			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
 		}
 	}
-	public static void verifyBreadrumbs(String operation, String category) throws InterruptedException, IOException{
+
+	public static void verifyBreadrumbs(String operation, String category) throws InterruptedException, IOException {
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(OR.getProperty("home_XPATH"))));
-		if(operation.equals("Home"))
-		{
-			//verify navigation to home
-			verifyBreadrumb_navigation("home_XPATH",operation,"dashboard");
-		}else
-		{
+		if (operation.equals("Home")) {
+			// verify navigation to home
+			verifyBreadrumb_navigation("home_XPATH", operation, "dashboard");
+		} else {
 			verifyBreadcrumb_title(operation.concat(" ").concat(category));
-			//verify navigation to grid
-			verifyBreadrumb_navigation("brdcrmb_XPATH",operation,category);
+			// verify navigation to grid
+			verifyBreadrumb_navigation("brdcrmb_XPATH", operation, category);
 		}
-		
+
 	}
-	
+
 	@AfterSuite
 	public void tearDown() throws InterruptedException, IOException {
 
-		//logout();
-		
-
+		// logout();
 
 		log.debug("test execution completed !!!");
-		
+
 		Thread.sleep(10000);
-		
+
 		copyLogFiles();
-		
+
 		if (driver != null) {
 			driver.quit();
 		}
 	}
-	
-	
+
 	public void copyLogFiles() throws IOException {
-		
+
 		String timeStamp = new SimpleDateFormat("y-M-dd, E 'at' h.mm a").format(new java.util.Date());
-		
+
 		File srcDir = new File(System.getProperty("user.dir") + "\\target\\surefire-reports\\html");
-		File destDir = new File(System.getProperty("user.dir") + "\\target\\surefire-reports\\"+timeStamp);
+		File destDir = new File(System.getProperty("user.dir") + "\\target\\surefire-reports\\" + timeStamp);
 		FileUtils.copyDirectory(srcDir, destDir);
 		System.out.println("Created reports directory with timestamp");
 	}
-	
-	
+
 	@BeforeMethod
 	public void beforeTest() throws InterruptedException {
 		closeNewTab();

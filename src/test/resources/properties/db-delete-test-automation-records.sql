@@ -105,10 +105,7 @@ delete from programDefinition where code like 'Auto_%' ;
 
 /*Deleting from Grades table */
 delete from gradeMark
-where gradeId in (select * from grade where code like 'Auto_%');
-
-delete from gradeSpecialization
-where gradeId in (select * from grade where code like 'Auto_%');
+where gradeId in (select id from grade where code like 'Auto_%');
 
 delete from grade
 where code like 'Auto_%';

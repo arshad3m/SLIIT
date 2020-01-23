@@ -17,6 +17,16 @@ SET SQL_SAFE_UPDATES = 0;
 
 
 /*Deleting intake tables  */
+/*Delete intake program specialization center */
+delete from intakeProgramSpecializationCenter where centerId in
+(select id from center where code like 'Auto_%' or locationId in 
+(select id from location where code like 'Auto_%' ));
+
+/*Delete intake Intake Evaluation location */
+delete from intakeEvaluation where locationId in
+(select id from location where code like 'Auto_%' );
+
+/*Delete intake program specialization Evaluation Group */
 delete from  intakeProgramSpecializationEvaluationGroup where intakeEvaluationGroupId in (select id from intakeEvaluationGroup where
 name like 'Auto_%') ;
 delete from intakeProgramSpecializationCenter where intakeProgramSpecializationId in 
@@ -105,10 +115,7 @@ delete from programDefinition where code like 'Auto_%' ;
 
 /*Deleting from Grades table */
 delete from gradeMark
-where gradeId in (select * from grade where code like 'Auto_%');
-
-delete from gradeSpecialization
-where gradeId in (select * from grade where code like 'Auto_%');
+where gradeId in (select id from grade where code like 'Auto_%');
 
 delete from grade
 where code like 'Auto_%';

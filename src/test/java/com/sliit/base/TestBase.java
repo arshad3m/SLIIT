@@ -304,13 +304,12 @@ public class TestBase {
 		}
 
 		// Select select = new Select(dropdown);
-
+		String newlocator_XPATH="";
 		int count = driver.findElements(By.xpath(OR.getProperty(locator).replace("/span", ""))).size();
+		click(locator);
 		if (count == 1) {
-			click(locator);
-
-			String newlocator_XPATH="";
 			
+		
 			if(OR.getProperty(locator).endsWith("/div/span")) {
 			newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[1]/ul[2]/li[1]/div");
 			}
@@ -318,24 +317,13 @@ public class TestBase {
 			if(OR.getProperty(locator).endsWith("/div/div/*")) {
 				newlocator_XPATH = OR.getProperty(locator).replace("/div/*", "/div/*/div/div[2]/ul[2]/li[1]/div");
 			}
-			
-			
-			OR.setProperty("temp_XPATH", newlocator_XPATH);
-			click("temp_XPATH");
-
+	
 		} else {
-			//// *[@id='faculty']/div/div[2]/ul[2]/li[1]
-			click(locator);
-
-			String newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[2]/ul[2]/li[1]/div");
-			OR.setProperty("temp_XPATH", newlocator_XPATH);
-			click("temp_XPATH");
-
+			newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[2]/ul[2]/li[1]/div");
 		}
+		OR.setProperty("temp_XPATH", newlocator_XPATH);
+		click("temp_XPATH");
 		// select.selectByVisibleText(value);
-
-	//	test.log(LogStatus.INFO,
-		//		"Selecting from dropdown : " + locator.toString().replace("_XPATH", "") + " value as "+getTextAttribute("temp_XPATH"));
 
 		click("prgm_header_XPATH");
 		Thread.sleep(1000);
@@ -360,30 +348,29 @@ public class TestBase {
 		
 		click(locator);
 		Thread.sleep(3000);
-		if (count == 1) {
-			
-
-			String newlocator_XPATH="";
-			
+		String newlocator_XPATH="";
+		
+		//for drop-downs in tables
+		if(OR.getProperty(locator).startsWith("//table")) {
+			newlocator_XPATH=OR.getProperty(locator).concat("/ng-multiselect-dropdown/div/div[2]/ul[2]/li["+value+"]");
+			test.log(LogStatus.INFO,"came to new if caluse ");
+		}
+		else if (count == 1) {
+					
 			if(OR.getProperty(locator).endsWith("/div/span")) {
-			newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[1]/ul[2]/li[1]/div");
+				newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[2]/ul[2]/li["+value+"]");
 			}
 			
-			if(OR.getProperty(locator).endsWith("/div/div/*")) {
-				newlocator_XPATH = OR.getProperty(locator).replace("/div/*", "/div/*/div/div[2]/ul[2]/li[1]/div");
+			if(OR.getProperty(locator).endsWith("/div/div")) {
+				newlocator_XPATH = OR.getProperty(locator).concat("/*/div/div[2]/ul[2]/li["+value+"]/div");
 			}
-			
-			
-			OR.setProperty("temp_XPATH", newlocator_XPATH);
-			click("temp_XPATH");
 
 		} else {
 			
-			String newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[2]/ul[2]/li["+value+"]/div");
-			OR.setProperty("temp_XPATH", newlocator_XPATH);
-			click("temp_XPATH");
-
+			newlocator_XPATH = OR.getProperty(locator).replace("/div/span", "/div[2]/ul[2]/li["+value+"]/div");
 		}
+		OR.setProperty("temp_XPATH", newlocator_XPATH);
+		click("temp_XPATH");
 			
 
 		click("prgm_header_XPATH");

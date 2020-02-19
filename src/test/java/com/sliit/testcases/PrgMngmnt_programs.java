@@ -64,6 +64,7 @@ public class PrgMngmnt_programs extends TestBase {
 		Thread.sleep(3000);
 		click("prgrms_centers_dd_value_XPATH");
 		
+		click("prgrms_plus_button_XPATH");
 
 		//setStatus("status_XPATH", data.get("status"));
 		
@@ -204,6 +205,7 @@ public class PrgMngmnt_programs extends TestBase {
 		type("prgrms_type_centers_XPATH", data.get("new centers"));
 		Thread.sleep(3000);
 		click("prgrms_centers_dd_value_XPATH");
+		
 		// Click save button
 		click("save_XPATH");
 

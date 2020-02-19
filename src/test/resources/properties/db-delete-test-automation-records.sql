@@ -13,15 +13,109 @@
  */
 
 use sims;
-SET SQL_SAFE_UPDATES=0;
+SET SQL_SAFE_UPDATES = 0;
 
+
+/*Deleting intake tables  */
+/*Delete intake program specialization center */
+delete from intakeProgramSpecializationCenter where centerId in
+(select id from center where code like 'Auto_%' or locationId in 
+(select id from location where code like 'Auto_%' ));
+
+/*Delete intake Intake Evaluation location */
+delete from intakeEvaluation where locationId in
+(select id from location where code like 'Auto_%' );
+
+/*Delete intake program specialization Evaluation Group */
+delete from  intakeProgramSpecializationEvaluationGroup where intakeEvaluationGroupId in (select id from intakeEvaluationGroup where
+name like 'Auto_%') ;
+delete from intakeProgramSpecializationCenter where intakeProgramSpecializationId in 
+(select id from intakeProgramSpecialization where intakeId in (select id from intake where code like 'Auto_%' )) ;
+Delete from intakeProgramSpecialization where programId in(select id from program where name like 'Auto_%');
+delete from intakeEvaluationGroup where intakeId in (select id from intake where code like 'Auto_%') ;
+delete from intake where code like 'Auto_%' ;
+
+/*delete Program definition Subject table*/
+delete from programDefinitionSubject where programDefinitionId in 
+(select id from programDefinition where  code like 'Auto_%' ) or
+programDefinitionSemesterId in
+(select id from programDefinitionSemester where  name like 'Auto_%' ) or
+programDefinitionYearId in
+(select id from programDefinitionYear where  name like 'Auto_%' )
+;
+/*delete Program definition Semester Entry Criteria table*/
+delete from programDefinitionSemesterEntryCriteria where programDefinitionSemesterId in
+(select id from  programDefinitionSemester where name like 'Auto_%') ;
+delete from programDefinitionSemester where name like 'Auto_%' ;
+
+/*delete Program definition Semester table*/
+delete from programDefinitionSemester where programDefinitionYearId in
+(select id from programDefinitionYear where programDefinitionId
+in
+(select id from programDefinition where code like 'Auto_%' ));
+delete from programDefinitionSemester where programDefinitionYearId in
+(select id from programDefinitionYear where name like 'Auto_%' );
+delete from programDefinitionSemester where programDefinitionId in
+(select id from programDefinition where code like 'Auto_%' );
+
+/*delete Program definition Year Entry Criteria table*/
+delete from programDefinitionYearEntryCriteria  where programDefinitionEntryCriterionId in
+ (select id from programDefinitionEntryCriterion where programDefinitionId in 
+(select id from programDefinition where code like 'Auto_%' ));
+
+delete from programDefinitionYearEntryCriteria  where programDefinitionEntryCriterionId in
+ (select id from programDefinitionEntryCriterion where entryCriterionId in 
+(select id from entryCriterion where code like 'Auto_%' ));
+
+delete from programDefinitionYearEntryCriteria  where programDefinitionYearId in
+ (select id from programDefinitionYear where learningOutcomeId in 
+(select id from learningOutcome where code like 'Auto_%' ));
+
+/*delete Program definition Year table*/
+delete from programDefinitionYear where programDefinitionId in 
+(select id from programDefinition where code like 'Auto_%' );
+delete from programDefinitionYear where learningOutcomeId in 
+(select id from learningOutcome where code like 'Auto_%' );
+
+/*delete Program definition Entry criterion Subject result table*/
+delete from programDefinitionEntryCriterionSubjectResult where programDefinitionEntryCriterionId in 
+(select id from programDefinitionEntryCriterion where programDefinitionId in 
+(select id from programDefinition where code like 'Auto_%') );
+delete from programDefinitionEntryCriterionSubjectResult where programDefinitionEntryCriterionId in 
+(select id from programDefinitionEntryCriterion where entryCriterionId in 
+(select id from entryCriterion where code like 'Auto_%') );
+
+delete from programDefinitionEntryCriterionSubjectResult where entryCriterionResultId in
+(Select id from entryCriterionResult where entryCriterionId in
+(select id from entryCriterion where code like 'Auto_%')) ;
+
+delete from programDefinitionEntryCriterionSubjectResult where entryCriterionResultId in
+(select id from entryCriterionOutcome where name like 'Auto_%');
+
+/*delete  Program definition Entry criterion special requirement table*/
+delete FROM  programDefinitionEntryCriterionSpecialRequirement where programDefinitionEntryCriterionId in 
+(select id from programDefinitionEntryCriterion where entryCriterionId in
+(select id from entryCriterion where code like 'Auto_%' ));
+delete FROM  programDefinitionEntryCriterionSpecialRequirement where programDefinitionEntryCriterionId in 
+(select id from programDefinitionEntryCriterion where programDefinitionId in
+(select id from programDefinition where code like 'Auto_%' ));
+Delete FROM  programDefinitionEntryCriterionSpecialRequirement where programDefinitionEntryCriterionId in 
+(select id from programDefinitionEntryCriterion where programDefinitionEntryCriterionId in 
+(select id from programDefinition where code like 'Auto_%'));
+
+/*delete  Program definition Entry criterion table*/
+Delete from programDefinitionEntryCriterion where programDefinitionId in 
+(select id from programDefinition where code like 'Auto_%') ;
+Delete from programDefinitionEntryCriterion where entryCriterionId in 
+(select id from entryCriterion where code like 'Auto_%') ;
+
+delete from programDefinition where code like 'Auto_%' ;
+
+/********* Program Definitions Deleted **********/
 
 /*Deleting from Grades table */
 delete from gradeMark
-where gradeId in (select * from grade where code like 'Auto_%');
-
-delete from gradeSpecialization
-where gradeId in (select * from grade where code like 'Auto_%');
+where gradeId in (select id from grade where code like 'Auto_%');
 
 delete from grade
 where code like 'Auto_%';

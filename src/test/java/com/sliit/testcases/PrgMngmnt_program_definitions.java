@@ -29,14 +29,15 @@ public class PrgMngmnt_program_definitions extends TestBase {
 		click("create_new_XPATH");
 		type("prgm_code_XPATH", data.get("code"));
 		type("prgm_name_XPATH", data.get("name"));
-		selectFirstValue("prgm_faculties_XPATH");
-		selectFirstValue("prgm_aw_institutes_XPATH");
-		selectFirstValue("prgm_program_XPATH");
-		selectFirstValue("prgm_cordinator_XPATH");
+		//selectFirstValue("prgm_faculties_XPATH");
+		selectFromDropdown("prgm_aw_institutes_XPATH",1);
+		selectFromDropdown("prgm_program_XPATH",1);
+		selectFromDropdown("prgm_specialization_XPATH",1);
+		selectFromDropdown("prgm_cordinator_XPATH",1);
 		click("prgm_next_XPATH");
 
 		// Enter entry criteria
-		selectFirstValue("prgm_entry_criteria_XPATH");
+		selectFromDropdown("prgm_entry_criteria_XPATH",1);
 		pd.selectEntryCriteria();
 		type("prgm_priority_XPATH", data.get("priority"));
 		type("prgm_no_of_passes_XPATH", data.get("passes"));
@@ -52,15 +53,15 @@ public class PrgMngmnt_program_definitions extends TestBase {
 
 		// Enter Semesters
 		type("prgm_semester_name_XPATH",data.get("semester"));
-		selectFirstValue("prgm_semester_year_XPATH");
+		selectFromDropdown("prgm_semester_year_XPATH",1);
 		click("prgm_add_XPATH");
 		click("prgm_next_XPATH");
 		Thread.sleep(3000);
 
 		// Enter modules and submit
-		selectFirstValue("prgm_semester_year_XPATH");
-		selectFirstValue("prgm_module_semester_XPATH");
-		selectFirstValue("prgm_module_XPATH");
+		selectFromDropdown("prgm_semester_year_XPATH",1);
+		selectFromDropdown("prgm_module_semester_XPATH",1);
+		selectFromDropdown("prgm_module_XPATH",1);
 		click("prgm_add_XPATH");
 		click("prgm_submit_XPATH");
 		Thread.sleep(3000);
@@ -177,7 +178,7 @@ public class PrgMngmnt_program_definitions extends TestBase {
 		click("prgm_next_XPATH");
 		
 		// Enter entry criteria
-		selectFromDropdown("prgm_entry_criteria_XPATH",2);
+		selectFromDropdown("prgm_entry_criteria_XPATH",3);
 		pd.selectEntryCriteria();
 		type("prgm_priority_XPATH", data.get("new priority"));
 		type("prgm_no_of_passes_XPATH", data.get("new passes"));
@@ -193,13 +194,13 @@ public class PrgMngmnt_program_definitions extends TestBase {
 
 		// Enter Semesters
 		type("prgm_semester_name_XPATH",data.get("new semester"));
-		selectFromDropdown("prgm_semester_year_XPATH",2);
+		selectFromDropdown("prgm_semester_year_XPATH",1);
 		click("prgm_add_XPATH");
 		click("prgm_next_XPATH");
 		Thread.sleep(3000);
 
 		// Enter modules and submit
-		selectFromDropdown("prgm_semester_year_XPATH",2);
+		selectFromDropdown("prgm_semester_year_XPATH",1);
 		selectFromDropdown("prgm_module_semester_XPATH",1);
 		selectFromDropdown("prgm_module_XPATH",2);
 		selectFromDropdown("prgm_module_XPATH",3);
@@ -216,7 +217,7 @@ public class PrgMngmnt_program_definitions extends TestBase {
 	}
 	
 	@Test(enabled=true,priority=6)
-	public void verify_breadcrumbs() throws InterruptedException, IOException{
+	public void verify_breadcrumbs_ProgramDefinitions() throws InterruptedException, IOException{
 
 		click("prg_management_XPATH");
 
@@ -255,14 +256,15 @@ public class PrgMngmnt_program_definitions extends TestBase {
 		click("create_new_XPATH");
 		type("prgm_code_XPATH", data.get("code"));
 		type("prgm_name_XPATH", data.get("name"));
-		selectFirstValue("prgm_faculties_XPATH");
-		selectFirstValue("prgm_aw_institutes_XPATH");
-		selectFirstValue("prgm_program_XPATH");
-		selectFirstValue("prgm_cordinator_XPATH");
+
+		selectFromDropdown("prgm_aw_institutes_XPATH",1);
+		selectFromDropdown("prgm_program_XPATH",1);
+		selectFromDropdown("prgm_specialization_XPATH",1);
+		selectFromDropdown("prgm_cordinator_XPATH",1);
 		click("prgm_next_XPATH");
 
 		// Enter entry criteria
-		selectFirstValue("prgm_entry_criteria_XPATH");
+		selectFromDropdown("prgm_entry_criteria_XPATH",1);
 		pd.selectEntryCriteria();
 		type("prgm_priority_XPATH", data.get("priority"));
 		type("prgm_no_of_passes_XPATH", data.get("passes"));
@@ -278,7 +280,7 @@ public class PrgMngmnt_program_definitions extends TestBase {
 
 		// Enter Semesters
 		type("prgm_semester_name_XPATH",data.get("semester"));
-		selectFirstValue("prgm_semester_year_XPATH");
+		selectFromDropdown("prgm_semester_year_XPATH",1);
 		click("prgm_add_XPATH");
 
 		Thread.sleep(3000);

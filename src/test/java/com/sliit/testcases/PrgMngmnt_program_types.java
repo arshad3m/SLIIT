@@ -12,7 +12,7 @@ import com.sliit.utilities.TestUtil;
 
 public class PrgMngmnt_program_types extends TestBase{
 	
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 1)
 	public void add_new_program_types(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -55,7 +55,7 @@ public class PrgMngmnt_program_types extends TestBase{
 
 
 	}
-	@Test(enabled =false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
+	@Test(enabled =true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=2)
 	public void search_program_types(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		click("prg_management_XPATH");
@@ -66,12 +66,14 @@ public class PrgMngmnt_program_types extends TestBase{
 
 		//Enter search keyword in the search box
 		search("search_box_XPATH", data.get("keyword"));
-
+		
+		Thread.sleep(3000);
+		
 		//Verify search results
-		verifySearchResults(7, data.get("keyword"));
+		verifySearchResults(6, data.get("keyword"));
 
 	}
-	@Test(enabled =true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
+	@Test(enabled =false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 3)
 	public void view_program_types(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -110,7 +112,7 @@ public class PrgMngmnt_program_types extends TestBase{
 		 
 		
 	}
-	@Test(enabled=false,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
+	@Test(enabled=true,dataProviderClass = TestUtil.class, dataProvider = "dp", priority=5)
 	public void filter_program_types(Hashtable<String, String> data) throws InterruptedException, IOException {
 		
 		if (!data.get("runmode").equals("Y")) {
@@ -134,7 +136,7 @@ public class PrgMngmnt_program_types extends TestBase{
 
 		}
 	}
-	@Test(enabled = false, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
+	@Test(enabled = true, dataProviderClass = TestUtil.class, dataProvider = "dp", priority = 4)
 	public void edit_program_types(Hashtable<String, String> data) throws InterruptedException, IOException {
 
 		if (!data.get("runmode").equals("Y")) {
@@ -180,7 +182,7 @@ public class PrgMngmnt_program_types extends TestBase{
 
 	}
 	
-	@Test(enabled=false,priority=6)
+	@Test(enabled=true,priority=6)
 	public void verify_breadcrumbs() throws InterruptedException, IOException{
 
 		click("prg_management_XPATH");
